@@ -1,0 +1,8 @@
+﻿services:
+  featureflagservice:
+    image: featureflagservice
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_UID: 1000
