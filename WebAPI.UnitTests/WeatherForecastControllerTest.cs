@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Logging;
 using Moq;
-using WebAPI;
 using WebAPI.Controllers;
 
 namespace WebAPI.UnitTests;
