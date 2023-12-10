@@ -1,4 +1,4 @@
-namespace FeatureFlagService.Domain;
+namespace Domain.Models;
 
 public class FeatureFlag
 {

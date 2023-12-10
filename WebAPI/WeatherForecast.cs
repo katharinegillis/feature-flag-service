@@ -1,4 +1,4 @@
-namespace FeatureFlagService;
+namespace WebAPI;
 
 public class WeatherForecast
 {

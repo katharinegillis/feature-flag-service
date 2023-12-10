@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace FeatureFlagService.Controllers;
+namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]

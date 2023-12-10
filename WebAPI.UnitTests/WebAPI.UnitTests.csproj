@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\FeatureFlagService\FeatureFlagService.csproj" />
+      <ProjectReference Include="..\WebAPI\WebAPI.csproj" />
     </ItemGroup>
 
 </Project>

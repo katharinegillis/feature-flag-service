@@ -1,8 +1,9 @@
-using FeatureFlagService.Controllers;
 using Microsoft.Extensions.Logging;
 using Moq;
+using WebAPI;
+using WebAPI.Controllers;
 
-namespace FeatureFlagService.UnitTests;
+namespace WebAPI.UnitTests;
 
 public class Tests
 {
