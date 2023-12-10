@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatureFlagService", "FeatureFlagService\FeatureFlagService.csproj", "{6212FBB4-43BC-4AD5-889A-B980D1671CEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatureFlagService.UnitTests", "FeatureFlagService.UnitTests\FeatureFlagService.UnitTests.csproj", "{2D652A15-AAE2-4312-B3E6-9A5DD470DB1C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6212FBB4-43BC-4AD5-889A-B980D1671CEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6212FBB4-43BC-4AD5-889A-B980D1671CEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6212FBB4-43BC-4AD5-889A-B980D1671CEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6212FBB4-43BC-4AD5-889A-B980D1671CEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D652A15-AAE2-4312-B3E6-9A5DD470DB1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D652A15-AAE2-4312-B3E6-9A5DD470DB1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D652A15-AAE2-4312-B3E6-9A5DD470DB1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D652A15-AAE2-4312-B3E6-9A5DD470DB1C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
