@@ -1,18 +1,20 @@
-using Domain.Models;
+using Domain.FeatureFlag;
 
 namespace Application.Interactors.GetFeatureFlag;
 
 public class CodePresenter : IOutputPort
 {
-    public FeatureFlag? FeatureFlag { get; private set; }
+    public IFeatureFlag FeatureFlag { get; private set; } = new FeatureFlagNull();
+    public bool IsNotFound;
 
-    public void Ok(FeatureFlag featureFlag)
+    public void Ok(IFeatureFlag featureFlag)
     {
         FeatureFlag = featureFlag;
     }
 
     public void NotFound()
     {
-        FeatureFlag = null;
+        FeatureFlag = new FeatureFlagNull();
+        IsNotFound = true;
     }
 }

@@ -12,15 +12,14 @@ public class Interactor(IGetFeatureFlagInputPort getFeatureFlagInteractor) : IIn
         var getFeatureFlagCodePresenter = new GetFeatureFlagCodePresenter();
         await getFeatureFlagInteractor.Execute(new GetFeatureFlagRequestModel { Id = request.Id },
             getFeatureFlagCodePresenter);
-        var featureFlag = getFeatureFlagCodePresenter.FeatureFlag;
 
-        if (featureFlag is not null)
+        if (getFeatureFlagCodePresenter.IsNotFound)
         {
-            // Send the enabled status.
-            presenter.Ok(featureFlag.Enabled);
+            // Not found
+            presenter.NotFound();
             return;
         }
 
-        presenter.NotFound();
+        presenter.Ok(getFeatureFlagCodePresenter.FeatureFlag.Enabled);
     }
 }

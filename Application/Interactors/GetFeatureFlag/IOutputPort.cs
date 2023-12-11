@@ -1,10 +1,10 @@
-using Domain.Models;
+using Domain.FeatureFlag;
 
 namespace Application.Interactors.GetFeatureFlag;
 
 public interface IOutputPort
 {
-    public void Ok(FeatureFlag featureFlag);
+    public void Ok(IFeatureFlag featureFlag);
 
     public void NotFound();
 }

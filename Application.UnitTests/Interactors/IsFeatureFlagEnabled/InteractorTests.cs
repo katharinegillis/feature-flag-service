@@ -2,7 +2,7 @@ using Application.Interactors.IsFeatureFlagEnabled;
 using IGetFeatureFlagInputPort = Application.Interactors.GetFeatureFlag.IInputPort;
 using IGetFeatureFlagOutputPort = Application.Interactors.GetFeatureFlag.IOutputPort;
 using GetFeatureFlagRequestModel = Application.Interactors.GetFeatureFlag.RequestModel;
-using Domain.Models;
+using Domain.FeatureFlag;
 using Moq;
 
 namespace Application.UnitTests.Interactors.IsFeatureFlagEnabled;
@@ -10,7 +10,7 @@ namespace Application.UnitTests.Interactors.IsFeatureFlagEnabled;
 public class InteractorTests
 {
     [Test]
-    public void IsFeatureFlagEnabledInterceptor_An_IIsFeatureFlagEnabledInputPort()
+    public void IsFeatureFlagEnabledInterceptor_An_InputPort()
     {
         var getFeatureFlagInteractor = Mock.Of<IGetFeatureFlagInputPort>();
 
