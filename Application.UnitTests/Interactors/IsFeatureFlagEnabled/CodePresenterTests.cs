@@ -5,7 +5,7 @@ namespace Application.UnitTests.Interactors.IsFeatureFlagEnabled;
 public class CodePresenterTests
 {
     [Test]
-    public void Ok_Should_Store_Enabled_Value()
+    public void Ok_Should_Store_Enabled_Value_And_Not_Found_As_False()
     {
         var presenter = new CodePresenter();
 
@@ -16,7 +16,7 @@ public class CodePresenterTests
     }
 
     [Test]
-    public void NotFound_Should_Store_Enabled_As_Null()
+    public void NotFound_Should_Store_Not_Found_As_True()
     {
         var presenter = new CodePresenter();
 
