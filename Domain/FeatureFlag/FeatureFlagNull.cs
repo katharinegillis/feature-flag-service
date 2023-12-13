@@ -1,7 +1,9 @@
 namespace Domain.FeatureFlag;
 
-public class FeatureFlagNull : IFeatureFlag
+public sealed class FeatureFlagNull : IFeatureFlag
 {
+    public static FeatureFlagNull Instance { get; } = new FeatureFlagNull();
+
     public bool IsNull => true;
 
     private string _id = "";

@@ -4,7 +4,7 @@ using GetFeatureFlagRequestModel = Application.Interactors.GetFeatureFlag.Reques
 
 namespace Application.Interactors.IsFeatureFlagEnabled;
 
-public class Interactor(IGetFeatureFlagInputPort getFeatureFlagInteractor) : IInputPort
+public sealed class Interactor(IGetFeatureFlagInputPort getFeatureFlagInteractor) : IInputPort
 {
     public async Task Execute(RequestModel request, IOutputPort presenter)
     {

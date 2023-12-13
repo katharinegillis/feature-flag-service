@@ -1,6 +1,6 @@
 namespace Application.Interactors.GetFeatureFlag;
 
-public class RequestModel
+public sealed class RequestModel
 {
     public required string Id { get; init; }
 }

@@ -1,6 +1,6 @@
 namespace Application.Interactors.IsFeatureFlagEnabled;
 
-public class CodePresenter : IOutputPort
+public sealed class CodePresenter : IOutputPort
 {
     public bool Enabled;
     public bool IsNotFound;

@@ -2,7 +2,7 @@ using Domain.FeatureFlag;
 
 namespace Application.Interactors.GetFeatureFlag;
 
-public class CodePresenter : IOutputPort
+public sealed class CodePresenter : IOutputPort
 {
     public IFeatureFlag FeatureFlag { get; private set; } = new FeatureFlagNull();
     public bool IsNotFound;
