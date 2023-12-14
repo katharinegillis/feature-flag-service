@@ -1,4 +1,4 @@
-namespace Domain.FeatureFlag;
+namespace Domain.FeatureFlags;
 
 public sealed class FeatureFlagNull : IFeatureFlag
 {
@@ -12,7 +12,7 @@ public sealed class FeatureFlagNull : IFeatureFlag
     {
         get => _id;
         // ReSharper disable once ValueParameterNotUsed
-        set => _id = "";
+        init => _id = "";
     }
 
     private bool _enabled;

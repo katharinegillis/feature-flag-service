@@ -1,4 +1,4 @@
-using Domain.FeatureFlag;
+using Domain.FeatureFlags;
 
 namespace Application.Interactors.GetFeatureFlag;
 

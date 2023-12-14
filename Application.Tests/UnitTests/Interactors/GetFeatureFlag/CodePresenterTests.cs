@@ -1,7 +1,7 @@
 using Application.Interactors.GetFeatureFlag;
-using Domain.FeatureFlag;
+using Domain.FeatureFlags;
 
-namespace Application.UnitTests.Interactors.GetFeatureFlag;
+namespace Application.Tests.UnitTests.Interactors.GetFeatureFlag;
 
 public class CodePresenterTests
 {

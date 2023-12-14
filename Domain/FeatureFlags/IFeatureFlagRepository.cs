@@ -1,4 +1,4 @@
-namespace Domain.FeatureFlag;
+namespace Domain.FeatureFlags;
 
 public interface IFeatureFlagRepository
 {

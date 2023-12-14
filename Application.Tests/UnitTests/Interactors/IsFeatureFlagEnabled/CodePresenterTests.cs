@@ -1,6 +1,6 @@
 using Application.Interactors.IsFeatureFlagEnabled;
 
-namespace Application.UnitTests.Interactors.IsFeatureFlagEnabled;
+namespace Application.Tests.UnitTests.Interactors.IsFeatureFlagEnabled;
 
 public class CodePresenterTests
 {

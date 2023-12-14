@@ -18,6 +18,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="UnitTests\"/>
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\Domain\Domain.csproj"/>
     </ItemGroup>
 

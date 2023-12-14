@@ -2,12 +2,12 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using WebAPI.Controllers;
 
-namespace WebAPI.UnitTests;
+namespace WebAPI.Tests;
 
 public class Tests
 {
     private WeatherForecastController _controller;
-    
+
     [SetUp]
     public void Setup()
     {
