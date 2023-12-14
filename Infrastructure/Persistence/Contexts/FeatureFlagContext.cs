@@ -3,11 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Contexts;
 
-public class FeatureFlagContext : DbContext
+public class FeatureFlagContext(DbContextOptions<FeatureFlagContext> options) : DbContext(options)
 {
-    public DbSet<FeatureFlag> FeatureFlags { get; set; }
-
-    public FeatureFlagContext(DbContextOptions<FeatureFlagContext> options) : base(options)
-    {
-    }
+    public DbSet<FeatureFlag> FeatureFlags { get; set; } = null!;
 }

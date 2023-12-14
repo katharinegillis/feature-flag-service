@@ -4,7 +4,7 @@ namespace Domain.FeatureFlags;
 
 public interface IFeatureFlag : INullable
 {
-    public string Id { get; init; }
+    public string Id { get; }
 
-    public bool Enabled { get; set; }
+    public bool Enabled { get; }
 }

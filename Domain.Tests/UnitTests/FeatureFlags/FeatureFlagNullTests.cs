@@ -7,9 +7,10 @@ public class FeatureFlagNullTests
     [Test]
     public void FeatureFlagNull_Should_Not_Allow_Enabled_To_Change()
     {
-        var featureFlagNull = new FeatureFlagNull();
-
-        featureFlagNull.Enabled = true;
+        var featureFlagNull = new FeatureFlagNull
+        {
+            Enabled = true
+        };
 
         Assert.That(featureFlagNull.Enabled, Is.False);
     }

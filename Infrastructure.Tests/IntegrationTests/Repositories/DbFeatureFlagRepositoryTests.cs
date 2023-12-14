@@ -47,7 +47,6 @@ public class DbFeatureFlagRepositoryTests
 
         var featureFlag = await repository.Get("some_flag");
 
-        Assert.That(featureFlag, Is.TypeOf<Domain.FeatureFlags.FeatureFlag>());
         Assert.That(comparer.Equals(featureFlag, new Domain.FeatureFlags.FeatureFlag
         {
             Id = "some_flag",

@@ -20,7 +20,7 @@ public class FeatureFlagEqualityComparerTests
             Enabled = true
         };
 
-        Assert.True(comparer.Equals(firstFeatureFlag, secondFeatureFlag));
+        Assert.That(comparer.Equals(firstFeatureFlag, secondFeatureFlag), Is.True);
     }
 
     [Test]
@@ -28,7 +28,7 @@ public class FeatureFlagEqualityComparerTests
     {
         var comparer = new FeatureFlagEqualityComparer();
 
-        Assert.True(comparer.Equals(null, null));
+        Assert.That(comparer.Equals(null, null), Is.True);
     }
 
     [Test]
@@ -41,9 +41,11 @@ public class FeatureFlagEqualityComparerTests
             Id = "some_flag",
             Enabled = true
         };
-
-        Assert.False(comparer.Equals(featureFlag, null));
-        Assert.False(comparer.Equals(null, featureFlag));
+        Assert.Multiple(() =>
+        {
+            Assert.That(comparer.Equals(featureFlag, null), Is.False);
+            Assert.That(comparer.Equals(null, featureFlag), Is.False);
+        });
     }
 
     [Test]
@@ -59,10 +61,10 @@ public class FeatureFlagEqualityComparerTests
         var secondFeatureFlag = new FeatureFlag
         {
             Id = "some_other_flag",
-            Enabled = true,
+            Enabled = true
         };
 
-        Assert.False(comparer.Equals(firstFeatureFlag, secondFeatureFlag));
+        Assert.That(comparer.Equals(firstFeatureFlag, secondFeatureFlag), Is.False);
     }
 
     [Test]
@@ -78,10 +80,10 @@ public class FeatureFlagEqualityComparerTests
         var secondFeatureFlag = new FeatureFlag
         {
             Id = "some_flag",
-            Enabled = false,
+            Enabled = false
         };
 
-        Assert.False(comparer.Equals(firstFeatureFlag, secondFeatureFlag));
+        Assert.That(comparer.Equals(firstFeatureFlag, secondFeatureFlag), Is.False);
     }
 
     [Test]
@@ -97,7 +99,7 @@ public class FeatureFlagEqualityComparerTests
         var secondFeatureFlag = new FeatureFlag
         {
             Id = "some_flag",
-            Enabled = true,
+            Enabled = true
         };
 
         Assert.That(comparer.GetHashCode(firstFeatureFlag), Is.EqualTo(comparer.GetHashCode(secondFeatureFlag)));
@@ -116,7 +118,7 @@ public class FeatureFlagEqualityComparerTests
         var secondFeatureFlag = new FeatureFlag
         {
             Id = "some_other_flag",
-            Enabled = true,
+            Enabled = true
         };
 
         Assert.That(comparer.GetHashCode(firstFeatureFlag), Is.Not.EqualTo(comparer.GetHashCode(secondFeatureFlag)));

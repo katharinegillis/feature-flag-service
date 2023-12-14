@@ -17,9 +17,11 @@ public class CodePresenterTests
         var presenter = new CodePresenter();
 
         presenter.Ok(featureFlag);
-
-        Assert.That(presenter.FeatureFlag, Is.EqualTo(featureFlag));
-        Assert.That(presenter.IsNotFound, Is.False);
+        Assert.Multiple(() =>
+        {
+            Assert.That(presenter.FeatureFlag, Is.EqualTo(featureFlag));
+            Assert.That(presenter.IsNotFound, Is.False);
+        });
     }
 
     [Test]
@@ -28,8 +30,10 @@ public class CodePresenterTests
         var presenter = new CodePresenter();
 
         presenter.NotFound();
-
-        Assert.That(presenter.FeatureFlag, Is.TypeOf<FeatureFlagNull>());
-        Assert.That(presenter.IsNotFound, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(presenter.FeatureFlag, Is.TypeOf<FeatureFlagNull>());
+            Assert.That(presenter.IsNotFound, Is.True);
+        });
     }
 }

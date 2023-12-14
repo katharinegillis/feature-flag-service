@@ -10,9 +10,11 @@ public class CodePresenterTests
         var presenter = new CodePresenter();
 
         presenter.Ok(true);
-
-        Assert.That(presenter.Enabled, Is.True);
-        Assert.That(presenter.IsNotFound, Is.False);
+        Assert.Multiple(() =>
+        {
+            Assert.That(presenter.Enabled, Is.True);
+            Assert.That(presenter.IsNotFound, Is.False);
+        });
     }
 
     [Test]
