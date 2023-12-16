@@ -30,4 +30,15 @@ public class FeatureFlagNullTests
         var secondFeatureFlagNull = FeatureFlagNull.Instance;
         Assert.That(firstFeatureFlagNull, Is.EqualTo(secondFeatureFlagNull));
     }
+
+    [Test]
+    public void FeatureFlagNull_Should_Not_Let_Id_Be_Set()
+    {
+        var featureFlagNull = new FeatureFlagNull
+        {
+            Id = "some_flag"
+        };
+
+        Assert.That(featureFlagNull.Id, Is.EqualTo(""));
+    }
 }
