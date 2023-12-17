@@ -20,6 +20,8 @@
     networks:
       - traefik
       - default
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
 
 networks:
   traefik:
