@@ -1,6 +1,8 @@
-@FeatureFlagService_HostAddress = http://localhost:5086
+@FeatureFlagService_HostAddress = http://featureflags.docker
 
-GET {{FeatureFlagService_HostAddress}}/weatherforecast/
+//@id = test_flag
+@id = test_flag2
+GET {{FeatureFlagService_HostAddress}}/{{id}}/enabled
 Accept: application/json
 
 ###
