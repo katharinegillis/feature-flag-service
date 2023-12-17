@@ -1,15 +1,16 @@
 using IGetFeatureFlagInputPort = Application.Interactors.GetFeatureFlag.IInputPort;
-using GetFeatureFlagCodePresenter = Application.Interactors.GetFeatureFlag.CodePresenter;
+using IGetFeatureFlagCodePresenter = Application.Interactors.GetFeatureFlag.ICodePresenter;
 using GetFeatureFlagRequestModel = Application.Interactors.GetFeatureFlag.RequestModel;
 
 namespace Application.Interactors.IsFeatureFlagEnabled;
 
-public sealed class Interactor(IGetFeatureFlagInputPort getFeatureFlagInteractor) : IInputPort
+public sealed class Interactor(
+    IGetFeatureFlagCodePresenter getFeatureFlagCodePresenter,
+    IGetFeatureFlagInputPort getFeatureFlagInteractor) : IInputPort
 {
     public async Task Execute(RequestModel request, IOutputPort presenter)
     {
         // Get the feature flag.
-        var getFeatureFlagCodePresenter = new GetFeatureFlagCodePresenter();
         await getFeatureFlagInteractor.Execute(new GetFeatureFlagRequestModel { Id = request.Id },
             getFeatureFlagCodePresenter);
 

@@ -1,6 +1,7 @@
 using Application.Interactors.IsFeatureFlagEnabled;
 using IGetFeatureFlagInputPort = Application.Interactors.GetFeatureFlag.IInputPort;
 using IGetFeatureFlagOutputPort = Application.Interactors.GetFeatureFlag.IOutputPort;
+using IGetFeatureFlagCodePresenter = Application.Interactors.GetFeatureFlag.ICodePresenter;
 using GetFeatureFlagRequestModel = Application.Interactors.GetFeatureFlag.RequestModel;
 using Domain.FeatureFlags;
 using Moq;
@@ -13,8 +14,9 @@ public class InteractorTests
     public void IsFeatureFlagEnabledInterceptor_An_InputPort()
     {
         var getFeatureFlagInteractor = Mock.Of<IGetFeatureFlagInputPort>();
+        var getFeatureFlagCodePresenter = Mock.Of<IGetFeatureFlagCodePresenter>();
 
-        var interactor = new Interactor(getFeatureFlagInteractor);
+        var interactor = new Interactor(getFeatureFlagCodePresenter, getFeatureFlagInteractor);
 
         Assert.That(interactor, Is.InstanceOf<IInputPort>());
     }
@@ -24,12 +26,14 @@ public class InteractorTests
     {
         var getFeatureFlagInteractor = new Mock<IGetFeatureFlagInputPort>();
         getFeatureFlagInteractor.Setup(interactor =>
-                interactor.Execute(It.IsAny<GetFeatureFlagRequestModel>(), It.IsAny<IGetFeatureFlagOutputPort>()))
-            // ReSharper disable once UnusedParameter.Local
-            .Callback((GetFeatureFlagRequestModel request, IGetFeatureFlagOutputPort getFeatureFlagPresenter) =>
-                getFeatureFlagPresenter.Ok(new FeatureFlag { Id = "some_flag", Enabled = true }));
+            interactor.Execute(It.IsAny<GetFeatureFlagRequestModel>(), It.IsAny<IGetFeatureFlagOutputPort>()));
 
-        var interactor = new Interactor(getFeatureFlagInteractor.Object);
+        var getFeatureFlagCodePresenter = new Mock<IGetFeatureFlagCodePresenter>();
+        getFeatureFlagCodePresenter.Setup(presenter => presenter.IsNotFound).Returns(false);
+        getFeatureFlagCodePresenter.Setup(presenter => presenter.FeatureFlag)
+            .Returns(new FeatureFlag { Id = "some_flag", Enabled = true });
+
+        var interactor = new Interactor(getFeatureFlagCodePresenter.Object, getFeatureFlagInteractor.Object);
 
         var request = new RequestModel
         {
@@ -47,12 +51,14 @@ public class InteractorTests
     {
         var getFeatureFlagInteractor = new Mock<IGetFeatureFlagInputPort>();
         getFeatureFlagInteractor.Setup(interactor =>
-                interactor.Execute(It.IsAny<GetFeatureFlagRequestModel>(), It.IsAny<IGetFeatureFlagOutputPort>()))
-            // ReSharper disable once UnusedParameter.Local
-            .Callback((GetFeatureFlagRequestModel request, IGetFeatureFlagOutputPort getFeatureFlagPresenter) =>
-                getFeatureFlagPresenter.Ok(new FeatureFlag { Id = "some_flag", Enabled = false }));
+            interactor.Execute(It.IsAny<GetFeatureFlagRequestModel>(), It.IsAny<IGetFeatureFlagOutputPort>()));
 
-        var interactor = new Interactor(getFeatureFlagInteractor.Object);
+        var getFeatureFlagCodePresenter = new Mock<IGetFeatureFlagCodePresenter>();
+        getFeatureFlagCodePresenter.Setup(presenter => presenter.IsNotFound).Returns(false);
+        getFeatureFlagCodePresenter.Setup(presenter => presenter.FeatureFlag)
+            .Returns(new FeatureFlag { Id = "some_flag", Enabled = false });
+
+        var interactor = new Interactor(getFeatureFlagCodePresenter.Object, getFeatureFlagInteractor.Object);
 
         var request = new RequestModel
         {
@@ -76,7 +82,11 @@ public class InteractorTests
                     IGetFeatureFlagOutputPort getFeatureFlagPresenter) =>
                 getFeatureFlagPresenter.NotFound());
 
-        var interactor = new Interactor(getFeatureFlagInteractor.Object);
+        var getFeatureFlagCodePresenter = new Mock<IGetFeatureFlagCodePresenter>();
+        getFeatureFlagCodePresenter.Setup(presenter => presenter.IsNotFound).Returns(true);
+        getFeatureFlagCodePresenter.Setup(presenter => presenter.FeatureFlag).Returns(FeatureFlagNull.Instance);
+
+        var interactor = new Interactor(getFeatureFlagCodePresenter.Object, getFeatureFlagInteractor.Object);
 
         var request = new RequestModel
         {
