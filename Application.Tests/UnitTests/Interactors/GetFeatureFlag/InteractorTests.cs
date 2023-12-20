@@ -7,7 +7,7 @@ namespace Application.Tests.UnitTests.Interactors.GetFeatureFlag;
 public class InteractorTests
 {
     [Test]
-    public void GetFeatureFlagInterceptor_Is_A_InputPort()
+    public void GetFeatureFlagInteractor_Is_An_InputPort()
     {
         var featureFlagRepository = Mock.Of<IFeatureFlagRepository>();
 
@@ -17,7 +17,7 @@ public class InteractorTests
     }
 
     [Test]
-    public async Task GetFeatureFlagInterceptor_Returns_A_Feature_Flag()
+    public async Task GetFeatureFlagInteractor_Returns_A_Feature_Flag()
     {
         var featureFlag = new FeatureFlag
         {
@@ -38,11 +38,13 @@ public class InteractorTests
 
         await interactor.Execute(request, presenterMock.Object);
 
+        featureFlagRepositoryMock.Verify(repository => repository.Get("some_flag"));
+
         presenterMock.Verify(presenter => presenter.Ok(featureFlag));
     }
 
     [Test]
-    public async Task GetFeatureFlagInterceptor_Returns_NotFound()
+    public async Task GetFeatureFlagInteractor_Returns_NotFound()
     {
         var featureFlagRepositoryMock = new Mock<IFeatureFlagRepository>();
         featureFlagRepositoryMock.Setup(repository => repository.Get(It.IsAny<string>()).Result)
@@ -57,6 +59,8 @@ public class InteractorTests
         var presenterMock = new Mock<IOutputPort>();
 
         await interactor.Execute(request, presenterMock.Object);
+
+        featureFlagRepositoryMock.Verify(repository => repository.Get("some_flag"));
 
         presenterMock.Verify(presenter => presenter.NotFound());
     }

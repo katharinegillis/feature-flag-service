@@ -2,7 +2,7 @@ using Domain.Common;
 
 namespace Domain.FeatureFlags;
 
-public interface IFeatureFlag : INullable
+public interface IFeatureFlag : INullable, IValidatable
 {
     public string Id { get; }
 

@@ -11,7 +11,7 @@ namespace Application.Tests.UnitTests.Interactors.IsFeatureFlagEnabled;
 public class InteractorTests
 {
     [Test]
-    public void IsFeatureFlagEnabledInterceptor_An_InputPort()
+    public void IsFeatureFlagEnabledInteractor_An_InputPort()
     {
         var getFeatureFlagInteractor = Mock.Of<IGetFeatureFlagInputPort>();
         var getFeatureFlagCodePresenter = Mock.Of<IGetFeatureFlagCodePresenter>();
@@ -22,7 +22,7 @@ public class InteractorTests
     }
 
     [Test]
-    public async Task IsFeatureFlagEnabledInterceptor_Should_Return_True_If_Flag_Is_Enabled()
+    public async Task IsFeatureFlagEnabledInteractor_Should_Return_True_If_Flag_Is_Enabled()
     {
         var getFeatureFlagInteractor = new Mock<IGetFeatureFlagInputPort>();
         getFeatureFlagInteractor.Setup(interactor =>
@@ -47,7 +47,7 @@ public class InteractorTests
     }
 
     [Test]
-    public async Task IsFeatureFlagEnabledInterceptor_Should_Return_False_If_Flag_Is_Not_Enabled()
+    public async Task IsFeatureFlagEnabledInteractor_Should_Return_False_If_Flag_Is_Not_Enabled()
     {
         var getFeatureFlagInteractor = new Mock<IGetFeatureFlagInputPort>();
         getFeatureFlagInteractor.Setup(interactor =>
@@ -72,7 +72,7 @@ public class InteractorTests
     }
 
     [Test]
-    public async Task IsFeatureFlagEnabledInterceptor_Should_Return_NotFound_If_Flag_Not_Found()
+    public async Task IsFeatureFlagEnabledInteractor_Should_Return_NotFound_If_Flag_Not_Found()
     {
         var getFeatureFlagInteractor = new Mock<IGetFeatureFlagInputPort>();
         getFeatureFlagInteractor.Setup(interactor =>

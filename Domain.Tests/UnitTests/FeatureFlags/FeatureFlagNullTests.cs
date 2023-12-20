@@ -1,3 +1,4 @@
+using Domain.Common;
 using Domain.FeatureFlags;
 
 namespace Domain.Tests.UnitTests.FeatureFlags;
@@ -40,5 +41,23 @@ public class FeatureFlagNullTests
         };
 
         Assert.That(featureFlagNull.Id, Is.EqualTo(""));
+    }
+
+    [Test]
+    public void FeatureFlagNull_Validate_Should_Return_Is_Null_Error()
+    {
+        var featureFlagNull = FeatureFlagNull.Instance;
+
+        var result = featureFlagNull.Validate();
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsOk, Is.False);
+            Assert.That(result.Error.Count, Is.EqualTo(1));
+            Assert.That(result.Error.First(), Is.EqualTo(new ValidationError
+            {
+                Field = "Id",
+                Message = "Null object"
+            }));
+        });
     }
 }
