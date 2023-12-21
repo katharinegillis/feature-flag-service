@@ -3,7 +3,7 @@ using Domain.FeatureFlags;
 
 namespace Application.Tests.UnitTests.Interactors.GetFeatureFlag;
 
-public class CodePresenterTests
+public sealed class CodePresenterTests
 {
     [Test]
     public void Ok_Should_Store_FeatureFlag()

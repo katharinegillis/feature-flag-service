@@ -5,7 +5,7 @@ using Moq;
 
 namespace Application.Tests.UnitTests.Interactors.CreateFeatureFlag;
 
-public class InteractorTests
+public sealed class InteractorTests
 {
     [Test]
     public void CreateFeatureFlagInteractor_Is_An_InputPort()
@@ -129,7 +129,6 @@ public class InteractorTests
 
         var interactor = new Interactor(featureFlagRepositoryMock.Object, featureFlagFactoryMock.Object);
 
-        // TODO make request models records
         var request = new RequestModel
         {
             Id = "new_flag",

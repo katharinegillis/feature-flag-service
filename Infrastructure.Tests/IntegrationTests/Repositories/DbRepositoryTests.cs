@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Tests.IntegrationTests.Repositories;
 
-public class DbRepositoryTests : BaseFeatureFlagContextRepositoryTests
+public sealed class DbRepositoryTests : BaseFeatureFlagContextRepositoryTests
 {
     [Test]
     public async Task DbFeatureFlagRepository_Get_Should_Return_A_FeatureFlag()

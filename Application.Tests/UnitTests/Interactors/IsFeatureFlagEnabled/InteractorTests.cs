@@ -8,7 +8,7 @@ using Moq;
 
 namespace Application.Tests.UnitTests.Interactors.IsFeatureFlagEnabled;
 
-public class InteractorTests
+public sealed class InteractorTests
 {
     [Test]
     public void IsFeatureFlagEnabledInteractor_An_InputPort()

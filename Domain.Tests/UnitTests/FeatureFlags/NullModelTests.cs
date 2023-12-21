@@ -3,7 +3,7 @@ using Domain.FeatureFlags;
 
 namespace Domain.Tests.UnitTests.FeatureFlags;
 
-public class NullModelTests
+public sealed class NullModelTests
 {
     [Test]
     public void FeatureFlagNull_Should_Not_Allow_Enabled_To_Change()

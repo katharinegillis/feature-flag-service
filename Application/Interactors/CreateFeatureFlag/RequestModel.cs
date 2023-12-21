@@ -1,6 +1,6 @@
 namespace Application.Interactors.CreateFeatureFlag;
 
-public record RequestModel
+public sealed record RequestModel
 {
     public required string Id { get; init; }
 

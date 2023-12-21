@@ -3,7 +3,7 @@ using Domain.FeatureFlags;
 
 namespace Domain.Tests.UnitTests.FeatureFlags;
 
-public class ModelTests
+public sealed class ModelTests
 {
     [Test]
     public void FeatureFlag_Validate_Should_Pass_If_Id_Is_100_Characters()

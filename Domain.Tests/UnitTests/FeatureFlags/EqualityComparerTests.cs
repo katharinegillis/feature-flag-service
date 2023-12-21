@@ -2,7 +2,7 @@ using Domain.FeatureFlags;
 
 namespace Domain.Tests.UnitTests.FeatureFlags;
 
-public class EqualityComparerTests
+public sealed class EqualityComparerTests
 {
     [Test]
     public void FeatureFlagEqualityComparer_Equals_Should_Return_True_If_Data_Is_The_Same()

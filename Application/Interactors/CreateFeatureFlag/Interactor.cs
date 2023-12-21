@@ -3,7 +3,7 @@ using Domain.FeatureFlags;
 
 namespace Application.Interactors.CreateFeatureFlag;
 
-public class Interactor(IRepository repository, IFactory factory) : IInputPort
+public sealed class Interactor(IRepository repository, IFactory factory) : IInputPort
 {
     public async Task Execute(RequestModel request, IOutputPort presenter)
     {

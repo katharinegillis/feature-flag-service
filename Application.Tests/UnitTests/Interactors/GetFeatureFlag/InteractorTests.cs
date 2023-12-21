@@ -4,7 +4,7 @@ using Moq;
 
 namespace Application.Tests.UnitTests.Interactors.GetFeatureFlag;
 
-public class InteractorTests
+public sealed class InteractorTests
 {
     [Test]
     public void GetFeatureFlagInteractor_Is_An_InputPort()

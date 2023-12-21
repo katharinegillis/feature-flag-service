@@ -6,7 +6,7 @@ using FeatureFlag = Infrastructure.Persistence.Models.FeatureFlag;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public class DbRepository(FeatureFlagContext context) : IRepository
+public sealed class DbRepository(FeatureFlagContext context) : IRepository
 {
     public async Task<IModel> Get(string id)
     {

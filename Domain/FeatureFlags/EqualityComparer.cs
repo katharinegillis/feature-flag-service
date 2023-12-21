@@ -1,6 +1,6 @@
 namespace Domain.FeatureFlags;
 
-public class EqualityComparer : IEqualityComparer<IModel>
+public sealed class EqualityComparer : IEqualityComparer<IModel>
 {
     public bool Equals(IModel? x, IModel? y)
     {
