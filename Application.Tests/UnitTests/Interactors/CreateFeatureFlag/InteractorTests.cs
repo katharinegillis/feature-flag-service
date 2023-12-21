@@ -114,7 +114,6 @@ public sealed class InteractorTests
             Message = "Id already exists"
         };
 
-        // TODO Change messages over to localization system or constants
         var featureFlagRepositoryMock = new Mock<IRepository>();
         featureFlagRepositoryMock.Setup(repository => repository.Create(It.IsAny<IModel>()).Result).Returns(
             Result<string, Error>.Err(validationError));

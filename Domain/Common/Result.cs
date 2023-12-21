@@ -2,7 +2,6 @@ namespace Domain.Common;
 
 public readonly struct Result<T, TE>
 {
-    private readonly bool _success;
     public readonly T Value;
     public readonly TE Error;
 
@@ -10,10 +9,10 @@ public readonly struct Result<T, TE>
     {
         Value = v;
         Error = e;
-        _success = success;
+        IsOk = success;
     }
 
-    public bool IsOk => _success;
+    public bool IsOk { get; }
 
     public static Result<T, TE> Ok(T v)
     {
