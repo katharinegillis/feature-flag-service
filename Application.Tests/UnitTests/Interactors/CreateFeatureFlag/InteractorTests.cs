@@ -10,7 +10,7 @@ public class InteractorTests
     [Test]
     public void CreateFeatureFlagInteractor_Is_An_InputPort()
     {
-        var featureFlagRepository = Mock.Of<IFeatureFlagRepository>();
+        var featureFlagRepository = Mock.Of<IRepository>();
 
         var featureFlagFactory = Mock.Of<IFactory>();
 
@@ -22,14 +22,13 @@ public class InteractorTests
     [Test]
     public async Task CreateFeatureFlagInteractor_Creates_A_Feature_Flag()
     {
-        // TODO: Add create method to feature flag repository
-        IFeatureFlag? passedFeatureFlag = null;
-        var featureFlagRepositoryMock = new Mock<IFeatureFlagRepository>();
-        featureFlagRepositoryMock.Setup(repository => repository.Create(It.IsAny<IFeatureFlag>()).Result)
-            .Callback<IFeatureFlag>(featureFlag => passedFeatureFlag = featureFlag)
+        IModel? passedFeatureFlag = null;
+        var featureFlagRepositoryMock = new Mock<IRepository>();
+        featureFlagRepositoryMock.Setup(repository => repository.Create(It.IsAny<IModel>()).Result)
+            .Callback<IModel>(featureFlag => passedFeatureFlag = featureFlag)
             .Returns(Result<string, Error>.Ok("new_flag"));
 
-        var featureFlagMock = new Mock<IFeatureFlag>();
+        var featureFlagMock = new Mock<IModel>();
         featureFlagMock.Setup(model => model.Id).Returns("new_flag");
         featureFlagMock.Setup(model => model.Enabled).Returns(true);
         featureFlagMock.Setup(model => model.Validate()).Returns(Result<bool, IEnumerable<ValidationError>>.Ok(true));
@@ -48,15 +47,15 @@ public class InteractorTests
 
         await interactor.Execute(request, presenterMock.Object);
 
-        var equalityHelper = new FeatureFlagEqualityComparer();
+        var equalityHelper = new EqualityComparer();
 
-        Assert.That(equalityHelper.Equals(new FeatureFlag
+        Assert.That(equalityHelper.Equals(new Model
         {
             Id = "new_flag",
             Enabled = true
         }, passedFeatureFlag));
 
-        featureFlagRepositoryMock.Verify(repository => repository.Create(It.IsAny<IFeatureFlag>()));
+        featureFlagRepositoryMock.Verify(repository => repository.Create(It.IsAny<IModel>()));
 
         presenterMock.Verify(presenter => presenter.Ok("new_flag"));
     }
@@ -64,9 +63,8 @@ public class InteractorTests
     [Test]
     public async Task CreateFeatureFlagInteractor_Should_Return_Validation_Error_If_Id_Is_Too_Long()
     {
-        var featureFlagRepository = Mock.Of<IFeatureFlagRepository>();
+        var featureFlagRepository = Mock.Of<IRepository>();
 
-        // TODO rename domain to model, modelnull, etc.
         var validationErrors = new ValidationError[]
         {
             new()
@@ -76,7 +74,7 @@ public class InteractorTests
             }
         };
 
-        var featureFlagMock = new Mock<IFeatureFlag>();
+        var featureFlagMock = new Mock<IModel>();
         featureFlagMock.Setup(model => model.Id)
             .Returns(
                 "abcdefghijklmnopqrstuvwxyz1234abcdefghijklmnopqrstuvwxyz1234abcdefghijklmnopqrstuvwxyz1234abcdefghijk");
@@ -117,11 +115,11 @@ public class InteractorTests
         };
 
         // TODO Change messages over to localization system or constants
-        var featureFlagRepositoryMock = new Mock<IFeatureFlagRepository>();
-        featureFlagRepositoryMock.Setup(repository => repository.Create(It.IsAny<IFeatureFlag>()).Result).Returns(
+        var featureFlagRepositoryMock = new Mock<IRepository>();
+        featureFlagRepositoryMock.Setup(repository => repository.Create(It.IsAny<IModel>()).Result).Returns(
             Result<string, Error>.Err(validationError));
 
-        var featureFlagMock = new Mock<IFeatureFlag>();
+        var featureFlagMock = new Mock<IModel>();
         featureFlagMock.Setup(model => model.Id).Returns("new_flag");
         featureFlagMock.Setup(model => model.Enabled).Returns(true);
         featureFlagMock.Setup(model => model.Validate()).Returns(Result<bool, IEnumerable<ValidationError>>.Ok(true));
@@ -153,11 +151,11 @@ public class InteractorTests
             Message = "Unknown error"
         };
 
-        var featureFlagRepositoryMock = new Mock<IFeatureFlagRepository>();
-        featureFlagRepositoryMock.Setup(repository => repository.Create(It.IsAny<IFeatureFlag>()).Result)
+        var featureFlagRepositoryMock = new Mock<IRepository>();
+        featureFlagRepositoryMock.Setup(repository => repository.Create(It.IsAny<IModel>()).Result)
             .Returns(Result<string, Error>.Err(error));
 
-        var featureFlagMock = new Mock<IFeatureFlag>();
+        var featureFlagMock = new Mock<IModel>();
         featureFlagMock.Setup(model => model.Id).Returns("new_flag");
         featureFlagMock.Setup(model => model.Enabled).Returns(true);
         featureFlagMock.Setup(model => model.Validate()).Returns(Result<bool, IEnumerable<ValidationError>>.Ok(true));

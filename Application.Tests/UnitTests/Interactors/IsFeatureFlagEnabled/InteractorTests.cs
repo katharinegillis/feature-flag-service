@@ -31,7 +31,7 @@ public class InteractorTests
         var getFeatureFlagCodePresenter = new Mock<IGetFeatureFlagCodePresenter>();
         getFeatureFlagCodePresenter.Setup(presenter => presenter.IsNotFound).Returns(false);
         getFeatureFlagCodePresenter.Setup(presenter => presenter.FeatureFlag)
-            .Returns(new FeatureFlag { Id = "some_flag", Enabled = true });
+            .Returns(new Model { Id = "some_flag", Enabled = true });
 
         var interactor = new Interactor(getFeatureFlagCodePresenter.Object, getFeatureFlagInteractor.Object);
 
@@ -56,7 +56,7 @@ public class InteractorTests
         var getFeatureFlagCodePresenter = new Mock<IGetFeatureFlagCodePresenter>();
         getFeatureFlagCodePresenter.Setup(presenter => presenter.IsNotFound).Returns(false);
         getFeatureFlagCodePresenter.Setup(presenter => presenter.FeatureFlag)
-            .Returns(new FeatureFlag { Id = "some_flag", Enabled = false });
+            .Returns(new Model { Id = "some_flag", Enabled = false });
 
         var interactor = new Interactor(getFeatureFlagCodePresenter.Object, getFeatureFlagInteractor.Object);
 
@@ -84,7 +84,7 @@ public class InteractorTests
 
         var getFeatureFlagCodePresenter = new Mock<IGetFeatureFlagCodePresenter>();
         getFeatureFlagCodePresenter.Setup(presenter => presenter.IsNotFound).Returns(true);
-        getFeatureFlagCodePresenter.Setup(presenter => presenter.FeatureFlag).Returns(FeatureFlagNull.Instance);
+        getFeatureFlagCodePresenter.Setup(presenter => presenter.FeatureFlag).Returns(NullModel.Instance);
 
         var interactor = new Interactor(getFeatureFlagCodePresenter.Object, getFeatureFlagInteractor.Object);
 

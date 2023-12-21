@@ -3,12 +3,12 @@ using Domain.FeatureFlags;
 
 namespace Domain.Tests.UnitTests.FeatureFlags;
 
-public class FeatureFlagNullTests
+public class NullModelTests
 {
     [Test]
     public void FeatureFlagNull_Should_Not_Allow_Enabled_To_Change()
     {
-        var featureFlagNull = new FeatureFlagNull
+        var featureFlagNull = new NullModel
         {
             Enabled = true
         };
@@ -19,23 +19,23 @@ public class FeatureFlagNullTests
     [Test]
     public void FeatureFlagNull_Should_Return_Singleton_With_Instance()
     {
-        var firstFeatureFlagNull = FeatureFlagNull.Instance;
-        var secondFeatureFlagNull = FeatureFlagNull.Instance;
+        var firstFeatureFlagNull = NullModel.Instance;
+        var secondFeatureFlagNull = NullModel.Instance;
         Assert.That(ReferenceEquals(firstFeatureFlagNull, secondFeatureFlagNull));
     }
 
     [Test]
     public void FeatureFlagNull_Should_Equal_On_Same_Data()
     {
-        var firstFeatureFlagNull = FeatureFlagNull.Instance;
-        var secondFeatureFlagNull = FeatureFlagNull.Instance;
+        var firstFeatureFlagNull = NullModel.Instance;
+        var secondFeatureFlagNull = NullModel.Instance;
         Assert.That(firstFeatureFlagNull, Is.EqualTo(secondFeatureFlagNull));
     }
 
     [Test]
     public void FeatureFlagNull_Should_Not_Let_Id_Be_Set()
     {
-        var featureFlagNull = new FeatureFlagNull
+        var featureFlagNull = new NullModel
         {
             Id = "some_flag"
         };
@@ -46,7 +46,7 @@ public class FeatureFlagNullTests
     [Test]
     public void FeatureFlagNull_Validate_Should_Return_Is_Null_Error()
     {
-        var featureFlagNull = FeatureFlagNull.Instance;
+        var featureFlagNull = NullModel.Instance;
 
         var result = featureFlagNull.Validate();
         Assert.Multiple(() =>

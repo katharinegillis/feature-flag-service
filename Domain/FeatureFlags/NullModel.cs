@@ -2,9 +2,9 @@ using Domain.Common;
 
 namespace Domain.FeatureFlags;
 
-public sealed class FeatureFlagNull : IFeatureFlag
+public sealed class NullModel : IModel
 {
-    public static FeatureFlagNull Instance { get; } = new();
+    public static NullModel Instance { get; } = new();
 
     public bool IsNull => true;
 

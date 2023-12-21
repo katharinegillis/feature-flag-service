@@ -2,19 +2,19 @@ using Domain.FeatureFlags;
 
 namespace Application.Interactors.GetFeatureFlag;
 
-public sealed class CodePresenter : IOutputPort, ICodePresenter
+public sealed class CodePresenter : ICodePresenter
 {
-    public IFeatureFlag FeatureFlag { get; private set; } = new FeatureFlagNull();
+    public IModel FeatureFlag { get; private set; } = new NullModel();
     public bool IsNotFound { get; private set; }
 
-    public void Ok(IFeatureFlag featureFlag)
+    public void Ok(IModel featureFlag)
     {
         FeatureFlag = featureFlag;
     }
 
     public void NotFound()
     {
-        FeatureFlag = new FeatureFlagNull();
+        FeatureFlag = new NullModel();
         IsNotFound = true;
     }
 }

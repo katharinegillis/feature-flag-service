@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Tests.IntegrationTests.Repositories;
 
-public class DbFeatureFlagRepositoryTests : BaseFeatureFlagContextRepositoryTests
+public class DbRepositoryTests : BaseFeatureFlagContextRepositoryTests
 {
     [Test]
     public async Task DbFeatureFlagRepository_Get_Should_Return_A_FeatureFlag()
@@ -27,13 +27,13 @@ public class DbFeatureFlagRepositoryTests : BaseFeatureFlagContextRepositoryTest
         });
         await context.SaveChangesAsync();
 
-        var repository = new DbFeatureFlagRepository(context);
+        var repository = new DbRepository(context);
 
-        var comparer = new Domain.FeatureFlags.FeatureFlagEqualityComparer();
+        var comparer = new Domain.FeatureFlags.EqualityComparer();
 
         var featureFlag = await repository.Get("some_flag");
 
-        Assert.That(comparer.Equals(featureFlag, new Domain.FeatureFlags.FeatureFlag
+        Assert.That(comparer.Equals(featureFlag, new Domain.FeatureFlags.Model
         {
             Id = "some_flag",
             Enabled = true
@@ -55,11 +55,11 @@ public class DbFeatureFlagRepositoryTests : BaseFeatureFlagContextRepositoryTest
         });
         await context.SaveChangesAsync();
 
-        var repository = new DbFeatureFlagRepository(context);
+        var repository = new DbRepository(context);
 
         var featureFlag = await repository.Get("some_flag");
 
-        Assert.That(featureFlag, Is.TypeOf<Domain.FeatureFlags.FeatureFlagNull>());
+        Assert.That(featureFlag, Is.TypeOf<Domain.FeatureFlags.NullModel>());
     }
 
     [Test]
@@ -70,9 +70,9 @@ public class DbFeatureFlagRepositoryTests : BaseFeatureFlagContextRepositoryTest
 
         await using var context = new FeatureFlagContext(options);
 
-        var repository = new DbFeatureFlagRepository(context);
+        var repository = new DbRepository(context);
 
-        var featureFlag = new Domain.FeatureFlags.FeatureFlag
+        var featureFlag = new Domain.FeatureFlags.Model
         {
             Id = "new_flag",
             Enabled = true
@@ -110,9 +110,9 @@ public class DbFeatureFlagRepositoryTests : BaseFeatureFlagContextRepositoryTest
         });
         await context.SaveChangesAsync();
 
-        var repository = new DbFeatureFlagRepository(context);
+        var repository = new DbRepository(context);
 
-        var result = await repository.Create(new Domain.FeatureFlags.FeatureFlag
+        var result = await repository.Create(new Domain.FeatureFlags.Model
         {
             Id = "some_flag",
             Enabled = false

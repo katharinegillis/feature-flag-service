@@ -4,7 +4,7 @@ namespace Application.Interactors.GetFeatureFlag;
 
 public interface IOutputPort
 {
-    public void Ok(IFeatureFlag featureFlag);
+    public void Ok(IModel featureFlag);
 
     public void NotFound();
 }

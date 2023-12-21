@@ -2,7 +2,7 @@ using Domain.Common;
 
 namespace Domain.FeatureFlags;
 
-public sealed class FeatureFlag : IFeatureFlag
+public sealed class Model : IModel
 {
     public bool IsNull => false;
 

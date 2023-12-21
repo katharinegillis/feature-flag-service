@@ -2,5 +2,5 @@ namespace Domain.FeatureFlags;
 
 public interface IFactory
 {
-    public IFeatureFlag Create(string id, bool enabled);
+    public IModel Create(string id, bool enabled);
 }

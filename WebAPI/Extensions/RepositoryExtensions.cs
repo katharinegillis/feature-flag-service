@@ -6,6 +6,6 @@ public static class RepositoryExtensions
 {
     public static void AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<Domain.FeatureFlags.IFeatureFlagRepository, Repositories.DbFeatureFlagRepository>();
+        services.AddScoped<Domain.FeatureFlags.IRepository, Repositories.DbRepository>();
     }
 }

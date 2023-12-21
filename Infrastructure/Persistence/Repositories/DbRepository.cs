@@ -6,9 +6,9 @@ using FeatureFlag = Infrastructure.Persistence.Models.FeatureFlag;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public class DbFeatureFlagRepository(FeatureFlagContext context) : Domain.FeatureFlags.IFeatureFlagRepository
+public class DbRepository(FeatureFlagContext context) : IRepository
 {
-    public async Task<Domain.FeatureFlags.IFeatureFlag> Get(string id)
+    public async Task<IModel> Get(string id)
     {
         var result = await context
             .FeatureFlags
@@ -19,22 +19,22 @@ public class DbFeatureFlagRepository(FeatureFlagContext context) : Domain.Featur
 
         if (result is not null)
         {
-            return new Domain.FeatureFlags.FeatureFlag
+            return new Model
             {
                 Id = result.FeatureFlagId,
                 Enabled = result.Enabled
             };
         }
 
-        return Domain.FeatureFlags.FeatureFlagNull.Instance;
+        return NullModel.Instance;
     }
 
-    public async Task<Result<string, Error>> Create(IFeatureFlag featureFlag)
+    public async Task<Result<string, Error>> Create(IModel model)
     {
         var dbFeatureFlag = new FeatureFlag
         {
-            FeatureFlagId = featureFlag.Id,
-            Enabled = featureFlag.Enabled
+            FeatureFlagId = model.Id,
+            Enabled = model.Enabled
         };
 
         try

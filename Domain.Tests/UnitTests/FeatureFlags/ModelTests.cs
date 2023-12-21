@@ -3,12 +3,12 @@ using Domain.FeatureFlags;
 
 namespace Domain.Tests.UnitTests.FeatureFlags;
 
-public class FeatureFlagTests
+public class ModelTests
 {
     [Test]
     public void FeatureFlag_Validate_Should_Pass_If_Id_Is_100_Characters()
     {
-        var model = new FeatureFlag
+        var model = new Model
         {
             Id = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuv",
             Enabled = true
@@ -22,7 +22,7 @@ public class FeatureFlagTests
     [Test]
     public void FeatureFlag_Validate_Should_Fail_If_Id_Is_More_Than_100_Characters()
     {
-        var model = new FeatureFlag
+        var model = new Model
         {
             Id =
                 "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvw",
