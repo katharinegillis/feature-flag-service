@@ -1,15 +1,22 @@
 ﻿using Console;
-using Console.Commands;
+using Console.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 var builder = Host.CreateApplicationBuilder(args);
-builder.Configuration.AddJsonFile("appsettings.json", optional: true);
+builder.Configuration.AddJsonFile("consolesettings.json", optional: true);
 builder.Logging.ClearProviders();
 
-builder.Services.AddTransient<TestCommand>();
+builder.Services.AddSqliteServer();
+builder.Services.AddRepositories();
+builder.Services.AddPresenters();
+builder.Services.AddInteractors();
+builder.Services.AddCommands();
+builder.Services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
+
+
 builder.Services.AddHostedService<App>();
 using var host = builder.Build();
 

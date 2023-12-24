@@ -1,5 +1,12 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
+ARG APP_UID
+
+USER root
+
+RUN groupadd -g $APP_UID webapp
+RUN useradd -m -u $APP_UID -g $APP_UID -s /bin/bash webapp
+
+USER webapp
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
