@@ -21,6 +21,11 @@ COPY ["./Infrastructure", "/src/Infrastructure"]
 WORKDIR /src/Infrastructure
 RUN dotnet restore
 
+COPY ["./Console", "/src/Console"]
+WORKDIR /src/Console
+RUN dotnet restore
+RUN dotnet build "Console.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
 COPY ["./WebAPI", "/src/WebAPI"]
 WORKDIR /src/WebAPI
 RUN dotnet restore
@@ -29,6 +34,9 @@ RUN dotnet build "WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
+WORKDIR /src/Console
+RUN dotnet publish "Console.csproj" -c $BUILD_CONFIGURATION -o /app/publish
+
 WORKDIR /src/WebAPI
 RUN dotnet publish "WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
