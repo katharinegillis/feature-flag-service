@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.Enabled;
 
-public class GetController(IPresenter presenter, IInputPort interactor, ILogger<GetController> logger) : ControllerBase
+public sealed class GetController(IPresenter presenter, IInputPort interactor, ILogger<GetController> logger)
+    : ControllerBase
 {
     [HttpGet("{id}/enabled")]
     public async Task<IActionResult> Execute(string id)

@@ -1,8 +1,10 @@
+using Domain.Common;
+
 namespace Domain.FeatureFlags;
 
-public sealed class FeatureFlagNull : IFeatureFlag
+public sealed class NullModel : IModel
 {
-    public static FeatureFlagNull Instance { get; } = new();
+    public static NullModel Instance { get; } = new();
 
     public bool IsNull => true;
 
@@ -22,5 +24,17 @@ public sealed class FeatureFlagNull : IFeatureFlag
         get => _enabled;
         // ReSharper disable once ValueParameterNotUsed
         set => _enabled = false;
+    }
+
+    public Result<bool, IEnumerable<ValidationError>> Validate()
+    {
+        return new List<ValidationError>
+        {
+            new()
+            {
+                Field = "Id",
+                Message = "Null object"
+            }
+        };
     }
 }

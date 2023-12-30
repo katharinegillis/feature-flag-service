@@ -1,8 +1,8 @@
 namespace Domain.FeatureFlags;
 
-public class FeatureFlagEqualityComparer : IEqualityComparer<IFeatureFlag>
+public sealed class EqualityComparer : IEqualityComparer<IModel>
 {
-    public bool Equals(IFeatureFlag? x, IFeatureFlag? y)
+    public bool Equals(IModel? x, IModel? y)
     {
         if (ReferenceEquals(x, y))
         {
@@ -17,7 +17,7 @@ public class FeatureFlagEqualityComparer : IEqualityComparer<IFeatureFlag>
         return x.Id == y.Id && x.Enabled == y.Enabled;
     }
 
-    public int GetHashCode(IFeatureFlag obj)
+    public int GetHashCode(IModel obj)
     {
         return (obj.Id, obj.Enabled).GetHashCode();
     }

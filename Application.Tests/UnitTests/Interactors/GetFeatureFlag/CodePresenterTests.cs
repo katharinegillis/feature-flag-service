@@ -3,12 +3,12 @@ using Domain.FeatureFlags;
 
 namespace Application.Tests.UnitTests.Interactors.GetFeatureFlag;
 
-public class CodePresenterTests
+public sealed class CodePresenterTests
 {
     [Test]
     public void Ok_Should_Store_FeatureFlag()
     {
-        var featureFlag = new FeatureFlag
+        var featureFlag = new Model
         {
             Id = "some_flag",
             Enabled = true
@@ -32,7 +32,7 @@ public class CodePresenterTests
         presenter.NotFound();
         Assert.Multiple(() =>
         {
-            Assert.That(presenter.FeatureFlag, Is.TypeOf<FeatureFlagNull>());
+            Assert.That(presenter.FeatureFlag, Is.TypeOf<NullModel>());
             Assert.That(presenter.IsNotFound, Is.True);
         });
     }

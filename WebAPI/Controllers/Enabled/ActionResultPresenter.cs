@@ -1,10 +1,8 @@
-using Application.Interactors.IsFeatureFlagEnabled;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Common;
 
 namespace WebAPI.Controllers.Enabled;
 
-public class ActionResultPresenter : IPresenter
+public sealed class ActionResultPresenter : IPresenter
 {
     public IActionResult ActionResult { get; private set; } =
         new StatusCodeResult(StatusCodes.Status500InternalServerError);

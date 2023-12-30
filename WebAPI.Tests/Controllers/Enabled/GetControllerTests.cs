@@ -6,7 +6,7 @@ using WebAPI.Controllers.Enabled;
 
 namespace WebAPI.Tests.Controllers.Enabled;
 
-public class GetControllerTests
+public sealed class GetControllerTests
 {
     [Test]
     public async Task Execute_Returns_True_If_Flag_Enabled()

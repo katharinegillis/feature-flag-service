@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace WebAPI.Persistence;
 
-public class FeatureFlagContextFactory : IDesignTimeDbContextFactory<FeatureFlagContext>
+public sealed class FeatureFlagContextFactory : IDesignTimeDbContextFactory<FeatureFlagContext>
 {
     public FeatureFlagContext CreateDbContext(string[] args)
     {

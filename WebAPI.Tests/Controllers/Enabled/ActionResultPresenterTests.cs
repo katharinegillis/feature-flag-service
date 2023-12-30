@@ -3,7 +3,7 @@ using WebAPI.Controllers.Enabled;
 
 namespace WebAPI.Tests.Controllers.Enabled;
 
-public class ActionResultPresenterTests
+public sealed class ActionResultPresenterTests
 {
     [Test]
     public void ActionResultPresenter_ActionResult_Should_Default_To_InternalServerError()

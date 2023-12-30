@@ -44,3 +44,6 @@ msbuild.wrn
 
 # Data files for dev dockers
 .data
+
+# Test results
+TestResults

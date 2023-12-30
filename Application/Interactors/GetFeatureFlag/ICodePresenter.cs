@@ -4,6 +4,6 @@ namespace Application.Interactors.GetFeatureFlag;
 
 public interface ICodePresenter : IOutputPort
 {
-    public IFeatureFlag FeatureFlag { get; }
+    public IModel FeatureFlag { get; }
     public bool IsNotFound { get; }
 }
