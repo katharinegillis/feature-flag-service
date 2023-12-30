@@ -10,4 +10,9 @@ public class Factory : IFactory
             Enabled = enabled
         };
     }
+
+    public IModel Create()
+    {
+        return NullModel.Instance;
+    }
 }
