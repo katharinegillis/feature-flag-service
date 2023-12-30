@@ -12,15 +12,16 @@ public class ConsolePresenterTests
     public void ConsolePresenter_Ok_Should_Display_Success_Message()
     {
         var localizerMock = new Mock<IStringLocalizer<ConsolePresenter>>();
+        var createdString = new LocalizedString("Feature Flag \"{0}\" created.", "Feature Flag \"{0}\" created.");
         localizerMock.Setup(localizer => localizer["Feature Flag \"{0}\" created.", "some_flag"])
-            .Returns(new LocalizedString("Feature Flag \"{0}\" created.", "Feature Flag \"{0}\" created."));
+            .Returns(createdString);
 
         var consoleWriterMock = new Mock<IConsoleWriter>();
 
         var presenter = new ConsolePresenter(localizerMock.Object, consoleWriterMock.Object);
         presenter.Ok("some_flag");
 
-        consoleWriterMock.Verify(consoleWriter => consoleWriter.WriteLine("Feature Flag \"{0}\" created."));
+        consoleWriterMock.Verify(consoleWriter => consoleWriter.WriteLine(createdString));
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.Success));
     }
 
