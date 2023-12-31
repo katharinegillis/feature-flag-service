@@ -1,5 +1,6 @@
 using Domain.Common;
 using Domain.FeatureFlags;
+using EntityFramework.Exceptions.Common;
 using Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using FeatureFlag = Infrastructure.Persistence.Models.FeatureFlag;
@@ -45,21 +46,19 @@ public sealed class DbRepository(FeatureFlagContext context) : IRepository
 
             return entityEntry.Entity.FeatureFlagId;
         }
-        catch (InvalidOperationException ex)
+        catch (UniqueConstraintException ex)
         {
-            if (ex.Message ==
-                "The instance of entity type 'FeatureFlag' cannot be tracked because another instance with the same key value for {'FeatureFlagId'} is already being tracked. When attaching existing entities, ensure that only one entity instance with a given key value is attached. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see the conflicting key values.")
+            return new ValidationError
             {
-                return new ValidationError
-                {
-                    Field = "Id",
-                    Message = "Id already exists"
-                };
-            }
-
+                Field = "Id",
+                Message = "Already exists"
+            };
+        }
+        catch (DbUpdateException ex)
+        {
             return new Error
             {
-                Message = ex.Message
+                Message = $"{ex.Message}; {ex.InnerException?.Message}"
             };
         }
     }

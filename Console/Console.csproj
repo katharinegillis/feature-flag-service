@@ -18,6 +18,7 @@
 
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1"/>
+        <PackageReference Include="katiecordescodes-utilities" Version="1.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0"/>
@@ -25,18 +26,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Update="appsettings.json">
-            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <None Remove="consolesettings.json"/>
+        <Content Include="consolesettings.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         </Content>
-        <Content Update="appsettings.Development.json">
-            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <None Remove="consolesettings.Development.json"/>
+        <Content Include="consolesettings.Development.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         </Content>
-        <None Remove="appsettings.json"/>
-        <None Remove="appsettings.Development.json"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -45,7 +42,18 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Resources\"/>
+        <EmbeddedResource Update="Resources\Commands.FeatureFlags.Create.ConsolePresenter.en.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Commands.FeatureFlags.Create.ConsolePresenter.en.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Resources\Commands.FeatureFlags.Create.ConsolePresenter.en.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Commands.FeatureFlags.Create.ConsolePresenter.en.resx</DependentUpon>
+        </Compile>
     </ItemGroup>
 
 </Project>

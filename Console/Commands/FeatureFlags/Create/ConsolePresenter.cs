@@ -1,15 +1,19 @@
 using Console.Common;
 using Domain.Common;
 using Microsoft.Extensions.Localization;
+using Utilities.LocalizationService;
 
 namespace Console.Commands.FeatureFlags.Create;
 
-public class ConsolePresenter(IStringLocalizer<ConsolePresenter> localizer, IConsoleWriter consoleWriter)
+// ReSharper disable once SuggestBaseTypeForParameterInConstructor
+public class ConsolePresenter(
+    ILocalizationService<ConsolePresenter> localizer,
+    IConsoleWriter consoleWriter)
     : IConsolePresenter
 {
     public void Ok(string id)
     {
-        consoleWriter.WriteLine(localizer["Feature Flag \"{0}\" created.", id]);
+        consoleWriter.WriteLine(localizer.Translate("Feature Flag \"{0}\" created.", id));
 
         ExitCode = (int)Console.Common.ExitCode.Success;
     }
@@ -18,7 +22,7 @@ public class ConsolePresenter(IStringLocalizer<ConsolePresenter> localizer, ICon
     {
         foreach (var error in validationErrors)
         {
-            consoleWriter.WriteLine(localizer["{0}: {1}.", error.Field, localizer[error.Message]]);
+            consoleWriter.WriteLine(localizer.Translate("{0}: {1}.", error.Field, localizer.Translate(error.Message)));
         }
 
         ExitCode = (int)Console.Common.ExitCode.OptionsError;
@@ -26,7 +30,7 @@ public class ConsolePresenter(IStringLocalizer<ConsolePresenter> localizer, ICon
 
     public void Error(Error error)
     {
-        consoleWriter.WriteLine(localizer["Error: {0}.", localizer[error.Message]]);
+        consoleWriter.WriteLine(localizer.Translate("Error: {0}.", localizer.Translate(error.Message)));
 
         ExitCode = (int)Console.Common.ExitCode.Error;
     }

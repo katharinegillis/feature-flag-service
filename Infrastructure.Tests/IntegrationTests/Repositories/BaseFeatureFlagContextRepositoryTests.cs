@@ -1,3 +1,4 @@
+using EntityFramework.Exceptions.Sqlite;
 using Infrastructure.Persistence.Contexts;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,14 @@ public abstract class BaseFeatureFlagContextRepositoryTests
 {
     public SqliteConnection GetSqliteConnection()
     {
-        var connection = new SqliteConnection("DataSource=:memory:");
+        if (File.Exists("test.db"))
+        {
+            File.Delete("test.db");
+        }
+
+        File.Create("test.db").Close();
+
+        var connection = new SqliteConnection("Data Source=test.db");
         connection.Open();
 
         return connection;
@@ -18,6 +26,7 @@ public abstract class BaseFeatureFlagContextRepositoryTests
     {
         var options = new DbContextOptionsBuilder<FeatureFlagContext>()
             .UseSqlite(connection)
+            .UseExceptionProcessor()
             .Options;
 
         using (var context = new FeatureFlagContext(options))
@@ -26,5 +35,15 @@ public abstract class BaseFeatureFlagContextRepositoryTests
         }
 
         return options;
+    }
+
+    public void CloseSqliteConnection(SqliteConnection connection)
+    {
+        connection.Close();
+
+        if (File.Exists("test.db"))
+        {
+            File.Delete("test.db");
+        }
     }
 }

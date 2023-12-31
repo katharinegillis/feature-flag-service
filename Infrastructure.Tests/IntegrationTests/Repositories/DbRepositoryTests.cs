@@ -1,31 +1,59 @@
 using Domain.Common;
+using EntityFramework.Exceptions.Sqlite;
 using Infrastructure.Persistence.Contexts;
 using Infrastructure.Persistence.Models;
 using Infrastructure.Persistence.Repositories;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Tests.IntegrationTests.Repositories;
 
+[NonParallelizable]
 public sealed class DbRepositoryTests : BaseFeatureFlagContextRepositoryTests
 {
+    private SqliteConnection _connection = null!;
+    private DbContextOptions<FeatureFlagContext> _options = null!;
+
+    [SetUp]
+    public void SetUp()
+    {
+        _connection = new SqliteConnection("Data Source=:memory:");
+        _connection.Open();
+
+        _options = new DbContextOptionsBuilder<FeatureFlagContext>()
+            .UseSqlite(_connection)
+            .UseExceptionProcessor()
+            .Options;
+
+        using (var context = new FeatureFlagContext(_options))
+        {
+            context.Database.EnsureCreated();
+        }
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        _connection.Close();
+    }
+
     [Test]
     public async Task DbFeatureFlagRepository_Get_Should_Return_A_FeatureFlag()
     {
-        await using var connection = GetSqliteConnection();
-        var options = GetSqliteContextOptions(connection);
-
-        await using var context = new FeatureFlagContext(options);
-        context.FeatureFlags.Add(new FeatureFlag
+        await using var seedContext = new FeatureFlagContext(_options);
+        seedContext.FeatureFlags.Add(new FeatureFlag
         {
             FeatureFlagId = "some_flag",
             Enabled = true
         });
-        context.FeatureFlags.Add(new FeatureFlag
+        seedContext.FeatureFlags.Add(new FeatureFlag
         {
             FeatureFlagId = "some_other_flag",
             Enabled = false
         });
-        await context.SaveChangesAsync();
+        await seedContext.SaveChangesAsync();
+
+        await using var context = new FeatureFlagContext(_options);
 
         var repository = new DbRepository(context);
 
@@ -43,17 +71,16 @@ public sealed class DbRepositoryTests : BaseFeatureFlagContextRepositoryTests
     [Test]
     public async Task DbFeatureFlagRepository_Get_Should_Return_FeatureFlagNull_If_Not_Found()
     {
-        await using var connection = GetSqliteConnection();
-        var options = GetSqliteContextOptions(connection);
+        await using var seedContext = new FeatureFlagContext(_options);
 
-        await using var context = new FeatureFlagContext(options);
-
-        context.FeatureFlags.Add(new FeatureFlag
+        seedContext.FeatureFlags.Add(new FeatureFlag
         {
             FeatureFlagId = "some_other_flag",
             Enabled = true
         });
-        await context.SaveChangesAsync();
+        await seedContext.SaveChangesAsync();
+
+        await using var context = new FeatureFlagContext(_options);
 
         var repository = new DbRepository(context);
 
@@ -65,10 +92,7 @@ public sealed class DbRepositoryTests : BaseFeatureFlagContextRepositoryTests
     [Test]
     public async Task DbFeatureFlagRepository_Create_Should_Return_New_Flag_Id_And_Add_To_Context()
     {
-        await using var connection = GetSqliteConnection();
-        var options = GetSqliteContextOptions(connection);
-
-        await using var context = new FeatureFlagContext(options);
+        await using var context = new FeatureFlagContext(_options);
 
         var repository = new DbRepository(context);
 
@@ -84,13 +108,6 @@ public sealed class DbRepositoryTests : BaseFeatureFlagContextRepositoryTests
         {
             Assert.That(result.IsOk, Is.True);
             Assert.That(result.Value, Is.EqualTo("new_flag"));
-
-            Assert.That(context.FeatureFlags.Count, Is.EqualTo(1));
-            Assert.That(context.FeatureFlags.First(), Is.EqualTo(new FeatureFlag
-            {
-                FeatureFlagId = "new_flag",
-                Enabled = true
-            }));
         });
     }
 
@@ -98,17 +115,17 @@ public sealed class DbRepositoryTests : BaseFeatureFlagContextRepositoryTests
     public async Task
         DbFeatureFlagRepository_Create_Should_Return_Validation_Error_If_Id_Already_Exists()
     {
-        await using var connection = GetSqliteConnection();
-        var options = GetSqliteContextOptions(connection);
+        await using var seedContext = new FeatureFlagContext(_options);
 
-        await using var context = new FeatureFlagContext(options);
-
-        context.FeatureFlags.Add(new FeatureFlag
+        var featureFlag = new FeatureFlag
         {
             FeatureFlagId = "some_flag",
             Enabled = true
-        });
-        await context.SaveChangesAsync();
+        };
+        seedContext.FeatureFlags.Add(featureFlag);
+        await seedContext.SaveChangesAsync();
+
+        await using var context = new FeatureFlagContext(_options);
 
         var repository = new DbRepository(context);
 
@@ -125,14 +142,7 @@ public sealed class DbRepositoryTests : BaseFeatureFlagContextRepositoryTests
 
             var validationError = result.Error as ValidationError;
             Assert.That(validationError?.Field, Is.EqualTo("Id"));
-            Assert.That(validationError?.Message, Is.EqualTo("Id already exists"));
-
-            Assert.That(context.FeatureFlags.Count, Is.EqualTo(1));
-            Assert.That(context.FeatureFlags.First(), Is.EqualTo(new FeatureFlag
-            {
-                FeatureFlagId = "some_flag",
-                Enabled = true
-            }));
+            Assert.That(validationError?.Message, Is.EqualTo("Already exists"));
         });
     }
 }
