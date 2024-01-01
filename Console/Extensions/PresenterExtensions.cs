@@ -1,7 +1,7 @@
-using Console.Commands.FeatureFlags.Create;
+using Get = Console.Commands.FeatureFlags.Get;
+using Create = Console.Commands.FeatureFlags.Create;
 using Console.Common;
 using Microsoft.Extensions.DependencyInjection;
-using CreateFeatureFlagInteractor = Application.Interactors.CreateFeatureFlag;
 
 namespace Console.Extensions;
 
@@ -11,6 +11,7 @@ public static class PresenterExtensions
     {
         services.AddScoped<IConsoleWriter, ConsoleWriter>();
 
-        services.AddTransient<IConsolePresenter, ConsolePresenter>();
+        services.AddTransient<Create.IConsolePresenter, Create.ConsolePresenter>();
+        services.AddTransient<Get.IConsolePresenter, Get.ConsolePresenter>();
     }
 }

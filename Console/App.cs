@@ -30,7 +30,6 @@ public class App(IHostApplicationLifetime applicationLifetime, IServiceProvider 
     {
         var verb = (IHasCommandType)obj;
 
-
         if (serviceProvider.GetService(verb.CommandType) is not IRunnableWithOptions command)
         {
             System.Console.WriteLine("Verb is missing command.");

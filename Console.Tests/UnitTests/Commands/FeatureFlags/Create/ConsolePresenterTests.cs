@@ -3,6 +3,7 @@ using Console.Common;
 using Domain.Common;
 using Microsoft.Extensions.Localization;
 using Moq;
+using Utilities.LocalizationService;
 
 namespace Console.Tests.UnitTests.Commands.FeatureFlags.Create;
 
@@ -11,36 +12,33 @@ public class ConsolePresenterTests
     [Test]
     public void ConsolePresenter_Ok_Should_Display_Success_Message()
     {
-        var localizerMock = new Mock<IStringLocalizer<ConsolePresenter>>();
-        var createdString = new LocalizedString("Feature Flag \"{0}\" created.", "Feature Flag \"{0}\" created.");
-        localizerMock.Setup(localizer => localizer["Feature Flag \"{0}\" created.", "some_flag"])
-            .Returns(createdString);
+        var localizationServiceMock = new Mock<ILocalizationService<ConsolePresenter>>();
+        localizationServiceMock.Setup(service => service.Translate("Feature Flag \"{0}\" created.", "some_flag"))
+            .Returns("Feature Flag \"some_flag\" created.");
 
         var consoleWriterMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizerMock.Object, consoleWriterMock.Object);
+        var presenter = new ConsolePresenter(localizationServiceMock.Object, consoleWriterMock.Object);
         presenter.Ok("some_flag");
 
-        consoleWriterMock.Verify(consoleWriter => consoleWriter.WriteLine(createdString));
+        consoleWriterMock.Verify(consoleWriter => consoleWriter.WriteLine("Feature Flag \"some_flag\" created."));
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.Success));
     }
 
     [Test]
     public void ConsolePresenter_BadRequest_Should_Display_Validation_Errors()
     {
-        var localizerMock = new Mock<IStringLocalizer<ConsolePresenter>>();
-        var validationString = new LocalizedString("{0}: {1}.", "{0}: {1}.");
-        localizerMock.Setup(localizer => localizer["{0}: {1}.", It.IsAny<string>(), It.IsAny<LocalizedString>()])
-            .Returns(validationString);
-        var maxLengthString = new LocalizedString("Max length is 100", "Max length is 100");
-        localizerMock.Setup(localizer => localizer["Max length is 100"])
-            .Returns(maxLengthString);
-        var requiredString = new LocalizedString("Required", "Required");
-        localizerMock.Setup(localizer => localizer["Required"]).Returns(requiredString);
+        var localizationServiceMock = new Mock<ILocalizationService<ConsolePresenter>>();
+        localizationServiceMock.Setup(service => service.Translate("Required")).Returns("Required");
+        localizationServiceMock.Setup(service => service.Translate("Max length is 100")).Returns("Max length is 100");
+        localizationServiceMock.Setup(service => service.Translate("{0}: {1}.", "Id", "Max length is 100"))
+            .Returns("Id: Max length is 100.");
+        localizationServiceMock.Setup(service => service.Translate("{0}: {1}.", "Enabled", "Required"))
+            .Returns("Enabled: Required.");
 
         var consoleWriterMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizerMock.Object, consoleWriterMock.Object);
+        var presenter = new ConsolePresenter(localizationServiceMock.Object, consoleWriterMock.Object);
         presenter.BadRequest(new List<ValidationError>
         {
             new()
@@ -55,36 +53,28 @@ public class ConsolePresenterTests
             }
         });
 
-        localizerMock.Verify(localizer => localizer["Max length is 100"]);
-        localizerMock.Verify(localizer => localizer["Required"]);
-        localizerMock.Verify(localizer =>
-            localizer["{0}: {1}.", "Id", maxLengthString]);
-        localizerMock.Verify(
-            localizer => localizer["{0}: {1}.", "Enabled", requiredString]);
-        consoleWriterMock.Verify(consoleWriter => consoleWriter.WriteLine(validationString), Times.Exactly(2));
+        consoleWriterMock.Verify(consoleWriter => consoleWriter.WriteLine("Id: Max length is 100."));
+        consoleWriterMock.Verify(consoleWriter => consoleWriter.WriteLine("Enabled: Required."));
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.OptionsError));
     }
 
     [Test]
     public void ConsolePresenter_Error_Should_Display_Error_Message()
     {
-        var localizerMock = new Mock<IStringLocalizer<ConsolePresenter>>();
-        var errorString = new LocalizedString("Unknown error", "Unknown error");
-        localizerMock.Setup(localizer => localizer["Unknown error"]).Returns(errorString);
-        var fullErrorString = new LocalizedString("Error: {0}.", "Error: {0}.");
-        localizerMock.Setup(localizer => localizer["Error: {0}.", errorString]).Returns(fullErrorString);
+        var localizationServiceMock = new Mock<ILocalizationService<ConsolePresenter>>();
+        localizationServiceMock.Setup(service => service.Translate("Unknown error")).Returns("Unknown error");
+        localizationServiceMock.Setup(service => service.Translate("Error: {0}.", "Unknown error"))
+            .Returns("Error: Unknown error.");
 
         var consoleWriterMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizerMock.Object, consoleWriterMock.Object);
+        var presenter = new ConsolePresenter(localizationServiceMock.Object, consoleWriterMock.Object);
         presenter.Error(new Error
         {
             Message = "Unknown error"
         });
 
-        localizerMock.Verify(localizer => localizer["Unknown error"]);
-        localizerMock.Verify(localizer => localizer["Error: {0}.", errorString]);
-        consoleWriterMock.Verify(consoleWriter => consoleWriter.WriteLine(fullErrorString));
+        consoleWriterMock.Verify(consoleWriter => consoleWriter.WriteLine("Error: Unknown error."));
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.Error));
     }
 }

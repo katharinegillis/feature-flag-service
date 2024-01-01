@@ -1,6 +1,6 @@
-using Console.Commands.FeatureFlags.Create;
+using Get = Console.Commands.FeatureFlags.Get;
+using Create = Console.Commands.FeatureFlags.Create;
 using Microsoft.Extensions.DependencyInjection;
-using CreateFeatureFlagInteractors = Application.Interactors.CreateFeatureFlag;
 
 namespace Console.Extensions;
 
@@ -8,6 +8,7 @@ public static class CommandExtensions
 {
     public static void AddCommands(this IServiceCollection services)
     {
-        services.AddTransient<Command>();
+        services.AddTransient<Create.Command>();
+        services.AddTransient<Get.Command>();
     }
 }

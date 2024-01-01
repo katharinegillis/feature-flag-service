@@ -68,5 +68,11 @@ namespace Console.Resources {
                 return ResourceManager.GetString("Already exists", resourceCulture);
             }
         }
+        
+        internal static string Max_length_is_100 {
+            get {
+                return ResourceManager.GetString("Max length is 100", resourceCulture);
+            }
+        }
     }
 }
