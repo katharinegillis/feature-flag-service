@@ -10,7 +10,7 @@ public class ConsolePresenter(ILocalizationService<ConsolePresenter> localizatio
     public void Ok(IModel featureFlag)
     {
         consoleWriter.WriteLine(localizationService.Translate("Id: \"{0}\", Enabled: \"{1}\"", featureFlag.Id,
-            featureFlag.Enabled ? "true" : "false"));
+            localizationService.Translate(featureFlag.Enabled ? "true" : "false")));
 
         ExitCode = (int)Console.Common.ExitCode.Success;
     }

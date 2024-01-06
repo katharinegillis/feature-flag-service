@@ -41,4 +41,28 @@
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <EmbeddedResource Update="Resources\Controllers.FeatureFlags.List.ConsolePresenter.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Controllers.FeatureFlags.List.ConsolePresenter.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\Controllers.FeatureFlags.Get.ConsolePresenter.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Controllers.FeatureFlags.Get.ConsolePresenter.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Resources\Controllers.FeatureFlags.List.ConsolePresenter.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Controllers.FeatureFlags.List.ConsolePresenter.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\Controllers.FeatureFlags.Get.ConsolePresenter.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Controllers.FeatureFlags.Get.ConsolePresenter.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
 </Project>

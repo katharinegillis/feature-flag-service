@@ -13,8 +13,9 @@ public class ConsolePresenterTests
     {
         var localizationServiceMock = new Mock<ILocalizationService<ConsolePresenter>>();
         localizationServiceMock
-            .Setup(s => s.Translate("Id: \"{0}\", Enabled: \"{1}\"", "some_flag", "true"))
-            .Returns("Id: \"some_flag\", Enabled: \"true\"");
+            .Setup(s => s.Translate("Id: \"{0}\", Enabled: \"{1}\"", "some_flag", "True"))
+            .Returns("Id: \"some_flag\", Enabled: \"True\"");
+        localizationServiceMock.Setup(s => s.Translate("true")).Returns("True");
 
         var writerMock = new Mock<IConsoleWriter>();
 
@@ -28,7 +29,7 @@ public class ConsolePresenterTests
 
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.Success));
 
-        writerMock.Verify(w => w.WriteLine("Id: \"some_flag\", Enabled: \"true\""));
+        writerMock.Verify(w => w.WriteLine("Id: \"some_flag\", Enabled: \"True\""));
     }
 
     [Test]

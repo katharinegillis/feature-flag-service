@@ -30,4 +30,10 @@
     <data name="{0}: {1}." xml:space="preserve">
         <value>{0}: {1}.</value>
     </data>
+    <data name="true" xml:space="preserve">
+        <value>true</value>
+    </data>
+    <data name="false" xml:space="preserve">
+        <value>false</value>
+    </data>
 </root>

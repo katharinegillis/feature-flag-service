@@ -17,8 +17,6 @@ builder.Services.AddInteractors();
 builder.Services.AddControllers();
 builder.Services.AddLocalizationServices();
 
-CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);
-
 builder.Services.AddHostedService<App>();
 using var host = builder.Build();
 

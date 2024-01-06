@@ -15,7 +15,7 @@ public class VerbTests
     }
 
     [Test]
-    public void GetVerb_Should_Associated_A_GetController()
+    public void GetVerb_Should_Be_Associated_With_GetController()
     {
         var verb = new Verb();
 
