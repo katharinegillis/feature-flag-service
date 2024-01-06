@@ -6,6 +6,7 @@
         <Configuration>
           <Format>cobertura</Format>
           <Include>[*]Infrastructure.*</Include>
+          <Exclude>[*]Infrastructure.Persistence.Contexts.FeatureFlagContext</Exclude>
           <ExcludeAssembliesWithoutSources>MissingAny</ExcludeAssembliesWithoutSources>
         </Configuration>
       </DataCollector>
