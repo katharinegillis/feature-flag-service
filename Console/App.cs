@@ -6,7 +6,7 @@ using Utilities.LocalizationService;
 
 namespace Console;
 
-public class App(
+public sealed class App(
     IHostApplicationLifetime applicationLifetime,
     IServiceProvider serviceProvider,
     ILocalizationService<App> localizationService) : IHostedService

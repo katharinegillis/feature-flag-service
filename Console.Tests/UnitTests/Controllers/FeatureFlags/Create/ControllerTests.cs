@@ -5,7 +5,7 @@ using Moq;
 
 namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Create;
 
-public class ControllerTests
+public sealed class ControllerTests
 {
     [Test]
     public void CreateCommand_Should_Be_IRunnableWithOptions()
@@ -13,9 +13,9 @@ public class ControllerTests
         var presenter = Mock.Of<IConsolePresenter>();
         var interactor = Mock.Of<IInputPort>();
 
-        var command = new Controller(presenter, interactor);
+        var controller = new Controller(presenter, interactor);
 
-        Assert.That(command, Is.InstanceOf<IRunnableWithOptions>());
+        Assert.That(controller, Is.InstanceOf<IRunnableWithOptions>());
     }
 
     [Test]
@@ -26,15 +26,15 @@ public class ControllerTests
 
         var createFeatureFlagInteractor = new Mock<IInputPort>();
 
-        var command = new Controller(presenterMock.Object, createFeatureFlagInteractor.Object);
+        var controller = new Controller(presenterMock.Object, createFeatureFlagInteractor.Object);
 
         var optionsMock = new Mock<IOptions>();
         optionsMock.Setup(o => o.Id).Returns("some_flag");
         optionsMock.Setup(o => o.Enabled).Returns(true);
 
-        command.SetOptions(optionsMock.Object);
+        controller.SetOptions(optionsMock.Object);
 
-        var result = await command.Run();
+        var result = await controller.Run();
 
         Assert.That(result, Is.EqualTo((int)ExitCode.Success));
 

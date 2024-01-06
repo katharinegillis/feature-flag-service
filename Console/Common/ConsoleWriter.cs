@@ -1,6 +1,6 @@
 namespace Console.Common;
 
-public class ConsoleWriter : IConsoleWriter
+public sealed class ConsoleWriter : IConsoleWriter
 {
     public void WriteLine(string line)
     {

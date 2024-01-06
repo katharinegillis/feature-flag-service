@@ -8,6 +8,7 @@ public static class RepositoryExtensions
     // ReSharper disable once UnusedMember.Global
     public static void AddRepositories(this IServiceCollection services)
     {
+        services.AddScoped<Domain.FeatureFlags.IFactory, Domain.FeatureFlags.Factory>();
         services.AddScoped<Domain.FeatureFlags.IRepository, Repositories.DbFeatureFlagRepository>();
     }
 }

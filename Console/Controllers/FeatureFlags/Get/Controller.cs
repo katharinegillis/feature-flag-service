@@ -3,7 +3,7 @@ using Console.Common;
 
 namespace Console.Controllers.FeatureFlags.Get;
 
-public class Controller(IConsolePresenter presenter, IInputPort interactor) : IRunnableWithOptions
+public sealed class Controller(IConsolePresenter presenter, IInputPort interactor) : IRunnableWithOptions
 {
     private IOptions _options = null!;
 
