@@ -173,4 +173,59 @@ public class DbFeatureFlagRepositoryTests
 
         mockContext.Verify(m => m.SaveChanges(), Times.Once());
     }
+
+    [Test]
+    public async Task DbFeatureFlagRepository_List_Should_Return_List_Of_FeatureFlags()
+    {
+        var data = new List<FeatureFlag>
+        {
+            new()
+            {
+                FeatureFlagId = "some_flag",
+                Enabled = true
+            },
+            new()
+            {
+                FeatureFlagId = "another_flag",
+                Enabled = false
+            }
+        };
+
+        var mockSet = TestingUtils.CreateDbSetMockFromList(data);
+
+        var mockContext = new Mock<FeatureFlagContext>();
+        mockContext.Setup(c => c.FeatureFlags).Returns(mockSet.Object);
+
+        var mockFactory = new Mock<IFactory>();
+        mockFactory.Setup(f => f.Create("some_flag", true)).Returns(new Model
+        {
+            Id = "some_flag",
+            Enabled = true
+        });
+        mockFactory.Setup(f => f.Create("another_flag", false)).Returns(new Model
+        {
+            Id = "another_flag",
+            Enabled = false
+        });
+
+        var repository = new DbFeatureFlagRepository(mockContext.Object, mockFactory.Object);
+
+        var result = await repository.List();
+
+        var comparer = new EqualityComparer();
+        var list = result.ToList();
+        Assert.Multiple(() =>
+        {
+            Assert.That(comparer.Equals(list[0], new Model
+            {
+                Id = "some_flag",
+                Enabled = true
+            }));
+            Assert.That(comparer.Equals(list[1], new Model
+            {
+                Id = "another_flag",
+                Enabled = false
+            }));
+        });
+    }
 }

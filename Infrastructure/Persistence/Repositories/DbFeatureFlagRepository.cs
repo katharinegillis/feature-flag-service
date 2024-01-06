@@ -53,4 +53,10 @@ public sealed class DbFeatureFlagRepository(FeatureFlagContext context, IFactory
             });
         }
     }
+
+    public Task<IEnumerable<IModel>> List()
+    {
+        return Task.FromResult(context.FeatureFlags.Select(e => factory.Create(e.FeatureFlagId, e.Enabled))
+            .AsEnumerable());
+    }
 }
