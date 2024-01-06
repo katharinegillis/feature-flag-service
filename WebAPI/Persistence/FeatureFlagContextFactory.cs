@@ -4,11 +4,12 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace WebAPI.Persistence;
 
+// ReSharper disable once UnusedType.Global
 public sealed class FeatureFlagContextFactory : IDesignTimeDbContextFactory<FeatureFlagContext>
 {
     public FeatureFlagContext CreateDbContext(string[] args)
     {
-        IConfigurationRoot configuration = new ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
             .Build();

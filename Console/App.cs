@@ -1,12 +1,15 @@
 using System.Reflection;
 using CommandLine;
 using Console.Common;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Utilities.LocalizationService;
 
 namespace Console;
 
-public class App(IHostApplicationLifetime applicationLifetime, IServiceProvider serviceProvider) : IHostedService
+public class App(
+    IHostApplicationLifetime applicationLifetime,
+    IServiceProvider serviceProvider,
+    ILocalizationService<App> localizationService) : IHostedService
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -20,7 +23,7 @@ public class App(IHostApplicationLifetime applicationLifetime, IServiceProvider 
         applicationLifetime.StopApplication();
     }
 
-    private Type[] LoadVerbs()
+    private static Type[] LoadVerbs()
     {
         return Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.GetCustomAttribute<VerbAttribute>() != null).ToArray();
@@ -28,12 +31,11 @@ public class App(IHostApplicationLifetime applicationLifetime, IServiceProvider 
 
     private async Task RunAsync(object obj)
     {
-        var verb = (IHasCommandType)obj;
+        var verb = (IHasControllerType)obj;
 
-
-        if (serviceProvider.GetService(verb.CommandType) is not IRunnableWithOptions command)
+        if (serviceProvider.GetService(verb.ControllerType) is not IRunnableWithOptions command)
         {
-            System.Console.WriteLine("Verb is missing command.");
+            System.Console.WriteLine(localizationService.Translate("Verb is missing command."));
             return;
         }
 

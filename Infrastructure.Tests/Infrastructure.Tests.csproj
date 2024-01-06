@@ -12,6 +12,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="EntityFramework" Version="6.4.4"/>
+        <PackageReference Include="EntityFrameworkCore.Exceptions.Sqlite" Version="8.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0"/>

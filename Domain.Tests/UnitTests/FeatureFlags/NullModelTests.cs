@@ -8,47 +8,47 @@ public sealed class NullModelTests
     [Test]
     public void FeatureFlagNull_Should_Not_Allow_Enabled_To_Change()
     {
-        var featureFlagNull = new NullModel
+        var nullModel = new NullModel
         {
             Enabled = true
         };
 
-        Assert.That(featureFlagNull.Enabled, Is.False);
+        Assert.That(nullModel.Enabled, Is.False);
     }
 
     [Test]
     public void FeatureFlagNull_Should_Return_Singleton_With_Instance()
     {
-        var firstFeatureFlagNull = NullModel.Instance;
-        var secondFeatureFlagNull = NullModel.Instance;
-        Assert.That(ReferenceEquals(firstFeatureFlagNull, secondFeatureFlagNull));
+        var a = NullModel.Instance;
+        var b = NullModel.Instance;
+        Assert.That(ReferenceEquals(a, b));
     }
 
     [Test]
     public void FeatureFlagNull_Should_Equal_On_Same_Data()
     {
-        var firstFeatureFlagNull = NullModel.Instance;
-        var secondFeatureFlagNull = NullModel.Instance;
-        Assert.That(firstFeatureFlagNull, Is.EqualTo(secondFeatureFlagNull));
+        var a = NullModel.Instance;
+        var b = NullModel.Instance;
+        Assert.That(a, Is.EqualTo(b));
     }
 
     [Test]
     public void FeatureFlagNull_Should_Not_Let_Id_Be_Set()
     {
-        var featureFlagNull = new NullModel
+        var nullModel = new NullModel
         {
             Id = "some_flag"
         };
 
-        Assert.That(featureFlagNull.Id, Is.EqualTo(""));
+        Assert.That(nullModel.Id, Is.EqualTo(""));
     }
 
     [Test]
     public void FeatureFlagNull_Validate_Should_Return_Is_Null_Error()
     {
-        var featureFlagNull = NullModel.Instance;
+        var nullModel = NullModel.Instance;
 
-        var result = featureFlagNull.Validate();
+        var result = nullModel.Validate();
         Assert.Multiple(() =>
         {
             Assert.That(result.IsOk, Is.False);

@@ -4,12 +4,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Contexts;
 
-public sealed class FeatureFlagContext(DbContextOptions<FeatureFlagContext> options) : DbContext(options)
+public class FeatureFlagContext : DbContext
 {
-    public DbSet<FeatureFlag> FeatureFlags { get; set; } = null!;
+    // ReSharper disable once PropertyCanBeMadeInitOnly.Global
+    public virtual DbSet<FeatureFlag> FeatureFlags { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseExceptionProcessor();
+    }
+
+    public FeatureFlagContext(DbContextOptions<FeatureFlagContext> options) : base(options)
+    {
+    }
+
+    public FeatureFlagContext()
+    {
     }
 }

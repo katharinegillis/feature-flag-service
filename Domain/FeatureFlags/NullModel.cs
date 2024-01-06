@@ -17,13 +17,13 @@ public sealed class NullModel : IModel
         init => _id = "";
     }
 
-    private bool _enabled;
+    private readonly bool _enabled;
 
     public bool Enabled
     {
         get => _enabled;
         // ReSharper disable once ValueParameterNotUsed
-        set => _enabled = false;
+        init => _enabled = false;
     }
 
     public Result<bool, IEnumerable<ValidationError>> Validate()

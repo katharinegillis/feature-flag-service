@@ -23,20 +23,20 @@ public sealed class InteractorTests
     public async Task CreateFeatureFlagInteractor_Creates_A_Feature_Flag()
     {
         IModel? passedFeatureFlag = null;
-        var featureFlagRepositoryMock = new Mock<IRepository>();
-        featureFlagRepositoryMock.Setup(repository => repository.Create(It.IsAny<IModel>()).Result)
+        var repositoryMock = new Mock<IRepository>();
+        repositoryMock.Setup(r => r.Create(It.IsAny<IModel>()).Result)
             .Callback<IModel>(featureFlag => passedFeatureFlag = featureFlag)
             .Returns(Result<string, Error>.Ok("new_flag"));
 
-        var featureFlagMock = new Mock<IModel>();
-        featureFlagMock.Setup(model => model.Id).Returns("new_flag");
-        featureFlagMock.Setup(model => model.Enabled).Returns(true);
-        featureFlagMock.Setup(model => model.Validate()).Returns(Result<bool, IEnumerable<ValidationError>>.Ok(true));
+        var modelMock = new Mock<IModel>();
+        modelMock.Setup(m => m.Id).Returns("new_flag");
+        modelMock.Setup(m => m.Enabled).Returns(true);
+        modelMock.Setup(m => m.Validate()).Returns(Result<bool, IEnumerable<ValidationError>>.Ok(true));
 
-        var featureFlagFactoryMock = new Mock<IFactory>();
-        featureFlagFactoryMock.Setup(factory => factory.Create("new_flag", true)).Returns(featureFlagMock.Object);
+        var factoryMock = new Mock<IFactory>();
+        factoryMock.Setup(f => f.Create("new_flag", true)).Returns(modelMock.Object);
 
-        var interactor = new Interactor(featureFlagRepositoryMock.Object, featureFlagFactoryMock.Object);
+        var interactor = new Interactor(repositoryMock.Object, factoryMock.Object);
 
         var request = new RequestModel
         {
@@ -47,23 +47,23 @@ public sealed class InteractorTests
 
         await interactor.Execute(request, presenterMock.Object);
 
-        var equalityHelper = new EqualityComparer();
+        var equalityComparer = new EqualityComparer();
 
-        Assert.That(equalityHelper.Equals(new Model
+        Assert.That(equalityComparer.Equals(new Model
         {
             Id = "new_flag",
             Enabled = true
         }, passedFeatureFlag));
 
-        featureFlagRepositoryMock.Verify(repository => repository.Create(It.IsAny<IModel>()));
+        repositoryMock.Verify(r => r.Create(It.IsAny<IModel>()));
 
-        presenterMock.Verify(presenter => presenter.Ok("new_flag"));
+        presenterMock.Verify(p => p.Ok("new_flag"));
     }
 
     [Test]
     public async Task CreateFeatureFlagInteractor_Should_Return_Validation_Error_If_Id_Is_Too_Long()
     {
-        var featureFlagRepository = Mock.Of<IRepository>();
+        var repository = Mock.Of<IRepository>();
 
         var validationErrors = new ValidationError[]
         {
@@ -74,22 +74,22 @@ public sealed class InteractorTests
             }
         };
 
-        var featureFlagMock = new Mock<IModel>();
-        featureFlagMock.Setup(model => model.Id)
+        var modelMock = new Mock<IModel>();
+        modelMock.Setup(m => m.Id)
             .Returns(
                 "abcdefghijklmnopqrstuvwxyz1234abcdefghijklmnopqrstuvwxyz1234abcdefghijklmnopqrstuvwxyz1234abcdefghijk");
-        featureFlagMock.Setup(model => model.Enabled).Returns(true);
-        featureFlagMock.Setup(model => model.Validate())
+        modelMock.Setup(m => m.Enabled).Returns(true);
+        modelMock.Setup(m => m.Validate())
             .Returns(Result<bool, IEnumerable<ValidationError>>.Err(validationErrors));
 
-        var featureFlagFactory = new Mock<IFactory>();
-        featureFlagFactory
-            .Setup(factory =>
-                factory.Create(
+        var factoryMock = new Mock<IFactory>();
+        factoryMock
+            .Setup(f =>
+                f.Create(
                     "abcdefghijklmnopqrstuvwxyz1234abcdefghijklmnopqrstuvwxyz1234abcdefghijklmnopqrstuvwxyz1234abcdefghijk",
-                    true)).Returns(featureFlagMock.Object);
+                    true)).Returns(modelMock.Object);
 
-        var interactor = new Interactor(featureFlagRepository, featureFlagFactory.Object);
+        var interactor = new Interactor(repository, factoryMock.Object);
 
         var request = new RequestModel
         {
@@ -101,7 +101,7 @@ public sealed class InteractorTests
 
         await interactor.Execute(request, presenterMock.Object);
 
-        presenterMock.Verify(presenter => presenter.BadRequest(validationErrors));
+        presenterMock.Verify(p => p.BadRequest(validationErrors));
     }
 
     [Test]
@@ -114,19 +114,19 @@ public sealed class InteractorTests
             Message = "Id already exists"
         };
 
-        var featureFlagRepositoryMock = new Mock<IRepository>();
-        featureFlagRepositoryMock.Setup(repository => repository.Create(It.IsAny<IModel>()).Result).Returns(
+        var repositoryMock = new Mock<IRepository>();
+        repositoryMock.Setup(r => r.Create(It.IsAny<IModel>()).Result).Returns(
             Result<string, Error>.Err(validationError));
 
-        var featureFlagMock = new Mock<IModel>();
-        featureFlagMock.Setup(model => model.Id).Returns("new_flag");
-        featureFlagMock.Setup(model => model.Enabled).Returns(true);
-        featureFlagMock.Setup(model => model.Validate()).Returns(Result<bool, IEnumerable<ValidationError>>.Ok(true));
+        var modelMock = new Mock<IModel>();
+        modelMock.Setup(model => model.Id).Returns("new_flag");
+        modelMock.Setup(model => model.Enabled).Returns(true);
+        modelMock.Setup(model => model.Validate()).Returns(Result<bool, IEnumerable<ValidationError>>.Ok(true));
 
-        var featureFlagFactoryMock = new Mock<IFactory>();
-        featureFlagFactoryMock.Setup(factory => factory.Create("new_flag", true)).Returns(featureFlagMock.Object);
+        var factoryMock = new Mock<IFactory>();
+        factoryMock.Setup(factory => factory.Create("new_flag", true)).Returns(modelMock.Object);
 
-        var interactor = new Interactor(featureFlagRepositoryMock.Object, featureFlagFactoryMock.Object);
+        var interactor = new Interactor(repositoryMock.Object, factoryMock.Object);
 
         var request = new RequestModel
         {
@@ -138,7 +138,7 @@ public sealed class InteractorTests
         await interactor.Execute(request, presenterMock.Object);
 
         var validationErrors = new List<ValidationError> { validationError };
-        presenterMock.Verify(presenter => presenter.BadRequest(validationErrors));
+        presenterMock.Verify(p => p.BadRequest(validationErrors));
     }
 
     [Test]
@@ -149,19 +149,19 @@ public sealed class InteractorTests
             Message = "Unknown error"
         };
 
-        var featureFlagRepositoryMock = new Mock<IRepository>();
-        featureFlagRepositoryMock.Setup(repository => repository.Create(It.IsAny<IModel>()).Result)
+        var repositoryMock = new Mock<IRepository>();
+        repositoryMock.Setup(r => r.Create(It.IsAny<IModel>()).Result)
             .Returns(Result<string, Error>.Err(error));
 
-        var featureFlagMock = new Mock<IModel>();
-        featureFlagMock.Setup(model => model.Id).Returns("new_flag");
-        featureFlagMock.Setup(model => model.Enabled).Returns(true);
-        featureFlagMock.Setup(model => model.Validate()).Returns(Result<bool, IEnumerable<ValidationError>>.Ok(true));
+        var modelMock = new Mock<IModel>();
+        modelMock.Setup(model => model.Id).Returns("new_flag");
+        modelMock.Setup(model => model.Enabled).Returns(true);
+        modelMock.Setup(model => model.Validate()).Returns(Result<bool, IEnumerable<ValidationError>>.Ok(true));
 
-        var featureFlagFactoryMock = new Mock<IFactory>();
-        featureFlagFactoryMock.Setup(factory => factory.Create("new_flag", true)).Returns(featureFlagMock.Object);
+        var factoryMock = new Mock<IFactory>();
+        factoryMock.Setup(factory => factory.Create("new_flag", true)).Returns(modelMock.Object);
 
-        var interactor = new Interactor(featureFlagRepositoryMock.Object, featureFlagFactoryMock.Object);
+        var interactor = new Interactor(repositoryMock.Object, factoryMock.Object);
 
         var request = new RequestModel
         {
@@ -173,6 +173,6 @@ public sealed class InteractorTests
 
         await interactor.Execute(request, presenterMock.Object);
 
-        presenterMock.Verify(presenter => presenter.Error(error));
+        presenterMock.Verify(p => p.Error(error));
     }
 }

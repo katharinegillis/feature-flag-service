@@ -11,7 +11,7 @@ public static class SqliteExtensions
     {
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
+            .AddJsonFile("consolesettings.json")
             .Build();
 
         services.AddDbContext<FeatureFlagContext>(options =>
