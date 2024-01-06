@@ -1,6 +1,6 @@
 namespace Domain.FeatureFlags;
 
-public class Factory : IFactory
+public sealed class Factory : IFactory
 {
     public IModel Create(string id, bool enabled)
     {

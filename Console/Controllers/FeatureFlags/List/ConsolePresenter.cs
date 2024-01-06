@@ -4,7 +4,7 @@ using Utilities.LocalizationService;
 
 namespace Console.Controllers.FeatureFlags.List;
 
-public class ConsolePresenter(ILocalizationService<ConsolePresenter> localizationService, IConsoleWriter writer)
+public sealed class ConsolePresenter(ILocalizationService<ConsolePresenter> localizationService, IConsoleWriter writer)
     : IConsolePresenter
 {
     public int ExitCode { get; private set; }

@@ -4,7 +4,9 @@ using Utilities.LocalizationService;
 
 namespace Console.Controllers.FeatureFlags.Get;
 
-public class ConsolePresenter(ILocalizationService<ConsolePresenter> localizationService, IConsoleWriter consoleWriter)
+public sealed class ConsolePresenter(
+    ILocalizationService<ConsolePresenter> localizationService,
+    IConsoleWriter consoleWriter)
     : IConsolePresenter
 {
     public void Ok(IModel featureFlag)

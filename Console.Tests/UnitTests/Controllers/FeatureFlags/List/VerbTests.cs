@@ -4,7 +4,7 @@ using Console.Controllers.FeatureFlags.List;
 
 namespace Console.Tests.UnitTests.Controllers.FeatureFlags.List;
 
-public class VerbTests
+public sealed class VerbTests
 {
     [Test]
     public void ListVerb_Should_Be_A_IHasControllerType()

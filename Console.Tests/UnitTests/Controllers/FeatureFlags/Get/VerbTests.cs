@@ -4,7 +4,7 @@ using Console.Common;
 
 namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Get;
 
-public class VerbTests
+public sealed class VerbTests
 {
     [Test]
     public void GetVerb_Should_Be_A_IHasControllerType()

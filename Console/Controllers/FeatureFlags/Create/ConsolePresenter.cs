@@ -5,7 +5,7 @@ using Utilities.LocalizationService;
 namespace Console.Controllers.FeatureFlags.Create;
 
 // ReSharper disable once SuggestBaseTypeForParameterInConstructor
-public class ConsolePresenter(
+public sealed class ConsolePresenter(
     ILocalizationService<ConsolePresenter> localizer,
     IConsoleWriter consoleWriter)
     : IConsolePresenter

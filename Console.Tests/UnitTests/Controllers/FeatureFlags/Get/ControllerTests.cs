@@ -6,7 +6,7 @@ using Controller = Console.Controllers.FeatureFlags.Get.Controller;
 
 namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Get;
 
-public class ControllerTests
+public sealed class ControllerTests
 {
     [Test]
     public void GetController_Should_Be_IRunnableWithOptions()

@@ -5,7 +5,7 @@ using Moq;
 
 namespace Console.Tests.UnitTests.Controllers.FeatureFlags.List;
 
-public class ControllerTests
+public sealed class ControllerTests
 {
     [Test]
     public void ListController_Should_Be_IRunnableWithOptions()

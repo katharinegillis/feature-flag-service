@@ -2,7 +2,7 @@ using Domain.FeatureFlags;
 
 namespace Domain.Tests.UnitTests.FeatureFlags;
 
-public class FactoryTests
+public sealed class FactoryTests
 {
     [Test]
     public void Create_With_Data_Returns_New_Model()

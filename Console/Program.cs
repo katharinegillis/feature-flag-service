@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Console;
+﻿using Console;
 using Console.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

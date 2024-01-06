@@ -6,7 +6,7 @@ using Utilities.LocalizationService;
 
 namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Get;
 
-public class ConsolePresenterTests
+public sealed class ConsolePresenterTests
 {
     [Test]
     public void ConsolePresenter_Ok_Should_Display_FeatureFlag()

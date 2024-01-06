@@ -4,7 +4,7 @@ using Console.Common;
 namespace Console.Controllers.FeatureFlags.Create;
 
 [Verb("featureflag:create", HelpText = "Create a feature flag")]
-public class Verb : IHasControllerType, IOptions
+public sealed class Verb : IHasControllerType, IOptions
 {
     public Type ControllerType { get; } = typeof(Controller);
 

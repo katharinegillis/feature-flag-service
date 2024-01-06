@@ -10,7 +10,7 @@ using Moq;
 
 namespace Infrastructure.Tests.UnitTests.Repositories;
 
-public class DbFeatureFlagRepositoryTests
+public sealed class DbFeatureFlagRepositoryTests
 {
     [Test]
     public async Task DbFeatureFlagRepository_Get_Should_Return_A_Feature_Flag()
