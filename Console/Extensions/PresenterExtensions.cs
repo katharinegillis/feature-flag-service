@@ -1,5 +1,5 @@
-using Get = Console.Commands.FeatureFlags.Get;
-using Create = Console.Commands.FeatureFlags.Create;
+using Get = Console.Controllers.FeatureFlags.Get;
+using Create = Console.Controllers.FeatureFlags.Create;
 using Console.Common;
 using Microsoft.Extensions.DependencyInjection;
 

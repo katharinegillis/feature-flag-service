@@ -1,4 +1,4 @@
-namespace Console.Commands.FeatureFlags.Get;
+namespace Console.Controllers.FeatureFlags.Get;
 
 public interface IOptions
 {

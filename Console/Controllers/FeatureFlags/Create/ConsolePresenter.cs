@@ -2,7 +2,7 @@ using Console.Common;
 using Domain.Common;
 using Utilities.LocalizationService;
 
-namespace Console.Commands.FeatureFlags.Create;
+namespace Console.Controllers.FeatureFlags.Create;
 
 // ReSharper disable once SuggestBaseTypeForParameterInConstructor
 public class ConsolePresenter(

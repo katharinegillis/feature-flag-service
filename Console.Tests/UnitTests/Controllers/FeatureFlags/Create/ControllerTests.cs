@@ -1,11 +1,11 @@
 using Application.Interactors.CreateFeatureFlag;
-using Console.Commands.FeatureFlags.Create;
+using Console.Controllers.FeatureFlags.Create;
 using Console.Common;
 using Moq;
 
-namespace Console.Tests.UnitTests.Commands.FeatureFlags.Create;
+namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Create;
 
-public class CommandTests
+public class ControllerTests
 {
     [Test]
     public void CreateCommand_Should_Be_IRunnableWithOptions()
@@ -13,7 +13,7 @@ public class CommandTests
         var presenter = Mock.Of<IConsolePresenter>();
         var interactor = Mock.Of<IInputPort>();
 
-        var command = new Command(presenter, interactor);
+        var command = new Controller(presenter, interactor);
 
         Assert.That(command, Is.InstanceOf<IRunnableWithOptions>());
     }
@@ -26,7 +26,7 @@ public class CommandTests
 
         var createFeatureFlagInteractor = new Mock<IInputPort>();
 
-        var command = new Command(presenterMock.Object, createFeatureFlagInteractor.Object);
+        var command = new Controller(presenterMock.Object, createFeatureFlagInteractor.Object);
 
         var optionsMock = new Mock<IOptions>();
         optionsMock.Setup(o => o.Id).Returns("some_flag");

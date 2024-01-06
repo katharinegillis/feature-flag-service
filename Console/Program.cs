@@ -14,7 +14,7 @@ builder.Services.AddSqliteServer();
 builder.Services.AddRepositories();
 builder.Services.AddPresenters();
 builder.Services.AddInteractors();
-builder.Services.AddCommands();
+builder.Services.AddControllers();
 builder.Services.AddLocalizationServices();
 
 CultureInfo.CurrentUICulture = new CultureInfo("en-US", false);

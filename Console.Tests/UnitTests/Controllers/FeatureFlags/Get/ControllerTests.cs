@@ -1,12 +1,12 @@
 using Application.Interactors.GetFeatureFlag;
-using Console.Commands.FeatureFlags.Get;
+using Console.Controllers.FeatureFlags.Get;
 using Console.Common;
 using Moq;
-using Command = Console.Commands.FeatureFlags.Get.Command;
+using Controller = Console.Controllers.FeatureFlags.Get.Controller;
 
-namespace Console.Tests.UnitTests.Commands.FeatureFlags.Get;
+namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Get;
 
-public class CommandTests
+public class ControllerTests
 {
     [Test]
     public void GetCommand_Should_Be_IRunnableWithOptions()
@@ -14,7 +14,7 @@ public class CommandTests
         var presenter = Mock.Of<IConsolePresenter>();
         var interactor = Mock.Of<IInputPort>();
 
-        var command = new Command(presenter, interactor);
+        var command = new Controller(presenter, interactor);
 
         Assert.That(command, Is.InstanceOf<IRunnableWithOptions>());
     }
@@ -27,7 +27,7 @@ public class CommandTests
 
         var interactorMock = new Mock<IInputPort>();
 
-        var command = new Command(presenterMock.Object, interactorMock.Object);
+        var command = new Controller(presenterMock.Object, interactorMock.Object);
 
         var options = Mock.Of<IOptions>();
 

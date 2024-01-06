@@ -2,7 +2,7 @@ using Console.Common;
 using Domain.FeatureFlags;
 using Utilities.LocalizationService;
 
-namespace Console.Commands.FeatureFlags.Get;
+namespace Console.Controllers.FeatureFlags.Get;
 
 public class ConsolePresenter(ILocalizationService<ConsolePresenter> localizationService, IConsoleWriter consoleWriter)
     : IConsolePresenter

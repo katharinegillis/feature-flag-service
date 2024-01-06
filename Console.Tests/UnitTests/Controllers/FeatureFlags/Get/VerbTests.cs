@@ -1,25 +1,25 @@
 using CommandLine;
-using Console.Commands.FeatureFlags.Get;
+using Console.Controllers.FeatureFlags.Get;
 using Console.Common;
 
-namespace Console.Tests.UnitTests.Commands.FeatureFlags.Get;
+namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Get;
 
 public class VerbTests
 {
     [Test]
-    public void GetVerb_Should_Be_A_IHasCommandType()
+    public void GetVerb_Should_Be_A_IHasControllerType()
     {
         var verb = new Verb();
 
-        Assert.That(verb, Is.InstanceOf<IHasCommandType>());
+        Assert.That(verb, Is.InstanceOf<IHasControllerType>());
     }
 
     [Test]
-    public void GetVerb_Should_Associated_A_GetCommand()
+    public void GetVerb_Should_Associated_A_GetController()
     {
         var verb = new Verb();
 
-        Assert.That(verb.CommandType, Is.EqualTo(typeof(Command)));
+        Assert.That(verb.ControllerType, Is.EqualTo(typeof(Controller)));
     }
 
     [Test]

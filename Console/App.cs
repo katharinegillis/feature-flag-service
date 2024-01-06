@@ -31,9 +31,9 @@ public class App(
 
     private async Task RunAsync(object obj)
     {
-        var verb = (IHasCommandType)obj;
+        var verb = (IHasControllerType)obj;
 
-        if (serviceProvider.GetService(verb.CommandType) is not IRunnableWithOptions command)
+        if (serviceProvider.GetService(verb.ControllerType) is not IRunnableWithOptions command)
         {
             System.Console.WriteLine(localizationService.Translate("Verb is missing command."));
             return;

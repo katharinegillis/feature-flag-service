@@ -1,10 +1,10 @@
-using Console.Commands.FeatureFlags.Create;
+using Console.Controllers.FeatureFlags.Create;
 using Console.Common;
 using Domain.Common;
 using Moq;
 using Utilities.LocalizationService;
 
-namespace Console.Tests.UnitTests.Commands.FeatureFlags.Create;
+namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Create;
 
 public class ConsolePresenterTests
 {

@@ -1,9 +1,9 @@
 using Application.Interactors.GetFeatureFlag;
 using Console.Common;
 
-namespace Console.Commands.FeatureFlags.Get;
+namespace Console.Controllers.FeatureFlags.Get;
 
-public class Command(IConsolePresenter presenter, IInputPort interactor) : IRunnableWithOptions
+public class Controller(IConsolePresenter presenter, IInputPort interactor) : IRunnableWithOptions
 {
     private IOptions _options = null!;
 

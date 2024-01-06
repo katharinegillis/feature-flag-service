@@ -1,12 +1,12 @@
 using CommandLine;
 using Console.Common;
 
-namespace Console.Commands.FeatureFlags.Get;
+namespace Console.Controllers.FeatureFlags.Get;
 
 [Verb("featureflag:get", HelpText = "Get a feature flag")]
-public class Verb : IHasCommandType, IOptions
+public class Verb : IHasControllerType, IOptions
 {
-    public Type CommandType { get; } = typeof(Command);
+    public Type ControllerType { get; } = typeof(Controller);
 
     [Option('i', "id", Required = true)] public string Id { get; set; } = null!;
 }
