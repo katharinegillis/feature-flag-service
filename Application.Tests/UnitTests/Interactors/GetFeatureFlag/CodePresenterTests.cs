@@ -8,7 +8,7 @@ public sealed class CodePresenterTests
     [Test]
     public void Ok_Should_Store_FeatureFlag()
     {
-        var featureFlag = new Model
+        var model = new Model
         {
             Id = "some_flag",
             Enabled = true
@@ -16,10 +16,10 @@ public sealed class CodePresenterTests
 
         var presenter = new CodePresenter();
 
-        presenter.Ok(featureFlag);
+        presenter.Ok(model);
         Assert.Multiple(() =>
         {
-            Assert.That(presenter.FeatureFlag, Is.EqualTo(featureFlag));
+            Assert.That(presenter.FeatureFlag, Is.EqualTo(model));
             Assert.That(presenter.IsNotFound, Is.False);
         });
     }

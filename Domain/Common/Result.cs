@@ -16,14 +16,14 @@ public readonly struct Result<T, TE>
 
     public static Result<T, TE> Ok(T v)
     {
-        return new Result<T, TE>(v, default(TE)!, true);
+        return new Result<T, TE>(v, default!, true);
     }
 
     public static Result<T, TE> Err(TE e)
     {
-        return new Result<T, TE>(default(T)!, e, false);
+        return new Result<T, TE>(default!, e, false);
     }
 
-    public static implicit operator Result<T, TE>(T v) => new(v, default(TE)!, true);
-    public static implicit operator Result<T, TE>(TE e) => new(default(T)!, e, false);
+    public static implicit operator Result<T, TE>(T v) => new(v, default!, true);
+    public static implicit operator Result<T, TE>(TE e) => new(default!, e, false);
 }

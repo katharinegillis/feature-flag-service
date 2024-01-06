@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI.Extensions;
 
+// ReSharper disable once UnusedType.Global
 public static class SqliteExtensions
 {
+    // ReSharper disable once UnusedMember.Global
     public static void AddSqliteServer(this IServiceCollection services)
     {
-        IConfigurationRoot configuration = new ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
             .Build();

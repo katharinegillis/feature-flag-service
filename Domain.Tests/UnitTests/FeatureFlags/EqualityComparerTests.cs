@@ -9,18 +9,18 @@ public sealed class EqualityComparerTests
     {
         var comparer = new EqualityComparer();
 
-        var firstFeatureFlag = new Model
+        var a = new Model
         {
             Id = "some_flag",
             Enabled = true
         };
-        var secondFeatureFlag = new Model
+        var b = new Model
         {
             Id = "some_flag",
             Enabled = true
         };
 
-        Assert.That(comparer.Equals(firstFeatureFlag, secondFeatureFlag), Is.True);
+        Assert.That(comparer.Equals(a, b), Is.True);
     }
 
     [Test]
@@ -36,15 +36,15 @@ public sealed class EqualityComparerTests
     {
         var comparer = new EqualityComparer();
 
-        var featureFlag = new Model
+        var a = new Model
         {
             Id = "some_flag",
             Enabled = true
         };
         Assert.Multiple(() =>
         {
-            Assert.That(comparer.Equals(featureFlag, null), Is.False);
-            Assert.That(comparer.Equals(null, featureFlag), Is.False);
+            Assert.That(comparer.Equals(a, null), Is.False);
+            Assert.That(comparer.Equals(null, a), Is.False);
         });
     }
 
@@ -53,18 +53,18 @@ public sealed class EqualityComparerTests
     {
         var comparer = new EqualityComparer();
 
-        var firstFeatureFlag = new Model
+        var a = new Model
         {
             Id = "some_flag",
             Enabled = true
         };
-        var secondFeatureFlag = new Model
+        var b = new Model
         {
             Id = "some_other_flag",
             Enabled = true
         };
 
-        Assert.That(comparer.Equals(firstFeatureFlag, secondFeatureFlag), Is.False);
+        Assert.That(comparer.Equals(a, b), Is.False);
     }
 
     [Test]
@@ -72,18 +72,18 @@ public sealed class EqualityComparerTests
     {
         var comparer = new EqualityComparer();
 
-        var firstFeatureFlag = new Model
+        var a = new Model
         {
             Id = "some_flag",
             Enabled = true
         };
-        var secondFeatureFlag = new Model
+        var b = new Model
         {
             Id = "some_flag",
             Enabled = false
         };
 
-        Assert.That(comparer.Equals(firstFeatureFlag, secondFeatureFlag), Is.False);
+        Assert.That(comparer.Equals(a, b), Is.False);
     }
 
     [Test]
@@ -91,18 +91,18 @@ public sealed class EqualityComparerTests
     {
         var comparer = new EqualityComparer();
 
-        var firstFeatureFlag = new Model
+        var a = new Model
         {
             Id = "some_flag",
             Enabled = true
         };
-        var secondFeatureFlag = new Model
+        var b = new Model
         {
             Id = "some_flag",
             Enabled = true
         };
 
-        Assert.That(comparer.GetHashCode(firstFeatureFlag), Is.EqualTo(comparer.GetHashCode(secondFeatureFlag)));
+        Assert.That(comparer.GetHashCode(a), Is.EqualTo(comparer.GetHashCode(b)));
     }
 
     [Test]
@@ -110,25 +110,25 @@ public sealed class EqualityComparerTests
     {
         var comparer = new EqualityComparer();
 
-        var firstFeatureFlag = new Model
+        var a = new Model
         {
             Id = "some_flag",
             Enabled = true
         };
-        var secondFeatureFlag = new Model
+        var b = new Model
         {
             Id = "some_other_flag",
             Enabled = true
         };
 
-        Assert.That(comparer.GetHashCode(firstFeatureFlag), Is.Not.EqualTo(comparer.GetHashCode(secondFeatureFlag)));
+        Assert.That(comparer.GetHashCode(a), Is.Not.EqualTo(comparer.GetHashCode(b)));
 
-        secondFeatureFlag = new Model
+        b = new Model
         {
             Id = "some_flag",
             Enabled = false
         };
 
-        Assert.That(comparer.GetHashCode(firstFeatureFlag), Is.Not.EqualTo(comparer.GetHashCode(secondFeatureFlag)));
+        Assert.That(comparer.GetHashCode(a), Is.Not.EqualTo(comparer.GetHashCode(b)));
     }
 }

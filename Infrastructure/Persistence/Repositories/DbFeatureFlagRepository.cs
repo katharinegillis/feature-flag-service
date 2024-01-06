@@ -2,12 +2,11 @@ using Domain.Common;
 using Domain.FeatureFlags;
 using EntityFramework.Exceptions.Common;
 using Infrastructure.Persistence.Contexts;
-using Microsoft.EntityFrameworkCore;
 using FeatureFlag = Infrastructure.Persistence.Models.FeatureFlag;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public sealed class DbFeatureFlagRepository(FeatureFlagContext context) : IRepository
+public sealed class DbFeatureFlagRepository(FeatureFlagContext context, IFactory factory) : IRepository
 {
     public Task<IModel> Get(string id)
     {
@@ -17,16 +16,9 @@ public sealed class DbFeatureFlagRepository(FeatureFlagContext context) : IRepos
             .Select(e => e)
             .SingleOrDefault();
 
-        if (result is not null)
-        {
-            return Task.FromResult<IModel>(new Model
-            {
-                Id = result.FeatureFlagId,
-                Enabled = result.Enabled
-            });
-        }
-
-        return Task.FromResult<IModel>(NullModel.Instance);
+        return Task.FromResult(result is not null
+            ? factory.Create(result.FeatureFlagId, result.Enabled)
+            : factory.Create());
     }
 
     public Task<Result<string, Error>> Create(IModel model)

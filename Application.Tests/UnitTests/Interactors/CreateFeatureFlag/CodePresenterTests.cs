@@ -38,8 +38,6 @@ public sealed class CodePresenterTests
             }
         });
 
-        var errors = presenter.Errors.ToList();
-
         Assert.Multiple(() =>
         {
             Assert.That(presenter.IsOk, Is.False);

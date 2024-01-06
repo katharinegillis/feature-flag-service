@@ -6,7 +6,6 @@ using Infrastructure.Persistence.Models;
 using Infrastructure.Persistence.Repositories;
 using Infrastructure.Tests.Common;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
 
 namespace Infrastructure.Tests.UnitTests.Repositories;
@@ -21,7 +20,7 @@ public class DbFeatureFlagRepositoryTests
             new()
             {
                 FeatureFlagId = "some_flag",
-                Enabled = true,
+                Enabled = true
             }
         };
 
@@ -30,7 +29,14 @@ public class DbFeatureFlagRepositoryTests
         var mockContext = new Mock<FeatureFlagContext>();
         mockContext.Setup(c => c.FeatureFlags).Returns(mockSet.Object);
 
-        var repository = new DbFeatureFlagRepository(mockContext.Object);
+        var mockFactory = new Mock<IFactory>();
+        mockFactory.Setup(f => f.Create("some_flag", true)).Returns(new Model
+        {
+            Id = "some_flag",
+            Enabled = true
+        });
+
+        var repository = new DbFeatureFlagRepository(mockContext.Object, mockFactory.Object);
 
         var result = await repository.Get("some_flag");
 
@@ -45,14 +51,15 @@ public class DbFeatureFlagRepositoryTests
     [Test]
     public async Task DbFeatureFlagRepository_Get_Should_Return_NullModel_If_Not_Found()
     {
-        var data = new List<FeatureFlag>();
-
-        var mockSet = TestingUtils.CreateDbSetMockFromList(data);
+        var mockSet = TestingUtils.CreateDbSetMockFromList(new List<FeatureFlag>());
 
         var mockContext = new Mock<FeatureFlagContext>();
         mockContext.Setup(c => c.FeatureFlags).Returns(mockSet.Object);
 
-        var repository = new DbFeatureFlagRepository(mockContext.Object);
+        var mockFactory = new Mock<IFactory>();
+        mockFactory.Setup(f => f.Create()).Returns(NullModel.Instance);
+
+        var repository = new DbFeatureFlagRepository(mockContext.Object, mockFactory.Object);
 
         var result = await repository.Get("some_flag");
 
@@ -69,7 +76,9 @@ public class DbFeatureFlagRepositoryTests
         var mockContext = new Mock<FeatureFlagContext>();
         mockContext.Setup(c => c.FeatureFlags).Returns(mockSet.Object);
 
-        var repository = new DbFeatureFlagRepository(mockContext.Object);
+        var factory = Mock.Of<IFactory>();
+
+        var repository = new DbFeatureFlagRepository(mockContext.Object, factory);
 
         var result = await repository.Create(new Model
         {
@@ -92,7 +101,7 @@ public class DbFeatureFlagRepositoryTests
     }
 
     [Test]
-    public async Task DbFeatureFlagRepository_Create_Should_Return_Validation_Error_If_Alredy_Exists()
+    public async Task DbFeatureFlagRepository_Create_Should_Return_Validation_Error_If_Already_Exists()
     {
         var mockSet = new Mock<DbSet<FeatureFlag>>();
 
@@ -100,7 +109,9 @@ public class DbFeatureFlagRepositoryTests
         mockContext.Setup(m => m.FeatureFlags).Returns(mockSet.Object);
         mockContext.Setup(m => m.SaveChanges()).Callback(() => throw new UniqueConstraintException());
 
-        var repository = new DbFeatureFlagRepository(mockContext.Object);
+        var factory = Mock.Of<IFactory>();
+
+        var repository = new DbFeatureFlagRepository(mockContext.Object, factory);
 
         var result = await repository.Create(new Model
         {
@@ -136,7 +147,9 @@ public class DbFeatureFlagRepositoryTests
         mockContext.Setup(m => m.SaveChanges())
             .Callback(() => throw new Exception("Unknown error"));
 
-        var repository = new DbFeatureFlagRepository(mockContext.Object);
+        var factory = Mock.Of<IFactory>();
+
+        var repository = new DbFeatureFlagRepository(mockContext.Object, factory);
 
         var result = await repository.Create(new Model
         {

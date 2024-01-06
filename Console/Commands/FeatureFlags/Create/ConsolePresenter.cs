@@ -1,6 +1,5 @@
 using Console.Common;
 using Domain.Common;
-using Microsoft.Extensions.Localization;
 using Utilities.LocalizationService;
 
 namespace Console.Commands.FeatureFlags.Create;
@@ -35,5 +34,5 @@ public class ConsolePresenter(
         ExitCode = (int)Console.Common.ExitCode.Error;
     }
 
-    public int ExitCode { get; set; }
+    public int ExitCode { get; private set; }
 }

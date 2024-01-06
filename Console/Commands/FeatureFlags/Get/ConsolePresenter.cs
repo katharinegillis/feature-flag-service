@@ -22,5 +22,5 @@ public class ConsolePresenter(ILocalizationService<ConsolePresenter> localizatio
         ExitCode = (int)Console.Common.ExitCode.Success;
     }
 
-    public int ExitCode { get; set; }
+    public int ExitCode { get; private set; }
 }

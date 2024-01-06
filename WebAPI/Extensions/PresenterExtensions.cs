@@ -4,8 +4,10 @@ using IsFeatureFlagEnabledInteractor = Application.Interactors.IsFeatureFlagEnab
 
 namespace WebAPI.Extensions;
 
+// ReSharper disable once UnusedType.Global
 public static class PresenterExtensions
 {
+    // ReSharper disable once UnusedMember.Global
     public static void AddPresenters(this IServiceCollection services)
     {
         services.AddTransient<EnabledController.IPresenter, EnabledController.ActionResultPresenter>();

@@ -13,10 +13,10 @@ public sealed class InteractorTests
     [Test]
     public void IsFeatureFlagEnabledInteractor_An_InputPort()
     {
-        var getFeatureFlagInteractor = Mock.Of<IGetFeatureFlagInputPort>();
-        var getFeatureFlagCodePresenter = Mock.Of<IGetFeatureFlagCodePresenter>();
+        var getInteractor = Mock.Of<IGetFeatureFlagInputPort>();
+        var getPresenter = Mock.Of<IGetFeatureFlagCodePresenter>();
 
-        var interactor = new Interactor(getFeatureFlagCodePresenter, getFeatureFlagInteractor);
+        var interactor = new Interactor(getPresenter, getInteractor);
 
         Assert.That(interactor, Is.InstanceOf<IInputPort>());
     }
@@ -24,16 +24,16 @@ public sealed class InteractorTests
     [Test]
     public async Task IsFeatureFlagEnabledInteractor_Should_Return_True_If_Flag_Is_Enabled()
     {
-        var getFeatureFlagInteractor = new Mock<IGetFeatureFlagInputPort>();
-        getFeatureFlagInteractor.Setup(interactor =>
-            interactor.Execute(It.IsAny<GetFeatureFlagRequestModel>(), It.IsAny<IGetFeatureFlagOutputPort>()));
+        var getInteractor = new Mock<IGetFeatureFlagInputPort>();
+        getInteractor.Setup(i =>
+            i.Execute(It.IsAny<GetFeatureFlagRequestModel>(), It.IsAny<IGetFeatureFlagOutputPort>()));
 
-        var getFeatureFlagCodePresenter = new Mock<IGetFeatureFlagCodePresenter>();
-        getFeatureFlagCodePresenter.Setup(presenter => presenter.IsNotFound).Returns(false);
-        getFeatureFlagCodePresenter.Setup(presenter => presenter.FeatureFlag)
+        var getPresenter = new Mock<IGetFeatureFlagCodePresenter>();
+        getPresenter.Setup(p => p.IsNotFound).Returns(false);
+        getPresenter.Setup(p => p.FeatureFlag)
             .Returns(new Model { Id = "some_flag", Enabled = true });
 
-        var interactor = new Interactor(getFeatureFlagCodePresenter.Object, getFeatureFlagInteractor.Object);
+        var interactor = new Interactor(getPresenter.Object, getInteractor.Object);
 
         var request = new RequestModel
         {
@@ -43,22 +43,22 @@ public sealed class InteractorTests
 
         await interactor.Execute(request, presenterMock.Object);
 
-        presenterMock.Verify(presenter => presenter.Ok(true));
+        presenterMock.Verify(p => p.Ok(true));
     }
 
     [Test]
     public async Task IsFeatureFlagEnabledInteractor_Should_Return_False_If_Flag_Is_Not_Enabled()
     {
-        var getFeatureFlagInteractor = new Mock<IGetFeatureFlagInputPort>();
-        getFeatureFlagInteractor.Setup(interactor =>
-            interactor.Execute(It.IsAny<GetFeatureFlagRequestModel>(), It.IsAny<IGetFeatureFlagOutputPort>()));
+        var getInteractor = new Mock<IGetFeatureFlagInputPort>();
+        getInteractor.Setup(i =>
+            i.Execute(It.IsAny<GetFeatureFlagRequestModel>(), It.IsAny<IGetFeatureFlagOutputPort>()));
 
-        var getFeatureFlagCodePresenter = new Mock<IGetFeatureFlagCodePresenter>();
-        getFeatureFlagCodePresenter.Setup(presenter => presenter.IsNotFound).Returns(false);
-        getFeatureFlagCodePresenter.Setup(presenter => presenter.FeatureFlag)
+        var getPresenter = new Mock<IGetFeatureFlagCodePresenter>();
+        getPresenter.Setup(p => p.IsNotFound).Returns(false);
+        getPresenter.Setup(p => p.FeatureFlag)
             .Returns(new Model { Id = "some_flag", Enabled = false });
 
-        var interactor = new Interactor(getFeatureFlagCodePresenter.Object, getFeatureFlagInteractor.Object);
+        var interactor = new Interactor(getPresenter.Object, getInteractor.Object);
 
         var request = new RequestModel
         {
@@ -74,19 +74,19 @@ public sealed class InteractorTests
     [Test]
     public async Task IsFeatureFlagEnabledInteractor_Should_Return_NotFound_If_Flag_Not_Found()
     {
-        var getFeatureFlagInteractor = new Mock<IGetFeatureFlagInputPort>();
-        getFeatureFlagInteractor.Setup(interactor =>
-                interactor.Execute(It.IsAny<GetFeatureFlagRequestModel>(), It.IsAny<IGetFeatureFlagOutputPort>()))
+        var getInteractor = new Mock<IGetFeatureFlagInputPort>();
+        getInteractor.Setup(i =>
+                i.Execute(It.IsAny<GetFeatureFlagRequestModel>(), It.IsAny<IGetFeatureFlagOutputPort>()))
             // ReSharper disable once UnusedParameter.Local
-            .Callback((GetFeatureFlagRequestModel getFeatureFlagRequestModel,
-                    IGetFeatureFlagOutputPort getFeatureFlagPresenter) =>
-                getFeatureFlagPresenter.NotFound());
+            .Callback((GetFeatureFlagRequestModel r,
+                    IGetFeatureFlagOutputPort p) =>
+                p.NotFound());
 
-        var getFeatureFlagCodePresenter = new Mock<IGetFeatureFlagCodePresenter>();
-        getFeatureFlagCodePresenter.Setup(presenter => presenter.IsNotFound).Returns(true);
-        getFeatureFlagCodePresenter.Setup(presenter => presenter.FeatureFlag).Returns(NullModel.Instance);
+        var getPresenter = new Mock<IGetFeatureFlagCodePresenter>();
+        getPresenter.Setup(p => p.IsNotFound).Returns(true);
+        getPresenter.Setup(p => p.FeatureFlag).Returns(NullModel.Instance);
 
-        var interactor = new Interactor(getFeatureFlagCodePresenter.Object, getFeatureFlagInteractor.Object);
+        var interactor = new Interactor(getPresenter.Object, getInteractor.Object);
 
         var request = new RequestModel
         {
@@ -96,6 +96,6 @@ public sealed class InteractorTests
 
         await interactor.Execute(request, presenterMock.Object);
 
-        presenterMock.Verify(presenter => presenter.NotFound());
+        presenterMock.Verify(p => p.NotFound());
     }
 }

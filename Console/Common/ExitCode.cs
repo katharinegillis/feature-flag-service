@@ -1,6 +1,6 @@
 namespace Console.Common;
 
-public enum ExitCode : int
+public enum ExitCode
 {
     Success = 0,
     OptionsError = 1,

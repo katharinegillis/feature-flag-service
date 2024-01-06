@@ -3,6 +3,4 @@ using Console.Common;
 
 namespace Console.Commands.FeatureFlags.Get;
 
-public interface IConsolePresenter : IOutputPort, IHasExitCode
-{
-}
+public interface IConsolePresenter : IOutputPort, IHasExitCode;

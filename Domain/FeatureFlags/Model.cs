@@ -8,7 +8,7 @@ public sealed class Model : IModel
 
     public required string Id { get; init; }
 
-    public required bool Enabled { get; set; }
+    public required bool Enabled { get; init; }
 
     public Result<bool, IEnumerable<ValidationError>> Validate()
     {

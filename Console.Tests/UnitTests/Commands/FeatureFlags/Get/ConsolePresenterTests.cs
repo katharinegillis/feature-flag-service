@@ -13,12 +13,12 @@ public class ConsolePresenterTests
     {
         var localizationServiceMock = new Mock<ILocalizationService<ConsolePresenter>>();
         localizationServiceMock
-            .Setup(service => service.Translate("Id: \"{0}\", Enabled: \"{1}\"", "some_flag", "true"))
+            .Setup(s => s.Translate("Id: \"{0}\", Enabled: \"{1}\"", "some_flag", "true"))
             .Returns("Id: \"some_flag\", Enabled: \"true\"");
 
-        var consoleWriterMock = new Mock<IConsoleWriter>();
+        var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizationServiceMock.Object, consoleWriterMock.Object);
+        var presenter = new ConsolePresenter(localizationServiceMock.Object, writerMock.Object);
 
         presenter.Ok(new Model
         {
@@ -28,24 +28,24 @@ public class ConsolePresenterTests
 
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.Success));
 
-        consoleWriterMock.Verify(writer => writer.WriteLine("Id: \"some_flag\", Enabled: \"true\""));
+        writerMock.Verify(w => w.WriteLine("Id: \"some_flag\", Enabled: \"true\""));
     }
 
     [Test]
     public void ConsolePresenter_NotFound_Should_Display_Not_Found()
     {
         var localizationServiceMock = new Mock<ILocalizationService<ConsolePresenter>>();
-        localizationServiceMock.Setup(service => service.Translate("Feature Flag doesn\'t exist."))
+        localizationServiceMock.Setup(s => s.Translate("Feature Flag doesn\'t exist."))
             .Returns("Feature Flag doesn\'t exist.");
 
-        var consoleWriterMock = new Mock<IConsoleWriter>();
+        var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizationServiceMock.Object, consoleWriterMock.Object);
+        var presenter = new ConsolePresenter(localizationServiceMock.Object, writerMock.Object);
 
         presenter.NotFound();
 
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.Success));
 
-        consoleWriterMock.Verify(writer => writer.WriteLine("Feature Flag doesn\'t exist."));
+        writerMock.Verify(w => w.WriteLine("Feature Flag doesn\'t exist."));
     }
 }

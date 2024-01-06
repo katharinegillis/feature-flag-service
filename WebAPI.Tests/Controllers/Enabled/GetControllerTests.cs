@@ -18,7 +18,7 @@ public sealed class GetControllerTests
             .Setup(interactor => interactor.Execute(It.IsAny<RequestModel>(), It.IsAny<IOutputPort>()));
 
         var presenterMock = new Mock<IPresenter>();
-        presenterMock.Setup(presenter => presenter.ActionResult).Returns(new OkObjectResult(true));
+        presenterMock.Setup(p => p.ActionResult).Returns(new OkObjectResult(true));
 
         var controller = new GetController(presenterMock.Object, interactorMock.Object, logger);
 
@@ -37,10 +37,10 @@ public sealed class GetControllerTests
 
         var interactorMock = new Mock<IInputPort>();
         interactorMock
-            .Setup(interactor => interactor.Execute(It.IsAny<RequestModel>(), It.IsAny<IOutputPort>()));
+            .Setup(i => i.Execute(It.IsAny<RequestModel>(), It.IsAny<IOutputPort>()));
 
         var presenterMock = new Mock<IPresenter>();
-        presenterMock.Setup(presenter => presenter.ActionResult).Returns(new OkObjectResult(false));
+        presenterMock.Setup(p => p.ActionResult).Returns(new OkObjectResult(false));
 
         var controller = new GetController(presenterMock.Object, interactorMock.Object, logger);
 
@@ -58,10 +58,10 @@ public sealed class GetControllerTests
         var logger = Mock.Of<ILogger<GetController>>();
 
         var interactorMock = new Mock<IInputPort>();
-        interactorMock.Setup(interactor => interactor.Execute(It.IsAny<RequestModel>(), It.IsAny<IOutputPort>()));
+        interactorMock.Setup(i => i.Execute(It.IsAny<RequestModel>(), It.IsAny<IOutputPort>()));
 
         var presenterMock = new Mock<IPresenter>();
-        presenterMock.Setup(presenter => presenter.ActionResult).Returns(new NotFoundResult());
+        presenterMock.Setup(p => p.ActionResult).Returns(new NotFoundResult());
 
         var controller = new GetController(presenterMock.Object, interactorMock.Object, logger);
 
@@ -78,9 +78,9 @@ public sealed class GetControllerTests
         var interactor = Mock.Of<IInputPort>();
 
         var presenterMock = new Mock<IPresenter>();
-        presenterMock.Setup(presenter => presenter.ActionResult).Returns(new StatusCodeResult(500));
-        presenterMock.Setup(presenter => presenter.IsError).Returns(true);
-        presenterMock.Setup(presenter => presenter.Message).Returns("Error message");
+        presenterMock.Setup(p => p.ActionResult).Returns(new StatusCodeResult(500));
+        presenterMock.Setup(p => p.IsError).Returns(true);
+        presenterMock.Setup(p => p.Message).Returns("Error message");
 
         var controller = new GetController(presenterMock.Object, interactor, loggerMock.Object);
 
@@ -91,11 +91,11 @@ public sealed class GetControllerTests
             Assert.That((result as StatusCodeResult)?.StatusCode, Is.EqualTo(500));
         });
 
-        loggerMock.Verify(logger => logger.Log(
-                It.Is<LogLevel>(logLevel => logLevel == LogLevel.Error),
-                It.Is<EventId>(eventId => eventId.Id == 0),
-                It.Is<It.IsAnyType>((@object, @type) =>
-                    @object.ToString() == "Error message" && @type.Name == "FormattedLogValues"),
+        loggerMock.Verify(l => l.Log(
+                It.Is<LogLevel>(ll => ll == LogLevel.Error),
+                It.Is<EventId>(e => e.Id == 0),
+                It.Is<It.IsAnyType>((@object, type) =>
+                    @object.ToString() == "Error message" && type.Name == "FormattedLogValues"),
                 It.IsAny<Exception>(),
                 It.IsAny<Func<It.IsAnyType, Exception, string>>()!),
             Times.Once);

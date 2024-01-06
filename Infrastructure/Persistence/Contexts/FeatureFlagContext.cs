@@ -6,6 +6,7 @@ namespace Infrastructure.Persistence.Contexts;
 
 public class FeatureFlagContext : DbContext
 {
+    // ReSharper disable once PropertyCanBeMadeInitOnly.Global
     public virtual DbSet<FeatureFlag> FeatureFlags { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -17,7 +18,7 @@ public class FeatureFlagContext : DbContext
     {
     }
 
-    public FeatureFlagContext() : base()
+    public FeatureFlagContext()
     {
     }
 }

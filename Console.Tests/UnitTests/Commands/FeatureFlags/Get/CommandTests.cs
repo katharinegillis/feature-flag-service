@@ -23,7 +23,7 @@ public class CommandTests
     public async Task GetCommand_Should_Return_Flag()
     {
         var presenterMock = new Mock<IConsolePresenter>();
-        presenterMock.Setup(presenter => presenter.ExitCode).Returns((int)ExitCode.Success);
+        presenterMock.Setup(p => p.ExitCode).Returns((int)ExitCode.Success);
 
         var interactorMock = new Mock<IInputPort>();
 
@@ -37,6 +37,6 @@ public class CommandTests
 
         Assert.That(result, Is.EqualTo((int)ExitCode.Success));
 
-        interactorMock.Verify(interactor => interactor.Execute(It.IsAny<RequestModel>(), It.IsAny<IOutputPort>()));
+        interactorMock.Verify(i => i.Execute(It.IsAny<RequestModel>(), It.IsAny<IOutputPort>()));
     }
 }

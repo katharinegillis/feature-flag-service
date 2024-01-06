@@ -9,9 +9,9 @@ public sealed class InteractorTests
     [Test]
     public void GetFeatureFlagInteractor_Is_An_InputPort()
     {
-        var featureFlagRepository = Mock.Of<IRepository>();
+        var repository = Mock.Of<IRepository>();
 
-        var interactor = new Interactor(featureFlagRepository);
+        var interactor = new Interactor(repository);
 
         Assert.That(interactor, Is.InstanceOf<IInputPort>());
     }
@@ -19,16 +19,16 @@ public sealed class InteractorTests
     [Test]
     public async Task GetFeatureFlagInteractor_Returns_A_Feature_Flag()
     {
-        var featureFlag = new Model
+        var model = new Model
         {
             Id = "some_flag",
             Enabled = true
         };
 
-        var featureFlagRepositoryMock = new Mock<IRepository>();
-        featureFlagRepositoryMock.Setup(repository => repository.Get(It.IsAny<string>()).Result).Returns(featureFlag);
+        var repositoryMock = new Mock<IRepository>();
+        repositoryMock.Setup(r => r.Get(It.IsAny<string>()).Result).Returns(model);
 
-        var interactor = new Interactor(featureFlagRepositoryMock.Object);
+        var interactor = new Interactor(repositoryMock.Object);
 
         var request = new RequestModel
         {
@@ -38,19 +38,19 @@ public sealed class InteractorTests
 
         await interactor.Execute(request, presenterMock.Object);
 
-        featureFlagRepositoryMock.Verify(repository => repository.Get("some_flag"));
+        repositoryMock.Verify(r => r.Get("some_flag"));
 
-        presenterMock.Verify(presenter => presenter.Ok(featureFlag));
+        presenterMock.Verify(p => p.Ok(model));
     }
 
     [Test]
     public async Task GetFeatureFlagInteractor_Returns_NotFound()
     {
-        var featureFlagRepositoryMock = new Mock<IRepository>();
-        featureFlagRepositoryMock.Setup(repository => repository.Get(It.IsAny<string>()).Result)
+        var repositoryMock = new Mock<IRepository>();
+        repositoryMock.Setup(r => r.Get(It.IsAny<string>()).Result)
             .Returns(new NullModel());
 
-        var interactor = new Interactor(featureFlagRepositoryMock.Object);
+        var interactor = new Interactor(repositoryMock.Object);
 
         var request = new RequestModel
         {
@@ -60,8 +60,8 @@ public sealed class InteractorTests
 
         await interactor.Execute(request, presenterMock.Object);
 
-        featureFlagRepositoryMock.Verify(repository => repository.Get("some_flag"));
+        repositoryMock.Verify(r => r.Get("some_flag"));
 
-        presenterMock.Verify(presenter => presenter.NotFound());
+        presenterMock.Verify(p => p.NotFound());
     }
 }

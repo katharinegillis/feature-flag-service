@@ -41,19 +41,4 @@
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <EmbeddedResource Update="Resources\Commands.FeatureFlags.Create.ConsolePresenter.en.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Commands.FeatureFlags.Create.ConsolePresenter.en.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Compile Update="Resources\Commands.FeatureFlags.Create.ConsolePresenter.en.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Commands.FeatureFlags.Create.ConsolePresenter.en.resx</DependentUpon>
-        </Compile>
-    </ItemGroup>
-
 </Project>
