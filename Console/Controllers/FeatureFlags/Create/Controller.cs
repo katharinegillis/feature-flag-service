@@ -17,7 +17,7 @@ public sealed class Controller(IConsolePresenter presenter, IInputPort interacto
         var request = new RequestModel
         {
             Id = _options.Id,
-            Enabled = _options.Enabled
+            Enabled = (bool)_options.Enabled!
         };
 
         await interactor.Execute(request, presenter);

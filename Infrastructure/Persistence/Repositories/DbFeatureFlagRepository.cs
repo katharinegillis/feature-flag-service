@@ -59,4 +59,9 @@ public sealed class DbFeatureFlagRepository(FeatureFlagContext context, IFactory
         return Task.FromResult(context.FeatureFlags.Select(e => factory.Create(e.FeatureFlagId, e.Enabled))
             .AsEnumerable());
     }
+
+    public Task<Result<bool, Error>> Update(IModel model)
+    {
+        throw new NotImplementedException();
+    }
 }

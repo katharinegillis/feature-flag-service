@@ -9,4 +9,6 @@ public interface IRepository
     public Task<Result<string, Error>> Create(IModel model);
 
     public Task<IEnumerable<IModel>> List();
+
+    public Task<Result<bool, Error>> Update(IModel model);
 }

@@ -10,11 +10,11 @@ public sealed class InteractorTests
     [Test]
     public void CreateFeatureFlagInteractor_Is_An_InputPort()
     {
-        var featureFlagRepository = Mock.Of<IRepository>();
+        var repository = Mock.Of<IRepository>();
 
-        var featureFlagFactory = Mock.Of<IFactory>();
+        var factory = Mock.Of<IFactory>();
 
-        var interactor = new Interactor(featureFlagRepository, featureFlagFactory);
+        var interactor = new Interactor(repository, factory);
 
         Assert.That(interactor, Is.InstanceOf<IInputPort>());
     }

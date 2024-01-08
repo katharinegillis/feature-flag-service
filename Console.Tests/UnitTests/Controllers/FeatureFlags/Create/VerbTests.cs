@@ -47,7 +47,7 @@ public sealed class VerbTests
         var verb = new Verb();
         verb.Enabled = true;
 
-        Assert.That(verb.Enabled);
+        Assert.That(verb.Enabled, Is.True);
     }
 
     [Test]
