@@ -71,4 +71,18 @@ public sealed class CodePresenterTests
             }));
         });
     }
+
+    [Test]
+    public void CodePresenter_NotFound_Should_Set_NotFound()
+    {
+        var presenter = new CodePresenter();
+
+        presenter.NotFound();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(presenter.IsOk, Is.False);
+            Assert.That(presenter.IsNotFound);
+        });
+    }
 }

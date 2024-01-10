@@ -24,7 +24,15 @@ public sealed class CodePresenter : ICodePresenter
         };
     }
 
+    public void NotFound()
+    {
+        IsOk = false;
+        IsNotFound = true;
+    }
+
     public bool IsOk { get; private set; }
 
     public IEnumerable<Error> Errors { get; private set; } = null!;
+
+    public bool IsNotFound { get; private set; }
 }

@@ -1,3 +1,4 @@
+using System.Data.Entity.Core;
 using Domain.Common;
 using Domain.FeatureFlags;
 using EntityFramework.Exceptions.Common;
@@ -62,6 +63,30 @@ public sealed class DbFeatureFlagRepository(FeatureFlagContext context, IFactory
 
     public Task<Result<bool, Error>> Update(IModel model)
     {
-        throw new NotImplementedException();
+        var featureFlag = new FeatureFlag
+        {
+            FeatureFlagId = model.Id,
+            Enabled = model.Enabled
+        };
+
+        try
+        {
+            context.FeatureFlags.Update(featureFlag);
+
+            context.SaveChanges();
+
+            return Task.FromResult<Result<bool, Error>>(true);
+        }
+        catch (ObjectNotFoundException)
+        {
+            return Task.FromResult<Result<bool, Error>>(new NotFoundError());
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult<Result<bool, Error>>(new Error
+            {
+                Message = $"{ex.Message}{(ex.InnerException != null ? $"; {ex.InnerException?.Message}" : "")}"
+            });
+        }
     }
 }

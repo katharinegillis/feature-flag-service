@@ -129,4 +129,35 @@ public sealed class InteractorTests
 
         presenterMock.Verify(p => p.Error(error));
     }
+
+    [Test]
+    public async Task UpdateFeatureFlagInteractor_Should_Call_NotFound_If_Flag_Not_Found()
+    {
+        var error = new NotFoundError();
+
+        var repositoryMock = new Mock<IRepository>();
+        repositoryMock.Setup(r => r.Update(It.IsAny<IModel>()).Result).Returns(Result<bool, Error>.Err(error));
+
+        var modelMock = new Mock<IModel>();
+        modelMock.Setup(m => m.Id).Returns("some_flag");
+        modelMock.Setup(m => m.Enabled).Returns(false);
+        modelMock.Setup(m => m.Validate()).Returns(Result<bool, IEnumerable<ValidationError>>.Ok(true));
+
+        var factoryMock = new Mock<IFactory>();
+        factoryMock.Setup(f => f.Create("some_flag", false)).Returns(modelMock.Object);
+
+        var interactor = new Interactor(repositoryMock.Object, factoryMock.Object);
+
+        var request = new RequestModel
+        {
+            Id = "some_flag",
+            Enabled = false
+        };
+
+        var presenterMock = new Mock<IOutputPort>();
+
+        await interactor.Execute(request, presenterMock.Object);
+
+        presenterMock.Verify(p => p.NotFound());
+    }
 }

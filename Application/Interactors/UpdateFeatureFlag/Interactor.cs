@@ -1,3 +1,4 @@
+using Domain.Common;
 using Domain.FeatureFlags;
 
 namespace Application.Interactors.UpdateFeatureFlag;
@@ -18,6 +19,12 @@ public sealed class Interactor(IRepository repository, IFactory factory) : IInpu
         if (result.IsOk)
         {
             presenter.Ok();
+            return;
+        }
+
+        if (result.Error is NotFoundError)
+        {
+            presenter.NotFound();
             return;
         }
 
