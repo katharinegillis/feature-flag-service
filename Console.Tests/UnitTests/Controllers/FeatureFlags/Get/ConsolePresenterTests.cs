@@ -11,15 +11,15 @@ public sealed class ConsolePresenterTests
     [Test]
     public void ConsolePresenter_Ok_Should_Display_FeatureFlag()
     {
-        var localizationServiceMock = new Mock<ILocalizationService<ConsolePresenter>>();
-        localizationServiceMock
+        var localizerMock = new Mock<ILocalizationService<ConsolePresenter>>();
+        localizerMock
             .Setup(s => s.Translate("Id: \"{0}\", Enabled: \"{1}\"", "some_flag", "True"))
             .Returns("Id: \"some_flag\", Enabled: \"True\"");
-        localizationServiceMock.Setup(s => s.Translate("true")).Returns("True");
+        localizerMock.Setup(s => s.Translate("true")).Returns("True");
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizationServiceMock.Object, writerMock.Object);
+        var presenter = new ConsolePresenter(localizerMock.Object, writerMock.Object);
 
         presenter.Ok(new Model
         {
@@ -35,13 +35,13 @@ public sealed class ConsolePresenterTests
     [Test]
     public void ConsolePresenter_NotFound_Should_Display_Not_Found()
     {
-        var localizationServiceMock = new Mock<ILocalizationService<ConsolePresenter>>();
-        localizationServiceMock.Setup(s => s.Translate("Feature Flag doesn\'t exist."))
+        var localizerMock = new Mock<ILocalizationService<ConsolePresenter>>();
+        localizerMock.Setup(s => s.Translate("Feature Flag doesn\'t exist."))
             .Returns("Feature Flag doesn\'t exist.");
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizationServiceMock.Object, writerMock.Object);
+        var presenter = new ConsolePresenter(localizerMock.Object, writerMock.Object);
 
         presenter.NotFound();
 

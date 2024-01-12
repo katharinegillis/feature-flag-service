@@ -271,7 +271,7 @@ public sealed class DbFeatureFlagRepositoryTests
 
         var contextMock = new Mock<FeatureFlagContext>();
         contextMock.Setup(m => m.FeatureFlags).Returns(setMock.Object);
-        contextMock.Setup(m => m.SaveChanges()).Callback(() => throw new ObjectNotFoundException());
+        contextMock.Setup(m => m.SaveChanges()).Callback(() => throw new DbUpdateConcurrencyException());
 
         var factoryMock = new Mock<IFactory>();
 

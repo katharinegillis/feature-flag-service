@@ -8,7 +8,7 @@ namespace Console.Tests.UnitTests.Controllers.FeatureFlags.List;
 public sealed class ControllerTests
 {
     [Test]
-    public void ListController_Should_Be_IRunnableWithOptions()
+    public void ListController_Should_Be_Executable()
     {
         var presenter = Mock.Of<IConsolePresenter>();
 
@@ -16,7 +16,7 @@ public sealed class ControllerTests
 
         var controller = new Controller(presenter, interactor);
 
-        Assert.That(controller, Is.InstanceOf<IRunnableWithOptions>());
+        Assert.That(controller, Is.InstanceOf<IExecutable>());
     }
 
     [Test]
@@ -29,11 +29,7 @@ public sealed class ControllerTests
 
         var controller = new Controller(presenterMock.Object, interactorMock.Object);
 
-        var options = new object();
-
-        controller.SetOptions(options);
-
-        var result = await controller.Run();
+        var result = await controller.Execute();
 
         Assert.That(result, Is.EqualTo((int)ExitCode.Success));
 

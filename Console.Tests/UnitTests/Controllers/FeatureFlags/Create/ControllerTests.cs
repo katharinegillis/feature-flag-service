@@ -8,18 +8,29 @@ namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Create;
 public sealed class ControllerTests
 {
     [Test]
-    public void CreateCommand_Should_Be_IRunnableWithOptions()
+    public void CreateController_Should_Be_Executable()
     {
         var presenter = Mock.Of<IConsolePresenter>();
         var interactor = Mock.Of<IInputPort>();
 
         var controller = new Controller(presenter, interactor);
 
-        Assert.That(controller, Is.InstanceOf<IRunnableWithOptions>());
+        Assert.That(controller, Is.InstanceOf<IExecutable>());
     }
 
     [Test]
-    public async Task CreateCommand_Creates_Flag()
+    public void CreateController_Should_Have_Options()
+    {
+        var presenter = Mock.Of<IConsolePresenter>();
+        var interactor = Mock.Of<IInputPort>();
+
+        var controller = new Controller(presenter, interactor);
+
+        Assert.That(controller, Is.InstanceOf<IHasOptions>());
+    }
+
+    [Test]
+    public async Task CreateController_Creates_Flag()
     {
         var presenterMock = new Mock<IConsolePresenter>();
         presenterMock.Setup(p => p.ExitCode).Returns((int)ExitCode.Success);
@@ -34,7 +45,7 @@ public sealed class ControllerTests
 
         controller.SetOptions(optionsMock.Object);
 
-        var result = await controller.Run();
+        var result = await controller.Execute();
 
         Assert.That(result, Is.EqualTo((int)ExitCode.Success));
 

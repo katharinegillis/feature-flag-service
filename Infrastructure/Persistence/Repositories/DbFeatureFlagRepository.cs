@@ -1,8 +1,8 @@
-using System.Data.Entity.Core;
 using Domain.Common;
 using Domain.FeatureFlags;
 using EntityFramework.Exceptions.Common;
 using Infrastructure.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 using FeatureFlag = Infrastructure.Persistence.Models.FeatureFlag;
 
 namespace Infrastructure.Persistence.Repositories;
@@ -77,7 +77,7 @@ public sealed class DbFeatureFlagRepository(FeatureFlagContext context, IFactory
 
             return Task.FromResult<Result<bool, Error>>(true);
         }
-        catch (ObjectNotFoundException)
+        catch (DbUpdateConcurrencyException)
         {
             return Task.FromResult<Result<bool, Error>>(new NotFoundError());
         }

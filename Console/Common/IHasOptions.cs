@@ -1,8 +1,6 @@
 namespace Console.Common;
 
-public interface IRunnableWithOptions
+public interface IHasOptions
 {
     public void SetOptions(object options);
-
-    public Task<int> Run();
 }

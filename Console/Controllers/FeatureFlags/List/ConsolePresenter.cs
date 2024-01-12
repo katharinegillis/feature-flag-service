@@ -4,7 +4,7 @@ using Utilities.LocalizationService;
 
 namespace Console.Controllers.FeatureFlags.List;
 
-public sealed class ConsolePresenter(ILocalizationService<ConsolePresenter> localizationService, IConsoleWriter writer)
+public sealed class ConsolePresenter(ILocalizationService<ConsolePresenter> localizer, IConsoleWriter writer)
     : IConsolePresenter
 {
     public int ExitCode { get; private set; }
@@ -13,8 +13,8 @@ public sealed class ConsolePresenter(ILocalizationService<ConsolePresenter> loca
     {
         foreach (var featureFlag in featureFlags)
         {
-            writer.WriteLine(localizationService.Translate("Id: \"{0}\", Enabled: \"{1}\"", featureFlag.Id,
-                localizationService.Translate(featureFlag.Enabled ? "true" : "false")));
+            writer.WriteLine(localizer.Translate("Id: \"{0}\", Enabled: \"{1}\"", featureFlag.Id,
+                localizer.Translate(featureFlag.Enabled ? "true" : "false")));
         }
 
         ExitCode = (int)Console.Common.ExitCode.Success;

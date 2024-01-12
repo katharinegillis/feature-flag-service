@@ -1,7 +1,7 @@
-using Application.Interactors.CreateFeatureFlag;
+using Application.Interactors.UpdateFeatureFlag;
 using Console.Common;
 
-namespace Console.Controllers.FeatureFlags.Create;
+namespace Console.Controllers.FeatureFlags.Update;
 
 public sealed class Controller(IConsolePresenter presenter, IInputPort interactor) : IExecutable, IHasOptions
 {

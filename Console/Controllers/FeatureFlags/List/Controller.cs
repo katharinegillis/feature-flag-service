@@ -3,13 +3,9 @@ using Console.Common;
 
 namespace Console.Controllers.FeatureFlags.List;
 
-public sealed class Controller(IConsolePresenter presenter, IInputPort interactor) : IRunnableWithOptions
+public sealed class Controller(IConsolePresenter presenter, IInputPort interactor) : IExecutable
 {
-    public void SetOptions(object options)
-    {
-    }
-
-    public async Task<int> Run()
+    public async Task<int> Execute()
     {
         await interactor.Execute(presenter);
 

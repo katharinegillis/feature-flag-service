@@ -2,17 +2,14 @@ using Console.Common;
 using Domain.Common;
 using Utilities.LocalizationService;
 
-namespace Console.Controllers.FeatureFlags.Create;
+namespace Console.Controllers.FeatureFlags.Update;
 
-// ReSharper disable once SuggestBaseTypeForParameterInConstructor
-public sealed class ConsolePresenter(
-    ILocalizationService<ConsolePresenter> localizer,
-    IConsoleWriter writer)
+public sealed class ConsolePresenter(ILocalizationService<ConsolePresenter> localizer, IConsoleWriter writer)
     : IConsolePresenter
 {
-    public void Ok(string id)
+    public void Ok()
     {
-        writer.WriteLine(localizer.Translate("Feature Flag created."));
+        writer.WriteLine(localizer.Translate("Feature Flag updated."));
 
         ExitCode = (int)Console.Common.ExitCode.Success;
     }
@@ -32,6 +29,13 @@ public sealed class ConsolePresenter(
         writer.WriteLine(localizer.Translate("Error: {0}.", localizer.Translate(error.Message)));
 
         ExitCode = (int)Console.Common.ExitCode.Error;
+    }
+
+    public void NotFound()
+    {
+        writer.WriteLine(localizer.Translate("Feature Flag doesn\'t exist."));
+
+        ExitCode = (int)Console.Common.ExitCode.OptionsError;
     }
 
     public int ExitCode { get; private set; }
