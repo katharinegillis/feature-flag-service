@@ -17,4 +17,6 @@ public sealed class CodePresenter : ICodePresenter
         FeatureFlag = new NullModel();
         IsNotFound = true;
     }
+
+    public RequestModel? Request { get; set; }
 }

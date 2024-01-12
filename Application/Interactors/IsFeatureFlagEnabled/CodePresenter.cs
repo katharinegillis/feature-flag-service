@@ -14,4 +14,6 @@ public sealed class CodePresenter : ICodePresenter
     {
         IsNotFound = true;
     }
+
+    public RequestModel? Request { get; set; }
 }

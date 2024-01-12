@@ -1,3 +1,4 @@
+using Application.Interactors.CreateFeatureFlag;
 using Console.Common;
 using Domain.Common;
 using Utilities.LocalizationService;
@@ -33,6 +34,8 @@ public sealed class ConsolePresenter(
 
         ExitCode = (int)Console.Common.ExitCode.Error;
     }
+
+    public RequestModel? Request { get; set; }
 
     public int ExitCode { get; private set; }
 }

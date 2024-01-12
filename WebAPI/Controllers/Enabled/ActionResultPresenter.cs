@@ -1,3 +1,4 @@
+using Application.Interactors.IsFeatureFlagEnabled;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.Enabled;
@@ -23,4 +24,6 @@ public sealed class ActionResultPresenter : IPresenter
         IsError = false;
         Message = null;
     }
+
+    public RequestModel? Request { get; set; }
 }

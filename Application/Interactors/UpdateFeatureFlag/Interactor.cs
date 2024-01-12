@@ -7,6 +7,8 @@ public sealed class Interactor(IRepository repository, IFactory factory) : IInpu
 {
     public async Task Execute(RequestModel request, IOutputPort presenter)
     {
+        presenter.Request = request;
+
         var featureFlag = factory.Create(request.Id, request.Enabled);
         var validationResult = featureFlag.Validate();
         if (!validationResult.IsOk)

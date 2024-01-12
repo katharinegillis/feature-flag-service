@@ -25,6 +25,8 @@ public sealed class CodePresenter : ICodePresenter
         IsOk = false;
     }
 
+    public RequestModel? Request { get; set; }
+
     public string Id { get; private set; } = null!;
 
     public IEnumerable<Error> Errors { get; private set; } = null!;

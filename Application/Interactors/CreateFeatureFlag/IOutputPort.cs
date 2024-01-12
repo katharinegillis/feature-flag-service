@@ -9,4 +9,6 @@ public interface IOutputPort
     public void BadRequest(IEnumerable<ValidationError> validationErrors);
 
     public void Error(Error error);
+
+    public RequestModel? Request { get; set; }
 }
