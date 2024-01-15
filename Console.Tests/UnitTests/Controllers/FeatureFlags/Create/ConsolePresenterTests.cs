@@ -1,3 +1,4 @@
+using Application.Interactors.CreateFeatureFlag;
 using Console.Controllers.FeatureFlags.Create;
 using Console.Common;
 using Domain.Common;
@@ -12,15 +13,21 @@ public sealed class ConsolePresenterTests
     public void ConsolePresenter_Ok_Should_Display_Success_Message()
     {
         var localizerMock = new Mock<ILocalizationService<ConsolePresenter>>();
-        localizerMock.Setup(s => s.Translate("Feature Flag created."))
-            .Returns("Feature Flag created.");
+        localizerMock.Setup(s => s.Translate("Feature Flag \"{0}\" created.", "some_flag"))
+            .Returns("Feature Flag \"some_flag\" created.");
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizerMock.Object, writerMock.Object);
+        var request = new RequestModel
+        {
+            Id = "some_flag",
+            Enabled = true
+        };
+
+        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
         presenter.Ok("some_flag");
 
-        writerMock.Verify(w => w.WriteLine("Feature Flag created."));
+        writerMock.Verify(w => w.WriteLine("Feature Flag \"some_flag\" created."));
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.Success));
     }
 
@@ -37,7 +44,13 @@ public sealed class ConsolePresenterTests
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizerMock.Object, writerMock.Object);
+        var request = new RequestModel
+        {
+            Id = "some_flag",
+            Enabled = true
+        };
+
+        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
         presenter.BadRequest(new List<ValidationError>
         {
             new()
@@ -67,7 +80,13 @@ public sealed class ConsolePresenterTests
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizerMock.Object, writerMock.Object);
+        var request = new RequestModel
+        {
+            Id = "some_flag",
+            Enabled = true
+        };
+
+        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
         presenter.Error(new Error
         {
             Message = "Unknown error"

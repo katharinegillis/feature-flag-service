@@ -6,6 +6,7 @@ using Utilities.LocalizationService;
 namespace Console.Controllers.FeatureFlags.Get;
 
 public sealed class ConsolePresenter(
+    RequestModel request,
     ILocalizationService<ConsolePresenter> localizer,
     IConsoleWriter writer)
     : IConsolePresenter
@@ -20,12 +21,12 @@ public sealed class ConsolePresenter(
 
     public void NotFound()
     {
-        writer.WriteLine("Feature Flag doesn\'t exist.");
+        writer.WriteLine(localizer.Translate("Feature Flag \"{0}\" doesn\'t exist.", request.Id));
 
         ExitCode = (int)Console.Common.ExitCode.Success;
     }
 
-    public RequestModel? Request { get; set; }
+    public RequestModel Request => request;
 
     public int ExitCode { get; private set; }
 }

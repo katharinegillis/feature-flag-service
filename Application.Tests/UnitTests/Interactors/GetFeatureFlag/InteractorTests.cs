@@ -35,15 +35,12 @@ public sealed class InteractorTests
             Id = "some_flag"
         };
         var presenterMock = new Mock<IOutputPort>();
-        presenterMock.SetupProperty(p => p.Request);
 
         await interactor.Execute(request, presenterMock.Object);
 
         repositoryMock.Verify(r => r.Get("some_flag"));
 
         presenterMock.Verify(p => p.Ok(model));
-
-        Assert.That(presenterMock.Object.Request, Is.EqualTo(request));
     }
 
     [Test]

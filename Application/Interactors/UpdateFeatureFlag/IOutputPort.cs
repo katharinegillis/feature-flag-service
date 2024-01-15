@@ -11,6 +11,4 @@ public interface IOutputPort
     public void Error(Error error);
 
     public void NotFound();
-
-    public RequestModel? Request { get; set; }
 }

@@ -10,8 +10,6 @@ public sealed class Interactor(
 {
     public async Task Execute(RequestModel request, IOutputPort presenter)
     {
-        presenter.Request = request;
-
         // Get the feature flag.
         await getFeatureFlagInteractor.Execute(new GetFeatureFlagRequestModel { Id = request.Id },
             getFeatureFlagCodePresenter);

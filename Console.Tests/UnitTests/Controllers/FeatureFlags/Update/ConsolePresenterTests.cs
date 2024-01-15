@@ -1,3 +1,4 @@
+using Application.Interactors.UpdateFeatureFlag;
 using Console.Common;
 using Console.Controllers.FeatureFlags.Update;
 using Domain.Common;
@@ -12,15 +13,21 @@ public class ConsolePresenterTests
     public void ConsolePresenter_Ok_Should_Display_Success_Message()
     {
         var localizerMock = new Mock<ILocalizationService<ConsolePresenter>>();
-        localizerMock.Setup(s => s.Translate("Feature Flag updated."))
-            .Returns("Feature Flag updated.");
+        localizerMock.Setup(s => s.Translate("Feature Flag \"{0}\" updated.", "some_flag"))
+            .Returns("Feature Flag \"some_flag\" updated.");
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizerMock.Object, writerMock.Object);
+        var request = new RequestModel
+        {
+            Id = "some_flag",
+            Enabled = false
+        };
+
+        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
         presenter.Ok();
 
-        writerMock.Verify(w => w.WriteLine("Feature Flag updated."));
+        writerMock.Verify(w => w.WriteLine("Feature Flag \"some_flag\" updated."));
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.Success));
     }
 
@@ -37,7 +44,13 @@ public class ConsolePresenterTests
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizerMock.Object, writerMock.Object);
+        var request = new RequestModel
+        {
+            Id = "some_flag",
+            Enabled = false
+        };
+
+        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
         presenter.BadRequest(new List<ValidationError>
         {
             new()
@@ -66,7 +79,13 @@ public class ConsolePresenterTests
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizerMock.Object, writerMock.Object);
+        var request = new RequestModel
+        {
+            Id = "some_flag",
+            Enabled = false
+        };
+
+        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
         presenter.Error(new Error
         {
             Message = "Unknown error"
@@ -83,15 +102,22 @@ public class ConsolePresenterTests
         // TODO: convert to shared resource for localization
         // TODO: Do find on Translate method and make sure all strings are in resx
         var localizerMock = new Mock<ILocalizationService<ConsolePresenter>>();
-        localizerMock.Setup(s => s.Translate("Feature Flag doesn\'t exist.")).Returns("Feature Flag doesn\'t exist.");
+        localizerMock.Setup(s => s.Translate("Feature Flag \"{0}\" doesn\'t exist.", "some_flag"))
+            .Returns("Feature Flag \"some_flag\" doesn\'t exist.");
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizerMock.Object, writerMock.Object);
+        var request = new RequestModel
+        {
+            Id = "some_flag",
+            Enabled = false
+        };
+
+        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
 
         presenter.NotFound();
 
-        writerMock.Verify(w => w.WriteLine("Feature Flag doesn\'t exist."));
+        writerMock.Verify(w => w.WriteLine("Feature Flag \"some_flag\" doesn\'t exist."));
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.OptionsError));
     }
 }

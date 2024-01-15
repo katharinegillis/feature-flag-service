@@ -5,12 +5,15 @@ using Utilities.LocalizationService;
 
 namespace Console.Controllers.FeatureFlags.Update;
 
-public sealed class ConsolePresenter(ILocalizationService<ConsolePresenter> localizer, IConsoleWriter writer)
+public sealed class ConsolePresenter(
+    RequestModel request,
+    ILocalizationService<ConsolePresenter> localizer,
+    IConsoleWriter writer)
     : IConsolePresenter
 {
     public void Ok()
     {
-        writer.WriteLine(localizer.Translate("Feature Flag updated."));
+        writer.WriteLine(localizer.Translate("Feature Flag \"{0}\" updated.", request.Id));
 
         ExitCode = (int)Console.Common.ExitCode.Success;
     }
@@ -34,12 +37,12 @@ public sealed class ConsolePresenter(ILocalizationService<ConsolePresenter> loca
 
     public void NotFound()
     {
-        writer.WriteLine(localizer.Translate("Feature Flag doesn\'t exist."));
+        writer.WriteLine(localizer.Translate("Feature Flag \"{0}\" doesn\'t exist.", request.Id));
 
         ExitCode = (int)Console.Common.ExitCode.OptionsError;
     }
 
-    public RequestModel? Request { get; set; }
+    public RequestModel Request => request;
 
     public int ExitCode { get; private set; }
 }

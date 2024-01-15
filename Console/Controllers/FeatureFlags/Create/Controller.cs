@@ -3,7 +3,7 @@ using Console.Common;
 
 namespace Console.Controllers.FeatureFlags.Create;
 
-public sealed class Controller(IConsolePresenter presenter, IInputPort interactor) : IExecutable, IHasOptions
+public sealed class Controller(IConsolePresenterFactory factory, IInputPort interactor) : IExecutable, IHasOptions
 {
     private IOptions _options = null!;
 
@@ -19,6 +19,8 @@ public sealed class Controller(IConsolePresenter presenter, IInputPort interacto
             Id = _options.Id,
             Enabled = (bool)_options.Enabled!
         };
+
+        var presenter = factory.Create(request);
 
         await interactor.Execute(request, presenter);
 

@@ -44,7 +44,6 @@ public sealed class InteractorTests
             Enabled = true
         };
         var presenterMock = new Mock<IOutputPort>();
-        presenterMock.SetupProperty(p => p.Request);
 
         await interactor.Execute(request, presenterMock.Object);
 
@@ -57,7 +56,6 @@ public sealed class InteractorTests
                 Id = "new_flag",
                 Enabled = true
             }, passedFeatureFlag));
-            Assert.That(presenterMock.Object.Request, Is.EqualTo(request));
         });
 
         repositoryMock.Verify(r => r.Create(It.IsAny<IModel>()));

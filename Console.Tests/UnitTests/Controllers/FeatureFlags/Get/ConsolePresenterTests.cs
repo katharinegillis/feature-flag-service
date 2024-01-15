@@ -1,3 +1,4 @@
+using Application.Interactors.GetFeatureFlag;
 using Console.Controllers.FeatureFlags.Get;
 using Console.Common;
 using Domain.FeatureFlags;
@@ -19,7 +20,12 @@ public sealed class ConsolePresenterTests
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizerMock.Object, writerMock.Object);
+        var request = new RequestModel
+        {
+            Id = "some_flag"
+        };
+
+        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
 
         presenter.Ok(new Model
         {
@@ -36,17 +42,22 @@ public sealed class ConsolePresenterTests
     public void ConsolePresenter_NotFound_Should_Display_Not_Found()
     {
         var localizerMock = new Mock<ILocalizationService<ConsolePresenter>>();
-        localizerMock.Setup(s => s.Translate("Feature Flag doesn\'t exist."))
-            .Returns("Feature Flag doesn\'t exist.");
+        localizerMock.Setup(s => s.Translate("Feature Flag \"{0}\" doesn\'t exist.", "some_flag"))
+            .Returns("Feature Flag \"some_flag\" doesn\'t exist.");
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizerMock.Object, writerMock.Object);
+        var request = new RequestModel
+        {
+            Id = "some_flag"
+        };
+
+        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
 
         presenter.NotFound();
 
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.Success));
 
-        writerMock.Verify(w => w.WriteLine("Feature Flag doesn\'t exist."));
+        writerMock.Verify(w => w.WriteLine("Feature Flag \"some_flag\" doesn\'t exist."));
     }
 }

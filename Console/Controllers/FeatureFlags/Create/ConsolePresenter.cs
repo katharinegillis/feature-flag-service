@@ -7,13 +7,14 @@ namespace Console.Controllers.FeatureFlags.Create;
 
 // ReSharper disable once SuggestBaseTypeForParameterInConstructor
 public sealed class ConsolePresenter(
+    RequestModel request,
     ILocalizationService<ConsolePresenter> localizer,
     IConsoleWriter writer)
     : IConsolePresenter
 {
     public void Ok(string id)
     {
-        writer.WriteLine(localizer.Translate("Feature Flag created."));
+        writer.WriteLine(localizer.Translate("Feature Flag \"{0}\" created.", request.Id));
 
         ExitCode = (int)Console.Common.ExitCode.Success;
     }
@@ -35,7 +36,7 @@ public sealed class ConsolePresenter(
         ExitCode = (int)Console.Common.ExitCode.Error;
     }
 
-    public RequestModel? Request { get; set; }
+    public RequestModel Request => request;
 
     public int ExitCode { get; private set; }
 }

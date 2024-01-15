@@ -30,8 +30,6 @@ public sealed class CodePresenter : ICodePresenter
         IsNotFound = true;
     }
 
-    public RequestModel? Request { get; set; }
-
     public bool IsOk { get; private set; }
 
     public IEnumerable<Error> Errors { get; private set; } = null!;
