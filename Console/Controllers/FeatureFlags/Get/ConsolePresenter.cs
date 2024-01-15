@@ -1,5 +1,6 @@
 using Application.Interactors.GetFeatureFlag;
 using Console.Common;
+using Console.Localization;
 using Domain.FeatureFlags;
 using Utilities.LocalizationService;
 
@@ -7,7 +8,7 @@ namespace Console.Controllers.FeatureFlags.Get;
 
 public sealed class ConsolePresenter(
     RequestModel request,
-    ILocalizationService<ConsolePresenter> localizer,
+    ILocalizationService<SharedResource> localizer,
     IConsoleWriter writer)
     : IConsolePresenter
 {

@@ -1,6 +1,7 @@
 using Application.Interactors.CreateFeatureFlag;
 using Console.Controllers.FeatureFlags.Create;
 using Console.Common;
+using Console.Localization;
 using Domain.Common;
 using Moq;
 using Utilities.LocalizationService;
@@ -12,7 +13,7 @@ public sealed class ConsolePresenterTests
     [Test]
     public void ConsolePresenter_Ok_Should_Display_Success_Message()
     {
-        var localizerMock = new Mock<ILocalizationService<ConsolePresenter>>();
+        var localizerMock = new Mock<ILocalizationService<SharedResource>>();
         localizerMock.Setup(s => s.Translate("Feature Flag \"{0}\" created.", "some_flag"))
             .Returns("Feature Flag \"some_flag\" created.");
 
@@ -34,7 +35,7 @@ public sealed class ConsolePresenterTests
     [Test]
     public void ConsolePresenter_BadRequest_Should_Display_Validation_Errors()
     {
-        var localizerMock = new Mock<ILocalizationService<ConsolePresenter>>();
+        var localizerMock = new Mock<ILocalizationService<SharedResource>>();
         localizerMock.Setup(s => s.Translate("Required")).Returns("Required");
         localizerMock.Setup(s => s.Translate("Max length is 100")).Returns("Max length is 100");
         localizerMock.Setup(s => s.Translate("{0}: {1}.", "Id", "Max length is 100"))
@@ -73,7 +74,7 @@ public sealed class ConsolePresenterTests
     [Test]
     public void ConsolePresenter_Error_Should_Display_Error_Message()
     {
-        var localizerMock = new Mock<ILocalizationService<ConsolePresenter>>();
+        var localizerMock = new Mock<ILocalizationService<SharedResource>>();
         localizerMock.Setup(s => s.Translate("Unknown error")).Returns("Unknown error");
         localizerMock.Setup(s => s.Translate("Error: {0}.", "Unknown error"))
             .Returns("Error: Unknown error.");

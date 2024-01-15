@@ -1,5 +1,6 @@
 using Console.Common;
 using Console.Controllers.FeatureFlags.List;
+using Console.Localization;
 using Domain.FeatureFlags;
 using Moq;
 using Utilities.LocalizationService;
@@ -11,7 +12,7 @@ public sealed class ConsolePresenterTests
     [Test]
     public void ConsolePresenter_Ok_Should_Display_FeatureFlags()
     {
-        var localizerMock = new Mock<ILocalizationService<ConsolePresenter>>();
+        var localizerMock = new Mock<ILocalizationService<SharedResource>>();
         localizerMock.Setup(s => s.Translate("Id: \"{0}\", Enabled: \"{1}\"", "some_flag", "True"))
             .Returns("Id: \"some_flag\", Enabled: \"True\"");
         localizerMock.Setup(s => s.Translate("true")).Returns("True");

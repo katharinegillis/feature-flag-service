@@ -42,26 +42,17 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Update="Resources\Controllers.FeatureFlags.List.ConsolePresenter.resx">
+        <EmbeddedResource Update="Resources\SharedResource.resx">
             <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Controllers.FeatureFlags.List.ConsolePresenter.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-        <EmbeddedResource Update="Resources\Controllers.FeatureFlags.Get.ConsolePresenter.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Controllers.FeatureFlags.Get.ConsolePresenter.Designer.cs</LastGenOutput>
+            <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Resources\Controllers.FeatureFlags.List.ConsolePresenter.Designer.cs">
+        <Compile Update="Resources\SharedResource.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
-            <DependentUpon>Controllers.FeatureFlags.List.ConsolePresenter.resx</DependentUpon>
-        </Compile>
-        <Compile Update="Resources\Controllers.FeatureFlags.Get.ConsolePresenter.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Controllers.FeatureFlags.Get.ConsolePresenter.resx</DependentUpon>
+            <DependentUpon>SharedResource.resx</DependentUpon>
         </Compile>
     </ItemGroup>
 

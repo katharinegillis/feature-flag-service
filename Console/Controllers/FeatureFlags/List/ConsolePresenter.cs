@@ -1,10 +1,11 @@
 using Console.Common;
+using Console.Localization;
 using Domain.FeatureFlags;
 using Utilities.LocalizationService;
 
 namespace Console.Controllers.FeatureFlags.List;
 
-public sealed class ConsolePresenter(ILocalizationService<ConsolePresenter> localizer, IConsoleWriter writer)
+public sealed class ConsolePresenter(ILocalizationService<SharedResource> localizer, IConsoleWriter writer)
     : IConsolePresenter
 {
     public int ExitCode { get; private set; }

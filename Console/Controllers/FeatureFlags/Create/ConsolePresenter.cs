@@ -1,5 +1,6 @@
 using Application.Interactors.CreateFeatureFlag;
 using Console.Common;
+using Console.Localization;
 using Domain.Common;
 using Utilities.LocalizationService;
 
@@ -8,7 +9,7 @@ namespace Console.Controllers.FeatureFlags.Create;
 // ReSharper disable once SuggestBaseTypeForParameterInConstructor
 public sealed class ConsolePresenter(
     RequestModel request,
-    ILocalizationService<ConsolePresenter> localizer,
+    ILocalizationService<SharedResource> localizer,
     IConsoleWriter writer)
     : IConsolePresenter
 {

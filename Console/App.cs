@@ -35,7 +35,7 @@ public sealed class App(
 
         if (serviceProvider.GetService(verb.ControllerType) is not IExecutable command)
         {
-            System.Console.WriteLine(localizer.Translate("Verb is missing command."));
+            System.Console.WriteLine(localizer.Translate("Unknown command."));
             return;
         }
 

@@ -1,6 +1,7 @@
 using Application.Interactors.GetFeatureFlag;
 using Console.Common;
 using Console.Controllers.FeatureFlags.Get;
+using Console.Localization;
 using Moq;
 using Utilities.LocalizationService;
 
@@ -11,7 +12,7 @@ public sealed class ConsolePresenterFactoryTests
     [Test]
     public void ConsolePresenterFactory_Should_Be_A_IConsolePresenterFactory()
     {
-        var localizerMock = new Mock<ILocalizationService<ConsolePresenter>>();
+        var localizerMock = new Mock<ILocalizationService<SharedResource>>();
         var writerMock = new Mock<IConsoleWriter>();
 
         var factory = new ConsolePresenterFactory(localizerMock.Object, writerMock.Object);
@@ -27,7 +28,7 @@ public sealed class ConsolePresenterFactoryTests
             Id = "some_flag"
         };
 
-        var localizerMock = new Mock<ILocalizationService<ConsolePresenter>>();
+        var localizerMock = new Mock<ILocalizationService<SharedResource>>();
         var writerMock = new Mock<IConsoleWriter>();
 
         var factory = new ConsolePresenterFactory(localizerMock.Object, writerMock.Object);
