@@ -13,9 +13,9 @@ public static class PresenterExtensions
     {
         services.AddScoped<IConsoleWriter, ConsoleWriter>();
 
-        services.AddTransient<Create.IConsolePresenter, Create.ConsolePresenter>();
-        services.AddTransient<Get.IConsolePresenter, Get.ConsolePresenter>();
-        services.AddTransient<List.IConsolePresenter, List.ConsolePresenter>();
-        services.AddTransient<Update.IConsolePresenter, Update.ConsolePresenter>();
+        services.AddScoped<Create.IConsolePresenterFactory, Create.ConsolePresenterFactory>();
+        services.AddScoped<Get.IConsolePresenterFactory, Get.ConsolePresenterFactory>();
+        services.AddScoped<List.IConsolePresenterFactory, List.ConsolePresenterFactory>();
+        services.AddScoped<Update.IConsolePresenterFactory, Update.ConsolePresenterFactory>();
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.Enabled;
 
-public sealed class ActionResultPresenter : IPresenter
+public sealed class ActionResultPresenter(RequestModel request) : IActionResultPresenter
 {
     public IActionResult ActionResult { get; private set; } =
         new StatusCodeResult(StatusCodes.Status500InternalServerError);
@@ -25,5 +25,5 @@ public sealed class ActionResultPresenter : IPresenter
         Message = null;
     }
 
-    public RequestModel? Request { get; set; }
+    public RequestModel Request => request;
 }

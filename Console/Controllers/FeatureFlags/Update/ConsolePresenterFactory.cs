@@ -1,7 +1,6 @@
 using Application.Interactors.UpdateFeatureFlag;
 using Console.Common;
 using Console.Localization;
-using Microsoft.Extensions.Localization;
 using Utilities.LocalizationService;
 
 namespace Console.Controllers.FeatureFlags.Update;

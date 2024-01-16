@@ -10,10 +10,8 @@ public static class PresenterExtensions
     // ReSharper disable once UnusedMember.Global
     public static void AddPresenters(this IServiceCollection services)
     {
-        services.AddTransient<EnabledController.IPresenter, EnabledController.ActionResultPresenter>();
-        services.AddTransient<GetFeatureFlagInteractor.ICodePresenter, GetFeatureFlagInteractor.CodePresenter>();
         services
-            .AddTransient<IsFeatureFlagEnabledInteractor.ICodePresenter,
-                IsFeatureFlagEnabledInteractor.CodePresenter>();
+            .AddScoped<EnabledController.IActionResultPresenterFactory,
+                EnabledController.ActionResultPresenterFactory>();
     }
 }
