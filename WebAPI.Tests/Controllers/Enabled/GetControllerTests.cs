@@ -17,10 +17,13 @@ public sealed class GetControllerTests
         interactorMock
             .Setup(interactor => interactor.Execute(It.IsAny<RequestModel>(), It.IsAny<IOutputPort>()));
 
-        var presenterMock = new Mock<IPresenter>();
+        var presenterMock = new Mock<IActionResultPresenter>();
         presenterMock.Setup(p => p.ActionResult).Returns(new OkObjectResult(true));
 
-        var controller = new GetController(presenterMock.Object, interactorMock.Object, logger);
+        var factoryMock = new Mock<IActionResultPresenterFactory>();
+        factoryMock.Setup(f => f.Create(It.IsAny<RequestModel>())).Returns(presenterMock.Object);
+
+        var controller = new GetController(factoryMock.Object, interactorMock.Object, logger);
 
         var result = await controller.Execute("some_flag");
         Assert.Multiple(() =>
@@ -39,10 +42,13 @@ public sealed class GetControllerTests
         interactorMock
             .Setup(i => i.Execute(It.IsAny<RequestModel>(), It.IsAny<IOutputPort>()));
 
-        var presenterMock = new Mock<IPresenter>();
+        var presenterMock = new Mock<IActionResultPresenter>();
         presenterMock.Setup(p => p.ActionResult).Returns(new OkObjectResult(false));
 
-        var controller = new GetController(presenterMock.Object, interactorMock.Object, logger);
+        var factoryMock = new Mock<IActionResultPresenterFactory>();
+        factoryMock.Setup(f => f.Create(It.IsAny<RequestModel>())).Returns(presenterMock.Object);
+
+        var controller = new GetController(factoryMock.Object, interactorMock.Object, logger);
 
         var result = await controller.Execute("some_flag");
         Assert.Multiple(() =>
@@ -60,10 +66,13 @@ public sealed class GetControllerTests
         var interactorMock = new Mock<IInputPort>();
         interactorMock.Setup(i => i.Execute(It.IsAny<RequestModel>(), It.IsAny<IOutputPort>()));
 
-        var presenterMock = new Mock<IPresenter>();
+        var presenterMock = new Mock<IActionResultPresenter>();
         presenterMock.Setup(p => p.ActionResult).Returns(new NotFoundResult());
 
-        var controller = new GetController(presenterMock.Object, interactorMock.Object, logger);
+        var factoryMock = new Mock<IActionResultPresenterFactory>();
+        factoryMock.Setup(f => f.Create(It.IsAny<RequestModel>())).Returns(presenterMock.Object);
+
+        var controller = new GetController(factoryMock.Object, interactorMock.Object, logger);
 
         var result = await controller.Execute("some_flag");
 
@@ -77,12 +86,15 @@ public sealed class GetControllerTests
 
         var interactor = Mock.Of<IInputPort>();
 
-        var presenterMock = new Mock<IPresenter>();
+        var presenterMock = new Mock<IActionResultPresenter>();
         presenterMock.Setup(p => p.ActionResult).Returns(new StatusCodeResult(500));
         presenterMock.Setup(p => p.IsError).Returns(true);
         presenterMock.Setup(p => p.Message).Returns("Error message");
 
-        var controller = new GetController(presenterMock.Object, interactor, loggerMock.Object);
+        var factoryMock = new Mock<IActionResultPresenterFactory>();
+        factoryMock.Setup(f => f.Create(It.IsAny<RequestModel>())).Returns(presenterMock.Object);
+
+        var controller = new GetController(factoryMock.Object, interactor, loggerMock.Object);
 
         var result = await controller.Execute("some_flag");
         Assert.Multiple(() =>

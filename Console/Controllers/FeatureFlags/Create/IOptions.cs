@@ -4,5 +4,5 @@ public interface IOptions
 {
     public string Id { get; }
 
-    public bool Enabled { get; }
+    public bool? Enabled { get; }
 }

@@ -2,6 +2,7 @@ using Application.Interactors.IsFeatureFlagEnabled;
 using IGetFeatureFlagInputPort = Application.Interactors.GetFeatureFlag.IInputPort;
 using IGetFeatureFlagOutputPort = Application.Interactors.GetFeatureFlag.IOutputPort;
 using IGetFeatureFlagCodePresenter = Application.Interactors.GetFeatureFlag.ICodePresenter;
+using IGetFeatureFlagCodePresenterFactory = Application.Interactors.GetFeatureFlag.ICodePresenterFactory;
 using GetFeatureFlagRequestModel = Application.Interactors.GetFeatureFlag.RequestModel;
 using Domain.FeatureFlags;
 using Moq;
@@ -14,9 +15,9 @@ public sealed class InteractorTests
     public void IsFeatureFlagEnabledInteractor_An_InputPort()
     {
         var getInteractor = Mock.Of<IGetFeatureFlagInputPort>();
-        var getPresenter = Mock.Of<IGetFeatureFlagCodePresenter>();
+        var getPresenterFactory = Mock.Of<IGetFeatureFlagCodePresenterFactory>();
 
-        var interactor = new Interactor(getPresenter, getInteractor);
+        var interactor = new Interactor(getPresenterFactory, getInteractor);
 
         Assert.That(interactor, Is.InstanceOf<IInputPort>());
     }
@@ -33,7 +34,10 @@ public sealed class InteractorTests
         getPresenter.Setup(p => p.FeatureFlag)
             .Returns(new Model { Id = "some_flag", Enabled = true });
 
-        var interactor = new Interactor(getPresenter.Object, getInteractor.Object);
+        var getPresenterFactory = new Mock<IGetFeatureFlagCodePresenterFactory>();
+        getPresenterFactory.Setup(f => f.Create()).Returns(getPresenter.Object);
+
+        var interactor = new Interactor(getPresenterFactory.Object, getInteractor.Object);
 
         var request = new RequestModel
         {
@@ -58,7 +62,10 @@ public sealed class InteractorTests
         getPresenter.Setup(p => p.FeatureFlag)
             .Returns(new Model { Id = "some_flag", Enabled = false });
 
-        var interactor = new Interactor(getPresenter.Object, getInteractor.Object);
+        var getPresenterFactory = new Mock<IGetFeatureFlagCodePresenterFactory>();
+        getPresenterFactory.Setup(f => f.Create()).Returns(getPresenter.Object);
+
+        var interactor = new Interactor(getPresenterFactory.Object, getInteractor.Object);
 
         var request = new RequestModel
         {
@@ -86,7 +93,10 @@ public sealed class InteractorTests
         getPresenter.Setup(p => p.IsNotFound).Returns(true);
         getPresenter.Setup(p => p.FeatureFlag).Returns(NullModel.Instance);
 
-        var interactor = new Interactor(getPresenter.Object, getInteractor.Object);
+        var getPresenterFactory = new Mock<IGetFeatureFlagCodePresenterFactory>();
+        getPresenterFactory.Setup(f => f.Create()).Returns(getPresenter.Object);
+
+        var interactor = new Interactor(getPresenterFactory.Object, getInteractor.Object);
 
         var request = new RequestModel
         {

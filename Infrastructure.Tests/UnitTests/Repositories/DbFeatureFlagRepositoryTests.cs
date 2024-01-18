@@ -24,19 +24,19 @@ public sealed class DbFeatureFlagRepositoryTests
             }
         };
 
-        var mockSet = TestingUtils.CreateDbSetMockFromList(data);
+        var setMock = TestingUtils.CreateDbSetMockFromList(data);
 
-        var mockContext = new Mock<FeatureFlagContext>();
-        mockContext.Setup(c => c.FeatureFlags).Returns(mockSet.Object);
+        var contextMock = new Mock<FeatureFlagContext>();
+        contextMock.Setup(c => c.FeatureFlags).Returns(setMock.Object);
 
-        var mockFactory = new Mock<IFactory>();
-        mockFactory.Setup(f => f.Create("some_flag", true)).Returns(new Model
+        var factoryMock = new Mock<IFactory>();
+        factoryMock.Setup(f => f.Create("some_flag", true)).Returns(new Model
         {
             Id = "some_flag",
             Enabled = true
         });
 
-        var repository = new DbFeatureFlagRepository(mockContext.Object, mockFactory.Object);
+        var repository = new DbFeatureFlagRepository(contextMock.Object, factoryMock.Object);
 
         var result = await repository.Get("some_flag");
 
@@ -51,15 +51,15 @@ public sealed class DbFeatureFlagRepositoryTests
     [Test]
     public async Task DbFeatureFlagRepository_Get_Should_Return_NullModel_If_Not_Found()
     {
-        var mockSet = TestingUtils.CreateDbSetMockFromList(new List<FeatureFlag>());
+        var setMock = TestingUtils.CreateDbSetMockFromList(new List<FeatureFlag>());
 
-        var mockContext = new Mock<FeatureFlagContext>();
-        mockContext.Setup(c => c.FeatureFlags).Returns(mockSet.Object);
+        var contextMock = new Mock<FeatureFlagContext>();
+        contextMock.Setup(c => c.FeatureFlags).Returns(setMock.Object);
 
-        var mockFactory = new Mock<IFactory>();
-        mockFactory.Setup(f => f.Create()).Returns(NullModel.Instance);
+        var factoryMock = new Mock<IFactory>();
+        factoryMock.Setup(f => f.Create()).Returns(NullModel.Instance);
 
-        var repository = new DbFeatureFlagRepository(mockContext.Object, mockFactory.Object);
+        var repository = new DbFeatureFlagRepository(contextMock.Object, factoryMock.Object);
 
         var result = await repository.Get("some_flag");
 
@@ -70,15 +70,15 @@ public sealed class DbFeatureFlagRepositoryTests
     [Test]
     public async Task DbFeatureFlagRepository_Create_Should_Return_Id()
     {
-        var mockSet = new Mock<DbSet<FeatureFlag>>();
-        mockSet.Setup(m => m.Add(It.IsAny<FeatureFlag>()));
+        var setMock = new Mock<DbSet<FeatureFlag>>();
+        setMock.Setup(m => m.Add(It.IsAny<FeatureFlag>()));
 
-        var mockContext = new Mock<FeatureFlagContext>();
-        mockContext.Setup(c => c.FeatureFlags).Returns(mockSet.Object);
+        var contextMock = new Mock<FeatureFlagContext>();
+        contextMock.Setup(c => c.FeatureFlags).Returns(setMock.Object);
 
         var factory = Mock.Of<IFactory>();
 
-        var repository = new DbFeatureFlagRepository(mockContext.Object, factory);
+        var repository = new DbFeatureFlagRepository(contextMock.Object, factory);
 
         var result = await repository.Create(new Model
         {
@@ -91,27 +91,27 @@ public sealed class DbFeatureFlagRepositoryTests
             Assert.That(result.Value, Is.EqualTo("some_flag"));
         });
 
-        mockSet.Verify(m => m.Add(new FeatureFlag
+        setMock.Verify(m => m.Add(new FeatureFlag
         {
             FeatureFlagId = "some_flag",
             Enabled = true
         }), Times.Once());
 
-        mockContext.Verify(m => m.SaveChanges(), Times.Once());
+        contextMock.Verify(m => m.SaveChanges(), Times.Once());
     }
 
     [Test]
     public async Task DbFeatureFlagRepository_Create_Should_Return_Validation_Error_If_Already_Exists()
     {
-        var mockSet = new Mock<DbSet<FeatureFlag>>();
+        var setMock = new Mock<DbSet<FeatureFlag>>();
 
-        var mockContext = new Mock<FeatureFlagContext>();
-        mockContext.Setup(m => m.FeatureFlags).Returns(mockSet.Object);
-        mockContext.Setup(m => m.SaveChanges()).Callback(() => throw new UniqueConstraintException());
+        var contextMock = new Mock<FeatureFlagContext>();
+        contextMock.Setup(m => m.FeatureFlags).Returns(setMock.Object);
+        contextMock.Setup(m => m.SaveChanges()).Callback(() => throw new UniqueConstraintException());
 
         var factory = Mock.Of<IFactory>();
 
-        var repository = new DbFeatureFlagRepository(mockContext.Object, factory);
+        var repository = new DbFeatureFlagRepository(contextMock.Object, factory);
 
         var result = await repository.Create(new Model
         {
@@ -128,28 +128,28 @@ public sealed class DbFeatureFlagRepositoryTests
             }));
         });
 
-        mockSet.Verify(m => m.Add(new FeatureFlag
+        setMock.Verify(m => m.Add(new FeatureFlag
         {
             FeatureFlagId = "some_flag",
             Enabled = true
         }), Times.Once());
 
-        mockContext.Verify(m => m.SaveChanges(), Times.Once());
+        contextMock.Verify(m => m.SaveChanges(), Times.Once());
     }
 
     [Test]
     public async Task DbFeatureFlagRepository_Create_Returns_Error_If_Unknown_Error_Occurs()
     {
-        var mockSet = new Mock<DbSet<FeatureFlag>>();
+        var setMock = new Mock<DbSet<FeatureFlag>>();
 
-        var mockContext = new Mock<FeatureFlagContext>();
-        mockContext.Setup(m => m.FeatureFlags).Returns(mockSet.Object);
-        mockContext.Setup(m => m.SaveChanges())
+        var contextMock = new Mock<FeatureFlagContext>();
+        contextMock.Setup(m => m.FeatureFlags).Returns(setMock.Object);
+        contextMock.Setup(m => m.SaveChanges())
             .Callback(() => throw new Exception("Unknown error"));
 
         var factory = Mock.Of<IFactory>();
 
-        var repository = new DbFeatureFlagRepository(mockContext.Object, factory);
+        var repository = new DbFeatureFlagRepository(contextMock.Object, factory);
 
         var result = await repository.Create(new Model
         {
@@ -165,13 +165,13 @@ public sealed class DbFeatureFlagRepositoryTests
             }));
         });
 
-        mockSet.Verify(m => m.Add(new FeatureFlag
+        setMock.Verify(m => m.Add(new FeatureFlag
         {
             FeatureFlagId = "some_flag",
             Enabled = true
         }), Times.Once());
 
-        mockContext.Verify(m => m.SaveChanges(), Times.Once());
+        contextMock.Verify(m => m.SaveChanges(), Times.Once());
     }
 
     [Test]
@@ -191,24 +191,24 @@ public sealed class DbFeatureFlagRepositoryTests
             }
         };
 
-        var mockSet = TestingUtils.CreateDbSetMockFromList(data);
+        var setMock = TestingUtils.CreateDbSetMockFromList(data);
 
-        var mockContext = new Mock<FeatureFlagContext>();
-        mockContext.Setup(c => c.FeatureFlags).Returns(mockSet.Object);
+        var contextMock = new Mock<FeatureFlagContext>();
+        contextMock.Setup(c => c.FeatureFlags).Returns(setMock.Object);
 
-        var mockFactory = new Mock<IFactory>();
-        mockFactory.Setup(f => f.Create("some_flag", true)).Returns(new Model
+        var factoryMock = new Mock<IFactory>();
+        factoryMock.Setup(f => f.Create("some_flag", true)).Returns(new Model
         {
             Id = "some_flag",
             Enabled = true
         });
-        mockFactory.Setup(f => f.Create("another_flag", false)).Returns(new Model
+        factoryMock.Setup(f => f.Create("another_flag", false)).Returns(new Model
         {
             Id = "another_flag",
             Enabled = false
         });
 
-        var repository = new DbFeatureFlagRepository(mockContext.Object, mockFactory.Object);
+        var repository = new DbFeatureFlagRepository(contextMock.Object, factoryMock.Object);
 
         var result = await repository.List();
 
@@ -225,6 +225,107 @@ public sealed class DbFeatureFlagRepositoryTests
             {
                 Id = "another_flag",
                 Enabled = false
+            }));
+        });
+    }
+
+    [Test]
+    public async Task DbFeatureFlagRepository_Update_Should_Return_True()
+    {
+        var setMock = new Mock<DbSet<FeatureFlag>>();
+        setMock.Setup(m => m.Update(It.IsAny<FeatureFlag>()));
+
+        var contextMock = new Mock<FeatureFlagContext>();
+        contextMock.Setup(c => c.FeatureFlags).Returns(setMock.Object);
+
+        var factoryMock = new Mock<IFactory>();
+
+        var repository = new DbFeatureFlagRepository(contextMock.Object, factoryMock.Object);
+
+        var result = await repository.Update(new Model
+        {
+            Id = "some_flag",
+            Enabled = false
+        });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsOk);
+            Assert.That(result.Value);
+        });
+
+        setMock.Verify(m => m.Update(new FeatureFlag
+        {
+            FeatureFlagId = "some_flag",
+            Enabled = false
+        }), Times.Once);
+
+        contextMock.Verify(m => m.SaveChanges(), Times.Once());
+    }
+
+    [Test]
+    public async Task DbFeatureFlagRepository_Update_Should_Return_NotFoundError()
+    {
+        var setMock = new Mock<DbSet<FeatureFlag>>();
+
+        var contextMock = new Mock<FeatureFlagContext>();
+        contextMock.Setup(m => m.FeatureFlags).Returns(setMock.Object);
+        contextMock.Setup(m => m.SaveChanges()).Callback(() => throw new DbUpdateConcurrencyException());
+
+        var factoryMock = new Mock<IFactory>();
+
+        var repository = new DbFeatureFlagRepository(contextMock.Object, factoryMock.Object);
+
+        var result = await repository.Update(new Model
+        {
+            Id = "some_flag",
+            Enabled = false
+        });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsOk, Is.False);
+            Assert.That(result.Error, Is.EqualTo(new NotFoundError
+            {
+                Message = "Not found"
+            }));
+        });
+
+        setMock.Verify(m => m.Update(new FeatureFlag
+        {
+            FeatureFlagId = "some_flag",
+            Enabled = false
+        }));
+
+        contextMock.Verify(m => m.SaveChanges(), Times.Once());
+    }
+
+    [Test]
+    public async Task DbFeatureFlagRepository_Update_Should_Return_Error_If_Error_Occurs()
+    {
+        var setMock = new Mock<DbSet<FeatureFlag>>();
+        setMock.Setup(s => s.Update(It.IsAny<FeatureFlag>()));
+
+        var contextMock = new Mock<FeatureFlagContext>();
+        contextMock.Setup(c => c.FeatureFlags).Returns(setMock.Object);
+        contextMock.Setup(c => c.SaveChanges()).Callback(() => throw new Exception("Unknown error"));
+
+        var factoryMock = new Mock<IFactory>();
+
+        var repository = new DbFeatureFlagRepository(contextMock.Object, factoryMock.Object);
+
+        var result = await repository.Update(new Model
+        {
+            Id = "some_flag",
+            Enabled = false
+        });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsOk, Is.False);
+            Assert.That(result.Error, Is.EqualTo(new Error
+            {
+                Message = "Unknown error"
             }));
         });
     }

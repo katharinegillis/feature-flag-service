@@ -1,4 +1,6 @@
+using Application.Interactors.CreateFeatureFlag;
 using Console.Common;
+using Console.Localization;
 using Domain.Common;
 using Utilities.LocalizationService;
 
@@ -6,13 +8,14 @@ namespace Console.Controllers.FeatureFlags.Create;
 
 // ReSharper disable once SuggestBaseTypeForParameterInConstructor
 public sealed class ConsolePresenter(
-    ILocalizationService<ConsolePresenter> localizer,
-    IConsoleWriter consoleWriter)
+    RequestModel request,
+    ILocalizationService<SharedResource> localizer,
+    IConsoleWriter writer)
     : IConsolePresenter
 {
     public void Ok(string id)
     {
-        consoleWriter.WriteLine(localizer.Translate("Feature Flag \"{0}\" created.", id));
+        writer.WriteLine(localizer.Translate("Feature Flag \"{0}\" created.", request.Id));
 
         ExitCode = (int)Console.Common.ExitCode.Success;
     }
@@ -21,7 +24,7 @@ public sealed class ConsolePresenter(
     {
         foreach (var error in validationErrors)
         {
-            consoleWriter.WriteLine(localizer.Translate("{0}: {1}.", error.Field, localizer.Translate(error.Message)));
+            writer.WriteLine(localizer.Translate("{0}: {1}.", error.Field, localizer.Translate(error.Message)));
         }
 
         ExitCode = (int)Console.Common.ExitCode.OptionsError;
@@ -29,10 +32,12 @@ public sealed class ConsolePresenter(
 
     public void Error(Error error)
     {
-        consoleWriter.WriteLine(localizer.Translate("Error: {0}.", localizer.Translate(error.Message)));
+        writer.WriteLine(localizer.Translate("Error: {0}.", localizer.Translate(error.Message)));
 
         ExitCode = (int)Console.Common.ExitCode.Error;
     }
+
+    public RequestModel Request => request;
 
     public int ExitCode { get; private set; }
 }

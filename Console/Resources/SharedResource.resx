@@ -1,4 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
     </resheader>
@@ -15,25 +23,31 @@
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
-    <data name="Max length is 100" xml:space="preserve">
-        <value>Max length is 100</value>
-    </data>
     <data name="Feature Flag &quot;{0}&quot; created." xml:space="preserve">
         <value>Feature Flag "{0}" created.</value>
+    </data>
+    <data name="{0}: {1}." xml:space="preserve">
+        <value>{0}: {1}.</value>
     </data>
     <data name="Error: {0}." xml:space="preserve">
         <value>Error: {0}.</value>
     </data>
-    <data name="Already exists" xml:space="preserve">
-        <value>Already exists</value>
-    </data>
-    <data name="{0}: {1}." xml:space="preserve">
-        <value>{0}: {1}.</value>
+    <data name="Id: &quot;{0}&quot;, Enabled: &quot;{1}&quot;" xml:space="preserve">
+        <value>Id: "{0}", Enabled: "{1}"</value>
     </data>
     <data name="true" xml:space="preserve">
         <value>true</value>
     </data>
     <data name="false" xml:space="preserve">
         <value>false</value>
+    </data>
+    <data name="Feature Flag &quot;{0}&quot; doesn't exist." xml:space="preserve">
+        <value>Feature Flag "{0}" doesn't exist.</value>
+    </data>
+    <data name="Feature Flag &quot;{0}&quot; updated." xml:space="preserve">
+        <value>Feature Flag "{0}" updated.</value>
+    </data>
+    <data name="Unknown command." xml:space="preserve">
+        <value>Unknown command.</value>
     </data>
 </root>

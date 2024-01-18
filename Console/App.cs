@@ -9,7 +9,7 @@ namespace Console;
 public sealed class App(
     IHostApplicationLifetime applicationLifetime,
     IServiceProvider serviceProvider,
-    ILocalizationService<App> localizationService) : IHostedService
+    ILocalizationService<App> localizer) : IHostedService
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -33,15 +33,18 @@ public sealed class App(
     {
         var verb = (IHasControllerType)obj;
 
-        if (serviceProvider.GetService(verb.ControllerType) is not IRunnableWithOptions command)
+        if (serviceProvider.GetService(verb.ControllerType) is not IExecutable command)
         {
-            System.Console.WriteLine(localizationService.Translate("Verb is missing command."));
+            System.Console.WriteLine(localizer.Translate("Unknown command."));
             return;
         }
 
-        command.SetOptions(obj);
+        if (command is IHasOptions commandWithOptions)
+        {
+            commandWithOptions.SetOptions(obj);
+        }
 
-        Environment.ExitCode = await command.Run();
+        Environment.ExitCode = await command.Execute();
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

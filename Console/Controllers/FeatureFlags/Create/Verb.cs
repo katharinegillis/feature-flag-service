@@ -11,5 +11,5 @@ public sealed class Verb : IHasControllerType, IOptions
     [Option('i', "id", Required = true)] public string Id { get; set; } = null!;
 
     [Option('e', "enabled", Default = false)]
-    public bool Enabled { get; set; }
+    public bool? Enabled { get; set; }
 }

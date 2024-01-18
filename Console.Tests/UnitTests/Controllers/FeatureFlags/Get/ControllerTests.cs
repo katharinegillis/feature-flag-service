@@ -9,14 +9,25 @@ namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Get;
 public sealed class ControllerTests
 {
     [Test]
-    public void GetController_Should_Be_IRunnableWithOptions()
+    public void GetController_Should_Be_Executable()
     {
-        var presenter = Mock.Of<IConsolePresenter>();
+        var factory = Mock.Of<IConsolePresenterFactory>();
         var interactor = Mock.Of<IInputPort>();
 
-        var controller = new Controller(presenter, interactor);
+        var controller = new Controller(factory, interactor);
 
-        Assert.That(controller, Is.InstanceOf<IRunnableWithOptions>());
+        Assert.That(controller, Is.InstanceOf<IExecutable>());
+    }
+
+    [Test]
+    public void GetController_Should_Have_Options()
+    {
+        var factory = Mock.Of<IConsolePresenterFactory>();
+        var interactor = Mock.Of<IInputPort>();
+
+        var controller = new Controller(factory, interactor);
+
+        Assert.That(controller, Is.InstanceOf<IHasOptions>());
     }
 
     [Test]
@@ -25,15 +36,18 @@ public sealed class ControllerTests
         var presenterMock = new Mock<IConsolePresenter>();
         presenterMock.Setup(p => p.ExitCode).Returns((int)ExitCode.Success);
 
+        var factoryMock = new Mock<IConsolePresenterFactory>();
+        factoryMock.Setup(f => f.Create(It.IsAny<RequestModel>())).Returns(presenterMock.Object);
+
         var interactorMock = new Mock<IInputPort>();
 
-        var controller = new Controller(presenterMock.Object, interactorMock.Object);
+        var controller = new Controller(factoryMock.Object, interactorMock.Object);
 
         var options = Mock.Of<IOptions>();
 
         controller.SetOptions(options);
 
-        var result = await controller.Run();
+        var result = await controller.Execute();
 
         Assert.That(result, Is.EqualTo((int)ExitCode.Success));
 

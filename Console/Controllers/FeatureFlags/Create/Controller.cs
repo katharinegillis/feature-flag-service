@@ -3,7 +3,7 @@ using Console.Common;
 
 namespace Console.Controllers.FeatureFlags.Create;
 
-public sealed class Controller(IConsolePresenter presenter, IInputPort interactor) : IRunnableWithOptions
+public sealed class Controller(IConsolePresenterFactory factory, IInputPort interactor) : IExecutable, IHasOptions
 {
     private IOptions _options = null!;
 
@@ -12,13 +12,15 @@ public sealed class Controller(IConsolePresenter presenter, IInputPort interacto
         _options = (IOptions)options;
     }
 
-    public async Task<int> Run()
+    public async Task<int> Execute()
     {
         var request = new RequestModel
         {
             Id = _options.Id,
-            Enabled = _options.Enabled
+            Enabled = (bool)_options.Enabled!
         };
+
+        var presenter = factory.Create(request);
 
         await interactor.Execute(request, presenter);
 

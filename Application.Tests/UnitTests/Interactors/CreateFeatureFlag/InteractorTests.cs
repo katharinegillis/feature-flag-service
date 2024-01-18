@@ -10,11 +10,11 @@ public sealed class InteractorTests
     [Test]
     public void CreateFeatureFlagInteractor_Is_An_InputPort()
     {
-        var featureFlagRepository = Mock.Of<IRepository>();
+        var repository = Mock.Of<IRepository>();
 
-        var featureFlagFactory = Mock.Of<IFactory>();
+        var factory = Mock.Of<IFactory>();
 
-        var interactor = new Interactor(featureFlagRepository, featureFlagFactory);
+        var interactor = new Interactor(repository, factory);
 
         Assert.That(interactor, Is.InstanceOf<IInputPort>());
     }
@@ -49,11 +49,14 @@ public sealed class InteractorTests
 
         var equalityComparer = new EqualityComparer();
 
-        Assert.That(equalityComparer.Equals(new Model
+        Assert.Multiple(() =>
         {
-            Id = "new_flag",
-            Enabled = true
-        }, passedFeatureFlag));
+            Assert.That(equalityComparer.Equals(new Model
+            {
+                Id = "new_flag",
+                Enabled = true
+            }, passedFeatureFlag));
+        });
 
         repositoryMock.Verify(r => r.Create(It.IsAny<IModel>()));
 

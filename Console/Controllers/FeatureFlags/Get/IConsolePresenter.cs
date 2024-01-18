@@ -3,4 +3,7 @@ using Console.Common;
 
 namespace Console.Controllers.FeatureFlags.Get;
 
-public interface IConsolePresenter : IOutputPort, IHasExitCode;
+public interface IConsolePresenter : IOutputPort, IHasExitCode
+{
+    public RequestModel Request { get; }
+}

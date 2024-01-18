@@ -1,3 +1,4 @@
+using Application.Interactors.IsFeatureFlagEnabled;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Controllers.Enabled;
 
@@ -8,7 +9,12 @@ public sealed class ActionResultPresenterTests
     [Test]
     public void ActionResultPresenter_ActionResult_Should_Default_To_InternalServerError()
     {
-        var presenter = new ActionResultPresenter();
+        var request = new RequestModel
+        {
+            Id = "some_flag"
+        };
+
+        var presenter = new ActionResultPresenter(request);
 
         Assert.Multiple(() =>
         {
@@ -20,7 +26,12 @@ public sealed class ActionResultPresenterTests
     [Test]
     public void ActionResultPresenter_IsError_Should_Default_To_True()
     {
-        var presenter = new ActionResultPresenter();
+        var request = new RequestModel
+        {
+            Id = "some_flag"
+        };
+
+        var presenter = new ActionResultPresenter(request);
 
         Assert.That(presenter.IsError, Is.True);
     }
@@ -28,7 +39,12 @@ public sealed class ActionResultPresenterTests
     [Test]
     public void ActionResultPresenter_Message_Should_Default_To_NoActionSet()
     {
-        var presenter = new ActionResultPresenter();
+        var request = new RequestModel
+        {
+            Id = "some_flag"
+        };
+
+        var presenter = new ActionResultPresenter(request);
 
         Assert.That(presenter.Message, Is.EqualTo("No action result set"));
     }
@@ -36,7 +52,12 @@ public sealed class ActionResultPresenterTests
     [Test]
     public void ActionResultPresenter_Ok_Should_Create_Ok_Response_With_Given_Data()
     {
-        var presenter = new ActionResultPresenter();
+        var request = new RequestModel
+        {
+            Id = "some_flag"
+        };
+
+        var presenter = new ActionResultPresenter(request);
 
         presenter.Ok(true);
 
@@ -52,7 +73,12 @@ public sealed class ActionResultPresenterTests
     [Test]
     public void ActionResultPresenter_NotFound_Should_Create_NotFound_Response()
     {
-        var presenter = new ActionResultPresenter();
+        var request = new RequestModel
+        {
+            Id = "some_flag"
+        };
+
+        var presenter = new ActionResultPresenter(request);
 
         presenter.NotFound();
 

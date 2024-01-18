@@ -1,5 +1,7 @@
+using Application.Interactors.CreateFeatureFlag;
 using Console.Controllers.FeatureFlags.Create;
 using Console.Common;
+using Console.Localization;
 using Domain.Common;
 using Moq;
 using Utilities.LocalizationService;
@@ -11,13 +13,19 @@ public sealed class ConsolePresenterTests
     [Test]
     public void ConsolePresenter_Ok_Should_Display_Success_Message()
     {
-        var localizationServiceMock = new Mock<ILocalizationService<ConsolePresenter>>();
-        localizationServiceMock.Setup(s => s.Translate("Feature Flag \"{0}\" created.", "some_flag"))
+        var localizerMock = new Mock<ILocalizationService<SharedResource>>();
+        localizerMock.Setup(s => s.Translate("Feature Flag \"{0}\" created.", "some_flag"))
             .Returns("Feature Flag \"some_flag\" created.");
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizationServiceMock.Object, writerMock.Object);
+        var request = new RequestModel
+        {
+            Id = "some_flag",
+            Enabled = true
+        };
+
+        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
         presenter.Ok("some_flag");
 
         writerMock.Verify(w => w.WriteLine("Feature Flag \"some_flag\" created."));
@@ -27,17 +35,23 @@ public sealed class ConsolePresenterTests
     [Test]
     public void ConsolePresenter_BadRequest_Should_Display_Validation_Errors()
     {
-        var localizationServiceMock = new Mock<ILocalizationService<ConsolePresenter>>();
-        localizationServiceMock.Setup(s => s.Translate("Required")).Returns("Required");
-        localizationServiceMock.Setup(s => s.Translate("Max length is 100")).Returns("Max length is 100");
-        localizationServiceMock.Setup(s => s.Translate("{0}: {1}.", "Id", "Max length is 100"))
+        var localizerMock = new Mock<ILocalizationService<SharedResource>>();
+        localizerMock.Setup(s => s.Translate("Required")).Returns("Required");
+        localizerMock.Setup(s => s.Translate("Max length is 100")).Returns("Max length is 100");
+        localizerMock.Setup(s => s.Translate("{0}: {1}.", "Id", "Max length is 100"))
             .Returns("Id: Max length is 100.");
-        localizationServiceMock.Setup(s => s.Translate("{0}: {1}.", "Enabled", "Required"))
+        localizerMock.Setup(s => s.Translate("{0}: {1}.", "Enabled", "Required"))
             .Returns("Enabled: Required.");
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizationServiceMock.Object, writerMock.Object);
+        var request = new RequestModel
+        {
+            Id = "some_flag",
+            Enabled = true
+        };
+
+        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
         presenter.BadRequest(new List<ValidationError>
         {
             new()
@@ -60,14 +74,20 @@ public sealed class ConsolePresenterTests
     [Test]
     public void ConsolePresenter_Error_Should_Display_Error_Message()
     {
-        var localizationServiceMock = new Mock<ILocalizationService<ConsolePresenter>>();
-        localizationServiceMock.Setup(s => s.Translate("Unknown error")).Returns("Unknown error");
-        localizationServiceMock.Setup(s => s.Translate("Error: {0}.", "Unknown error"))
+        var localizerMock = new Mock<ILocalizationService<SharedResource>>();
+        localizerMock.Setup(s => s.Translate("Unknown error")).Returns("Unknown error");
+        localizerMock.Setup(s => s.Translate("Error: {0}.", "Unknown error"))
             .Returns("Error: Unknown error.");
 
         var writerMock = new Mock<IConsoleWriter>();
 
-        var presenter = new ConsolePresenter(localizationServiceMock.Object, writerMock.Object);
+        var request = new RequestModel
+        {
+            Id = "some_flag",
+            Enabled = true
+        };
+
+        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
         presenter.Error(new Error
         {
             Message = "Unknown error"
