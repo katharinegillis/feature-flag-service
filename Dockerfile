@@ -52,9 +52,12 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY ./console.sh /app/console
+COPY ./console-fr.sh /app/console-fr
 USER root
 RUN chown webapp:webapp /app/console
+RUN chown webapp:webapp /app/console-fr
 RUN chmod +x /app/console
+RUN chmod +x /app/console-fr
 USER webapp
 RUN echo "export PATH=/app:${PATH}" >> /home/webapp/.bashrc
 ENV PATH=$PATH:/app

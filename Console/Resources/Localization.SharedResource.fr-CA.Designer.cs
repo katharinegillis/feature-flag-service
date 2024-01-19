@@ -14,21 +14,21 @@ namespace Console.Resources {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SharedResource {
+    internal class Localization_SharedResource_fr_CA {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SharedResource() {
+        internal Localization_SharedResource_fr_CA() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Console.Resources.SharedResource", typeof(SharedResource).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Console.Resources.Localization_SharedResource_fr_CA", typeof(Localization_SharedResource_fr_CA).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -45,39 +45,21 @@ namespace Console.Resources {
             }
         }
         
-        internal static string Feature_Flag___0___created_ {
-            get {
-                return ResourceManager.GetString("Feature Flag \"{0}\" created.", resourceCulture);
-            }
-        }
-        
-        internal static string _0____1__ {
-            get {
-                return ResourceManager.GetString("{0}: {1}.", resourceCulture);
-            }
-        }
-        
         internal static string Error___0__ {
             get {
                 return ResourceManager.GetString("Error: {0}.", resourceCulture);
             }
         }
         
-        internal static string Id____0____Enabled____1__ {
-            get {
-                return ResourceManager.GetString("Id: \"{0}\", Enabled: \"{1}\"", resourceCulture);
-            }
-        }
-        
-        internal static string _true {
-            get {
-                return ResourceManager.GetString("true", resourceCulture);
-            }
-        }
-        
         internal static string _false {
             get {
                 return ResourceManager.GetString("false", resourceCulture);
+            }
+        }
+        
+        internal static string Feature_Flag___0___created_ {
+            get {
+                return ResourceManager.GetString("Feature Flag \"{0}\" created.", resourceCulture);
             }
         }
         
@@ -93,9 +75,27 @@ namespace Console.Resources {
             }
         }
         
+        internal static string Id____0____Enabled____1__ {
+            get {
+                return ResourceManager.GetString("Id: \"{0}\", Enabled: \"{1}\"", resourceCulture);
+            }
+        }
+        
+        internal static string _true {
+            get {
+                return ResourceManager.GetString("true", resourceCulture);
+            }
+        }
+        
         internal static string Unknown_command_ {
             get {
                 return ResourceManager.GetString("Unknown command.", resourceCulture);
+            }
+        }
+        
+        internal static string _0____1__ {
+            get {
+                return ResourceManager.GetString("{0}: {1}.", resourceCulture);
             }
         }
     }
