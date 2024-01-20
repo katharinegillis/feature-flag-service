@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!-- FROM GOOGLE TRANSLATE, MAY HAVE MISTAKES -->
+
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
@@ -24,30 +26,30 @@
         </value>
     </resheader>
     <data name="Error: {0}." xml:space="preserve">
-        <value>.{0} :rorrE</value>
+        <value>Erreur : {0}.</value>
     </data>
     <data name="false" xml:space="preserve">
-        <value>eslaf</value>
+        <value>faux</value>
     </data>
     <data name="Feature Flag &quot;{0}&quot; created." xml:space="preserve">
-        <value>.detaerc "{0}" galF erutaeF</value>
+        <value>Indicateur de fonctionnalité "{0}" créé.</value>
     </data>
     <data name="Feature Flag &quot;{0}&quot; doesn't exist." xml:space="preserve">
-        <value>.tsixe t'nseod "{0}" falF erutaeF</value>
+        <value>L'indicateur de fonctionnalité "{0}" n'existe pas.</value>
     </data>
     <data name="Feature Flag &quot;{0}&quot; updated." xml:space="preserve">
-        <value>.detadpu "{0}" falF erutaeF</value>
+        <value>Indicateur de fonctionnalité « {0} » mis à jour.</value>
     </data>
     <data name="Id: &quot;{0}&quot;, Enabled: &quot;{1}&quot;" xml:space="preserve">
-        <value>"{1}" :edlbanE, "{0}" :dI</value>
+        <value>Identifiant : "{0}", Activé : "{1}"</value>
     </data>
     <data name="true" xml:space="preserve">
-        <value>eurt</value>
+        <value>vrai</value>
     </data>
     <data name="Unknown command." xml:space="preserve">
-        <value>.dnammoc nwonknU</value>
+        <value>Commande inconnue.</value>
     </data>
     <data name="{0}: {1}." xml:space="preserve">
-        <value>.{1} :{0}</value>
+        <value>{0}: {1}.</value>
     </data>
 </root>
