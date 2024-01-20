@@ -6,7 +6,7 @@
         <Configuration>
           <Format>cobertura</Format>
           <Include>[*]Console.*</Include>
-          <Exclude>[*]Console.Program,[*]Console.App,[*]Console.Extensions, [*]Console.Common.ConsoleWriter</Exclude> <!-- [Assembly-Filter]Type-Filter -->
+          <Exclude>[*]Console.Program,[*]Console.App,[*]Console.Extensions, [*]Console.Common.ConsoleWriter, [*]Console.Localization.LocalizableSentenceBuilder</Exclude> <!-- [Assembly-Filter]Type-Filter -->
           <ExcludeAssembliesWithoutSources>MissingAny</ExcludeAssembliesWithoutSources>
         </Configuration>
       </DataCollector>

@@ -18,7 +18,7 @@ public sealed class Interactor(IRepository repository, IFactory factory) : IInpu
         var result = await repository.Create(featureFlag);
         if (result.IsOk)
         {
-            presenter.Ok(result.Value);
+            presenter.Ok();
             return;
         }
 

@@ -1,6 +1,8 @@
 using System.Reflection;
 using CommandLine;
+using CommandLine.Text;
 using Console.Common;
+using Console.Localization;
 using Microsoft.Extensions.Hosting;
 using Utilities.LocalizationService;
 
@@ -13,6 +15,8 @@ public sealed class App(
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
+        SentenceBuilder.Factory = () => new LocalizableSentenceBuilder();
+
         var args = Environment.GetCommandLineArgs().Skip(1);
 
         var types = LoadVerbs();

@@ -60,7 +60,7 @@ public sealed class InteractorTests
 
         repositoryMock.Verify(r => r.Create(It.IsAny<IModel>()));
 
-        presenterMock.Verify(p => p.Ok("new_flag"));
+        presenterMock.Verify(p => p.Ok());
     }
 
     [Test]

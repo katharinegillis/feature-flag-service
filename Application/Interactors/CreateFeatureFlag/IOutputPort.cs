@@ -4,7 +4,7 @@ namespace Application.Interactors.CreateFeatureFlag;
 
 public interface IOutputPort
 {
-    public void Ok(string id);
+    public void Ok();
 
     public void BadRequest(IEnumerable<ValidationError> validationErrors);
 

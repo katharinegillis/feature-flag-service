@@ -13,7 +13,7 @@ public sealed class ConsolePresenter(
     IConsoleWriter writer)
     : IConsolePresenter
 {
-    public void Ok(string id)
+    public void Ok()
     {
         writer.WriteLine(localizer.Translate("Feature Flag \"{0}\" created.", request.Id));
 

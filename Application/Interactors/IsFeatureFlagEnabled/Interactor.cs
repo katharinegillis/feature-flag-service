@@ -1,5 +1,4 @@
 using IGetFeatureFlagInputPort = Application.Interactors.GetFeatureFlag.IInputPort;
-using IGetFeatureFlagCodePresenter = Application.Interactors.GetFeatureFlag.ICodePresenter;
 using IGetFeatureFlagCodePresenterFactory = Application.Interactors.GetFeatureFlag.ICodePresenterFactory;
 using GetFeatureFlagRequestModel = Application.Interactors.GetFeatureFlag.RequestModel;
 

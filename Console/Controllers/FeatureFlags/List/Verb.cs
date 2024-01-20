@@ -3,7 +3,8 @@ using Console.Common;
 
 namespace Console.Controllers.FeatureFlags.List;
 
-[Verb("featureflag:list", HelpText = "List all feature flags")]
+[Verb("featureflag:list", HelpText = "HelpListFeatureFlagsVerb",
+    ResourceType = typeof(Resources.CommandLineParser))]
 public sealed class Verb : IHasControllerType
 {
     public Type ControllerType { get; } = typeof(Controller);
