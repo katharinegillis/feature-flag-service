@@ -42,13 +42,27 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Update="Resources\Localization.SharedResource.en-CA.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
         <EmbeddedResource Update="Resources\Localization.SharedResource.fr-CA.resx">
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>Localization.SharedResource.fr-CA.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\CommandLineParser.fr-CA.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>CommandLineParser.fr-CA.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\CommandLineParser.en-CA.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>CommandLineParser.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\Localization.SharedResource.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\Localization.SharedResource.en-CA.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\CommandLineParser.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>CommandLineParser.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 
@@ -62,6 +76,26 @@
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>Localization.SharedResource.fr-CA.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\CommandLineParser.fr-CA.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>CommandLineParser.fr-CA.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\CommandLineParser.en-CA.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>CommandLineParser.en-CA.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\Localization.SharedResource.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Localization.SharedResource.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\CommandLineParser.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>CommandLineParser.resx</DependentUpon>
         </Compile>
     </ItemGroup>
 
