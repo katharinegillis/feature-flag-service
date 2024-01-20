@@ -24,84 +24,84 @@
         </value>
     </resheader>
     <data name="HelpIdOption" xml:space="preserve">
-        <value>galf erutaef eht fo dI</value>
+        <value>Identifiant de l'indicateur de fonctionnalité</value>
     </data>
     <data name="HelpEnableOption" xml:space="preserve">
-        <value>galf erutaef eht elbasid ro elbanE</value>
+        <value>Activer ou désactiver l'indicateur de fonctionnalité</value>
     </data>
     <data name="HelpListFeatureFlagsVerb" xml:space="preserve">
-        <value>sgalf erutaef lla tsiL</value>
+        <value>Répertorier tous les indicateurs de fonctionnalités</value>
     </data>
     <data name="HelpGetFeatureFlagVerb" xml:space="preserve">
-        <value>galf erutaef a teG</value>
+        <value>Obtenir un indicateur de fonctionnalité</value>
     </data>
     <data name="HelpCreateFeatureFlagVerb" xml:space="preserve">
-        <value>galf erutaef a etaerC</value>
+        <value>Créer un indicateur de fonctionnalité</value>
     </data>
     <data name="HelpUpdateFeatureFlagVerb" xml:space="preserve">
-        <value>galf erutaef a etadpU</value>
+        <value>Mettre à jour un indicateur de fonctionnalité</value>
     </data>
     <data name="SentenceBadFormatConversionErrorOption" xml:space="preserve">
-        <value>.tamrof gnorw eht ni denifed si '{0}' noitpO</value>
+        <value>L'option '{0}' est définie dans un format incorrect.</value>
     </data>
     <data name="SentenceBadFormatConversionErrorValue" xml:space="preserve">
-        <value>.tamrof dab a htiw denifed si eman noitpo ot dnuob ton eulav A</value>
+        <value>Une valeur non liée au nom de l'option est définie avec un mauvais format.</value>
     </data>
     <data name="SentenceBadFormatTokenError" xml:space="preserve">
-        <value>.dezingocer ton si '{0}' nekoT</value>
+        <value>Le jeton '{0}' n'est pas reconnu.</value>
     </data>
     <data name="SentenceBadVerbSelectedError" xml:space="preserve">
-        <value>.dezingocer ton si '{0}' breV</value>
+        <value>Le verbe '{0}' n'est pas reconnu.</value>
     </data>
     <data name="SentenceErrorsHeadingText" xml:space="preserve">
-        <value>:(S)RORRE</value>
+        <value>LES ERREURS:</value>
     </data>
     <data name="SentenceHelpCommandTextOption" xml:space="preserve">
-        <value>.neercs pleh siht yalpsiD</value>
+        <value>Affichez cet écran d'aide.</value>
     </data>
     <data name="SentenceHelpCommandTextVerb" xml:space="preserve">
-        <value>.dnammoc cificeps a no noitamrofni erom yalpsiD</value>
+        <value>Afficher plus d'informations sur une commande spécifique.</value>
     </data>
     <data name="SentenceMissingRequiredOptionError" xml:space="preserve">
-        <value>.gnissim si '{0}' noitpo deriuqeR</value>
+        <value>L'option obligatoire « {0} » est manquante.</value>
     </data>
     <data name="SentenceMissingRequiredValueError" xml:space="preserve">
-        <value>.gnissim si eman noitpo ot dnuob ton eulav deriuqer A</value>
+        <value>Il manque une valeur obligatoire non liée au nom de l'option.</value>
     </data>
     <data name="SentenceMissingValueOptionError" xml:space="preserve">
-        <value>.eulav on sah '{0}' noitpO</value>
+        <value>L'option '{0}' n'a aucune valeur.</value>
     </data>
     <data name="SentenceMutuallyExclusiveSetErrors" xml:space="preserve">
-        <value>.{1} htiw elbitapmoc ton era {0} :snoitpO</value>
+        <value>Options : {0} ne sont pas compatibles avec {1}.</value>
     </data>
     <data name="SentenceNoVerbSelectedError" xml:space="preserve">
-        <value>.detceles brev oN</value>
+        <value>Aucun verbe sélectionné.</value>
     </data>
     <data name="SentenceRepeatedOptionError" xml:space="preserve">
-        <value>.semit elpitlum denifed si '{0}' noitpO</value>
+        <value>L'option '{0}' est définie plusieurs fois.</value>
     </data>
     <data name="SentenceRequiredWord" xml:space="preserve">
-        <value>.deriuqeR</value>
+        <value>Requis.</value>
     </data>
     <data name="SentenceSequenceOutOfRangeErrorOption" xml:space="preserve">
-        <value>.deruiqer naht smeti erom ro rewef htiw denifed si '{0}' noitpo ecneuqes A</value>
+        <value>Une option de séquence '{0}' est définie avec moins ou plus d'éléments que requis.</value>
     </data>
     <data name="SentenceSequenceOutOfRangeErrorValue" xml:space="preserve">
-        <value>.deriuqer naht smeti rewef htiw denifed si eman noitpo ot dnuob ton eulav ecneuqes A</value>
+        <value>Une valeur de séquence non liée au nom de l'option est définie avec moins d'éléments que nécessaire.</value>
     </data>
     <data name="SentenceSetValueExceptionError" xml:space="preserve">
-        <value>{1} :'{0}' noitpo ot eulav gnittes rorrE</value>
+        <value>Erreur lors de la définition de la valeur de l'option « {0} » : {1}</value>
     </data>
     <data name="SentenceUnknownOptionError" xml:space="preserve">
-        <value>.nwonknu si '{0}' noitpO</value>
+        <value>L'option '{0}' est inconnue.</value>
     </data>
     <data name="SentenceUsageHeadingText" xml:space="preserve">
-        <value>:EGASU</value>
+        <value>USAGE:</value>
     </data>
     <data name="SentenceVersionCommandText" xml:space="preserve">
-        <value>.noitamrofni noisrev yalpsiD</value>
+        <value>Afficher les informations sur la version.</value>
     </data>
     <data name="SentenceOptionGroupWord" xml:space="preserve">
-        <value>puorG</value>
+        <value>Groupe</value>
     </data>
 </root>
