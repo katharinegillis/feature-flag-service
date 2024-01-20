@@ -329,4 +329,88 @@ public sealed class DbFeatureFlagRepositoryTests
             }));
         });
     }
+
+    [Test]
+    public async Task DbFeatureFlagRepository_Delete_Should_Return_True()
+    {
+        var setMock = new Mock<DbSet<FeatureFlag>>();
+        setMock.Setup(m => m.Remove(It.IsAny<FeatureFlag>()));
+
+        var contextMock = new Mock<FeatureFlagContext>();
+        contextMock.Setup(c => c.FeatureFlags).Returns(setMock.Object);
+
+        var factoryMock = new Mock<IFactory>();
+
+        var repository = new DbFeatureFlagRepository(contextMock.Object, factoryMock.Object);
+
+        var result = await repository.Delete("some_flag");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsOk);
+            Assert.That(result.Value);
+        });
+
+        setMock.Verify(m => m.Remove(new FeatureFlag
+        {
+            FeatureFlagId = "some_flag"
+        }), Times.Once);
+
+        contextMock.Verify(c => c.SaveChanges(), Times.Once());
+    }
+
+    [Test]
+    public async Task DbFeatureFlagRepository_Delete_Should_Return_NotFoundError_If_FeatureFlag_Not_Found()
+    {
+        var setMock = new Mock<DbSet<FeatureFlag>>();
+
+        var contextMock = new Mock<FeatureFlagContext>();
+        contextMock.Setup(c => c.FeatureFlags).Returns(setMock.Object);
+        contextMock.Setup(c => c.SaveChanges()).Callback(() => throw new DbUpdateConcurrencyException());
+
+        var factoryMock = new Mock<IFactory>();
+
+        var repository = new DbFeatureFlagRepository(contextMock.Object, factoryMock.Object);
+
+        var result = await repository.Delete("some_flag");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsOk, Is.False);
+            Assert.That(result.Error, Is.EqualTo(new NotFoundError()));
+        });
+
+        setMock.Verify(m => m.Remove(new FeatureFlag
+        {
+            FeatureFlagId = "some_flag"
+        }), Times.Once());
+
+        contextMock.Verify(c => c.SaveChanges(), Times.Once());
+    }
+
+    [Test]
+    public async Task DbFeatureFlagRepository_Delete_Should_Return_Error_If_Error_Occurs()
+    {
+        var setMock = new Mock<DbSet<FeatureFlag>>();
+        setMock.Setup(s => s.Remove(It.IsAny<FeatureFlag>()));
+
+        var contextMock = new Mock<FeatureFlagContext>();
+        contextMock.Setup(c => c.FeatureFlags).Returns(setMock.Object);
+        contextMock.Setup(c => c.SaveChanges()).Callback(() => throw new Exception("Unknown error"));
+
+        var factoryMock = new Mock<IFactory>();
+
+        var repository = new DbFeatureFlagRepository(contextMock.Object, factoryMock.Object);
+
+        var result = await repository.Delete("some_flag");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsOk, Is.False);
+            Assert.That(result.Error, Is.EqualTo(new Error
+            {
+                Message = "Unknown error"
+            }));
+        });
+    }
 }
