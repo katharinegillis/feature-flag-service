@@ -41,4 +41,67 @@
     <data name="HelpUpdateFeatureFlagVerb" xml:space="preserve">
         <value>galf erutaef a etadpU</value>
     </data>
+    <data name="SentenceBadFormatConversionErrorOption" xml:space="preserve">
+        <value>.tamrof gnorw eht ni denifed si '{0}' noitpO</value>
+    </data>
+    <data name="SentenceBadFormatConversionErrorValue" xml:space="preserve">
+        <value>.tamrof dab a htiw denifed si eman noitpo ot dnuob ton eulav A</value>
+    </data>
+    <data name="SentenceBadFormatTokenError" xml:space="preserve">
+        <value>.dezingocer ton si '{0}' nekoT</value>
+    </data>
+    <data name="SentenceBadVerbSelectedError" xml:space="preserve">
+        <value>.dezingocer ton si '{0}' breV</value>
+    </data>
+    <data name="SentenceErrorsHeadingText" xml:space="preserve">
+        <value>:(S)RORRE</value>
+    </data>
+    <data name="SentenceHelpCommandTextOption" xml:space="preserve">
+        <value>.neercs pleh siht yalpsiD</value>
+    </data>
+    <data name="SentenceHelpCommandTextVerb" xml:space="preserve">
+        <value>.dnammoc cificeps a no noitamrofni erom yalpsiD</value>
+    </data>
+    <data name="SentenceMissingRequiredOptionError" xml:space="preserve">
+        <value>.gnissim si '{0}' noitpo deriuqeR</value>
+    </data>
+    <data name="SentenceMissingRequiredValueError" xml:space="preserve">
+        <value>.gnissim si eman noitpo ot dnuob ton eulav deriuqer A</value>
+    </data>
+    <data name="SentenceMissingValueOptionError" xml:space="preserve">
+        <value>.eulav on sah '{0}' noitpO</value>
+    </data>
+    <data name="SentenceMutuallyExclusiveSetErrors" xml:space="preserve">
+        <value>.{1} htiw elbitapmoc ton era {0} :snoitpO</value>
+    </data>
+    <data name="SentenceNoVerbSelectedError" xml:space="preserve">
+        <value>.detceles brev oN</value>
+    </data>
+    <data name="SentenceRepeatedOptionError" xml:space="preserve">
+        <value>.semit elpitlum denifed si '{0}' noitpO</value>
+    </data>
+    <data name="SentenceRequiredWord" xml:space="preserve">
+        <value>.deriuqeR</value>
+    </data>
+    <data name="SentenceSequenceOutOfRangeErrorOption" xml:space="preserve">
+        <value>.deruiqer naht smeti erom ro rewef htiw denifed si '{0}' noitpo ecneuqes A</value>
+    </data>
+    <data name="SentenceSequenceOutOfRangeErrorValue" xml:space="preserve">
+        <value>.deriuqer naht smeti rewef htiw denifed si eman noitpo ot dnuob ton eulav ecneuqes A</value>
+    </data>
+    <data name="SentenceSetValueExceptionError" xml:space="preserve">
+        <value>{1} :'{0}' noitpo ot eulav gnittes rorrE</value>
+    </data>
+    <data name="SentenceUnknownOptionError" xml:space="preserve">
+        <value>.nwonknu si '{0}' noitpO</value>
+    </data>
+    <data name="SentenceUsageHeadingText" xml:space="preserve">
+        <value>:EGASU</value>
+    </data>
+    <data name="SentenceVersionCommandText" xml:space="preserve">
+        <value>.noitamrofni noisrev yalpsiD</value>
+    </data>
+    <data name="SentenceOptionGroupWord" xml:space="preserve">
+        <value>puorG</value>
+    </data>
 </root>

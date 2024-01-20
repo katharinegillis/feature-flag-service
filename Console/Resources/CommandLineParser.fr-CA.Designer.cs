@@ -14,7 +14,7 @@ namespace Console.Resources {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class CommandLineParser_fr_CA {
+    public class CommandLineParser_fr_CA {
         
         private static System.Resources.ResourceManager resourceMan;
         
@@ -25,7 +25,7 @@ namespace Console.Resources {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static System.Resources.ResourceManager ResourceManager {
+        public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
                     System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Console.Resources.CommandLineParser_fr_CA", typeof(CommandLineParser_fr_CA).Assembly);
@@ -36,7 +36,7 @@ namespace Console.Resources {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static System.Globalization.CultureInfo Culture {
+        public static System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -45,39 +45,165 @@ namespace Console.Resources {
             }
         }
         
-        internal static string HelpIdOption {
+        public static string HelpIdOption {
             get {
                 return ResourceManager.GetString("HelpIdOption", resourceCulture);
             }
         }
         
-        internal static string HelpEnableOption {
+        public static string HelpEnableOption {
             get {
                 return ResourceManager.GetString("HelpEnableOption", resourceCulture);
             }
         }
         
-        internal static string HelpListFeatureFlagsVerb {
+        public static string HelpListFeatureFlagsVerb {
             get {
                 return ResourceManager.GetString("HelpListFeatureFlagsVerb", resourceCulture);
             }
         }
         
-        internal static string HelpGetFeatureFlagVerb {
+        public static string HelpGetFeatureFlagVerb {
             get {
                 return ResourceManager.GetString("HelpGetFeatureFlagVerb", resourceCulture);
             }
         }
         
-        internal static string HelpCreateFeatureFlagVerb {
+        public static string HelpCreateFeatureFlagVerb {
             get {
                 return ResourceManager.GetString("HelpCreateFeatureFlagVerb", resourceCulture);
             }
         }
         
-        internal static string HelpUpdateFeatureFlagVerb {
+        public static string HelpUpdateFeatureFlagVerb {
             get {
                 return ResourceManager.GetString("HelpUpdateFeatureFlagVerb", resourceCulture);
+            }
+        }
+        
+        public static string SentenceBadFormatConversionErrorOption {
+            get {
+                return ResourceManager.GetString("SentenceBadFormatConversionErrorOption", resourceCulture);
+            }
+        }
+        
+        public static string SentenceBadFormatConversionErrorValue {
+            get {
+                return ResourceManager.GetString("SentenceBadFormatConversionErrorValue", resourceCulture);
+            }
+        }
+        
+        public static string SentenceBadFormatTokenError {
+            get {
+                return ResourceManager.GetString("SentenceBadFormatTokenError", resourceCulture);
+            }
+        }
+        
+        public static string SentenceBadVerbSelectedError {
+            get {
+                return ResourceManager.GetString("SentenceBadVerbSelectedError", resourceCulture);
+            }
+        }
+        
+        public static string SentenceErrorsHeadingText {
+            get {
+                return ResourceManager.GetString("SentenceErrorsHeadingText", resourceCulture);
+            }
+        }
+        
+        public static string SentenceHelpCommandTextOption {
+            get {
+                return ResourceManager.GetString("SentenceHelpCommandTextOption", resourceCulture);
+            }
+        }
+        
+        public static string SentenceHelpCommandTextVerb {
+            get {
+                return ResourceManager.GetString("SentenceHelpCommandTextVerb", resourceCulture);
+            }
+        }
+        
+        public static string SentenceMissingRequiredOptionError {
+            get {
+                return ResourceManager.GetString("SentenceMissingRequiredOptionError", resourceCulture);
+            }
+        }
+        
+        public static string SentenceMissingRequiredValueError {
+            get {
+                return ResourceManager.GetString("SentenceMissingRequiredValueError", resourceCulture);
+            }
+        }
+        
+        public static string SentenceMissingValueOptionError {
+            get {
+                return ResourceManager.GetString("SentenceMissingValueOptionError", resourceCulture);
+            }
+        }
+        
+        public static string SentenceMutuallyExclusiveSetErrors {
+            get {
+                return ResourceManager.GetString("SentenceMutuallyExclusiveSetErrors", resourceCulture);
+            }
+        }
+        
+        public static string SentenceNoVerbSelectedError {
+            get {
+                return ResourceManager.GetString("SentenceNoVerbSelectedError", resourceCulture);
+            }
+        }
+        
+        public static string SentenceRepeatedOptionError {
+            get {
+                return ResourceManager.GetString("SentenceRepeatedOptionError", resourceCulture);
+            }
+        }
+        
+        public static string SentenceRequiredWord {
+            get {
+                return ResourceManager.GetString("SentenceRequiredWord", resourceCulture);
+            }
+        }
+        
+        public static string SentenceSequenceOutOfRangeErrorOption {
+            get {
+                return ResourceManager.GetString("SentenceSequenceOutOfRangeErrorOption", resourceCulture);
+            }
+        }
+        
+        public static string SentenceSequenceOutOfRangeErrorValue {
+            get {
+                return ResourceManager.GetString("SentenceSequenceOutOfRangeErrorValue", resourceCulture);
+            }
+        }
+        
+        public static string SentenceSetValueExceptionError {
+            get {
+                return ResourceManager.GetString("SentenceSetValueExceptionError", resourceCulture);
+            }
+        }
+        
+        public static string SentenceUnknownOptionError {
+            get {
+                return ResourceManager.GetString("SentenceUnknownOptionError", resourceCulture);
+            }
+        }
+        
+        public static string SentenceUsageHeadingText {
+            get {
+                return ResourceManager.GetString("SentenceUsageHeadingText", resourceCulture);
+            }
+        }
+        
+        public static string SentenceVersionCommandText {
+            get {
+                return ResourceManager.GetString("SentenceVersionCommandText", resourceCulture);
+            }
+        }
+        
+        public static string SentenceOptionGroupWord {
+            get {
+                return ResourceManager.GetString("SentenceOptionGroupWord", resourceCulture);
             }
         }
     }

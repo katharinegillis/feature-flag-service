@@ -52,7 +52,7 @@
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\CommandLineParser.en-CA.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
-            <LastGenOutput>CommandLineParser.Designer.cs</LastGenOutput>
+            <LastGenOutput>CommandLineParser.en-CA.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\Localization.SharedResource.resx">
             <Generator>ResXFileCodeGenerator</Generator>
