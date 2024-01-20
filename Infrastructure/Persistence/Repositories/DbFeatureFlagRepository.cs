@@ -89,4 +89,9 @@ public sealed class DbFeatureFlagRepository(FeatureFlagContext context, IFactory
             });
         }
     }
+
+    public Task<Result<bool, Error>> Delete(string id)
+    {
+        throw new NotImplementedException();
+    }
 }

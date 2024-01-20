@@ -11,4 +11,6 @@ public interface IRepository
     public Task<IEnumerable<IModel>> List();
 
     public Task<Result<bool, Error>> Update(IModel model);
+
+    public Task<Result<bool, Error>> Delete(string id);
 }
