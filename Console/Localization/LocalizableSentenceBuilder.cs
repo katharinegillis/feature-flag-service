@@ -1,9 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using CommandLine;
 using CommandLine.Text;
+
+// ReSharper disable All
+// This came from the CommandLine Parser codebase and was minimally changed to work with my project structure.
+// All inspection problems are going to be ignored as it wasn't my code originally.
+// https://github.com/commandlineparser/commandline/blob/master/demo/ReadText.LocalizedDemo/LocalizableSentenceBuilder.cs
 
 namespace Console.Localization
 {
@@ -116,7 +117,7 @@ namespace Console.Localization
                             var names = String.Join(
                                 String.Empty,
                                 (from e in set.Errors select String.Format("'{0}', ", e.NameInfo.NameText)).ToArray());
-                            var namesCount = set.Errors.Count();
+                            var namesCount = set.Errors.Count;
 
                             var incompat = String.Join(
                                 String.Empty,

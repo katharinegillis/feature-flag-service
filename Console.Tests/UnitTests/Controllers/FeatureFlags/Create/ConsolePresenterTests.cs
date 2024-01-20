@@ -26,7 +26,7 @@ public sealed class ConsolePresenterTests
         };
 
         var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
-        presenter.Ok("some_flag");
+        presenter.Ok();
 
         writerMock.Verify(w => w.WriteLine("Feature Flag \"some_flag\" created."));
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.Success));

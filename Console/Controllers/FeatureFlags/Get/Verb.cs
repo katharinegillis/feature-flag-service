@@ -1,6 +1,5 @@
 using CommandLine;
 using Console.Common;
-using Console.Localization;
 
 namespace Console.Controllers.FeatureFlags.Get;
 
