@@ -104,4 +104,7 @@
     <data name="SentenceOptionGroupWord" xml:space="preserve">
         <value>Group</value>
     </data>
+    <data name="HelpDeleteFeatureFlagVerb" xml:space="preserve">
+        <value>Delete a feature flag</value>
+    </data>
 </root>

@@ -98,5 +98,11 @@ namespace Console.Resources {
                 return ResourceManager.GetString("Unknown command.", resourceCulture);
             }
         }
+        
+        internal static string Feature_Flag___0___deleted_ {
+            get {
+                return ResourceManager.GetString("Feature Flag \"{0}\" deleted.", resourceCulture);
+            }
+        }
     }
 }

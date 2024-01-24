@@ -2,7 +2,7 @@ using Application.Interactors.GetFeatureFlag;
 
 namespace Application.Tests.UnitTests.Interactors.GetFeatureFlag;
 
-public class CodePresenterFactoryTests
+public sealed class CodePresenterFactoryTests
 {
     [Test]
     public void CodePresenterFactory_Should_Be_An_ICodePresenterFactory()

@@ -3,7 +3,7 @@ using Domain.FeatureFlags;
 
 namespace Application.Interactors.DeleteFeatureFlag;
 
-public class Interactor(IRepository repository) : IInputPort
+public sealed class Interactor(IRepository repository) : IInputPort
 {
     public async Task Execute(RequestModel request, IOutputPort presenter)
     {

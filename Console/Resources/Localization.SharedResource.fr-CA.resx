@@ -52,4 +52,7 @@
     <data name="{0}: {1}." xml:space="preserve">
         <value>{0}: {1}.</value>
     </data>
+    <data name="Feature Flag &quot;{0}&quot; deleted." xml:space="preserve">
+        <value>Indicateur de fonctionnalité "{0}" supprimé.</value>
+    </data>
 </root>

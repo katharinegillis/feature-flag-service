@@ -5,7 +5,7 @@ namespace Console.Controllers.FeatureFlags.Update;
 
 [Verb("featureflag:update", HelpText = "HelpUpdateFeatureFlagVerb",
     ResourceType = typeof(Resources.CommandLineParser))]
-public class Verb : IHasControllerType, IOptions
+public sealed class Verb : IHasControllerType, IOptions
 {
     public Type ControllerType { get; } = typeof(Controller);
 

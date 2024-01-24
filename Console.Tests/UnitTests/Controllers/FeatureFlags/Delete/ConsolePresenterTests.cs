@@ -1,12 +1,12 @@
-using Application.Interactors.UpdateFeatureFlag;
+using Application.Interactors.DeleteFeatureFlag;
 using Console.Common;
-using Console.Controllers.FeatureFlags.Update;
+using Console.Controllers.FeatureFlags.Delete;
 using Console.Localization;
 using Domain.Common;
 using Moq;
 using Utilities.LocalizationService;
 
-namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Update;
+namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Delete;
 
 public sealed class ConsolePresenterTests
 {
@@ -14,61 +14,21 @@ public sealed class ConsolePresenterTests
     public void ConsolePresenter_Ok_Should_Display_Success_Message()
     {
         var localizerMock = new Mock<ILocalizationService<SharedResource>>();
-        localizerMock.Setup(s => s.Translate("Feature Flag \"{0}\" updated.", "some_flag"))
-            .Returns("Feature Flag \"some_flag\" updated.");
+        localizerMock.Setup(s => s.Translate("Feature Flag \"{0}\" deleted.", "some_flag"))
+            .Returns("Feature Flag \"some_flag\" deleted.");
 
         var writerMock = new Mock<IConsoleWriter>();
 
         var request = new RequestModel
         {
-            Id = "some_flag",
-            Enabled = false
+            Id = "some_flag"
         };
 
         var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
         presenter.Ok();
 
-        writerMock.Verify(w => w.WriteLine("Feature Flag \"some_flag\" updated."));
+        writerMock.Verify(w => w.WriteLine("Feature Flag \"some_flag\" deleted."));
         Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.Success));
-    }
-
-    [Test]
-    public void ConsolePresenter_BadRequest_Should_Display_Validation_Errors()
-    {
-        var localizerMock = new Mock<ILocalizationService<SharedResource>>();
-        localizerMock.Setup(s => s.Translate("Required")).Returns("Required");
-        localizerMock.Setup(s => s.Translate("Max length is 100")).Returns("Max length is 100");
-        localizerMock.Setup(s => s.Translate("{0}: {1}.", "Id", "Max length is 100"))
-            .Returns("Id: Max length is 100.");
-        localizerMock.Setup(s => s.Translate("{0}: {1}.", "Enabled", "Required"))
-            .Returns("Enabled: Required.");
-
-        var writerMock = new Mock<IConsoleWriter>();
-
-        var request = new RequestModel
-        {
-            Id = "some_flag",
-            Enabled = false
-        };
-
-        var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
-        presenter.BadRequest(new List<ValidationError>
-        {
-            new()
-            {
-                Field = "Id",
-                Message = "Max length is 100"
-            },
-            new()
-            {
-                Field = "Enabled",
-                Message = "Required"
-            }
-        });
-
-        writerMock.Verify(w => w.WriteLine("Id: Max length is 100."));
-        writerMock.Verify(w => w.WriteLine("Enabled: Required."));
-        Assert.That(presenter.ExitCode, Is.EqualTo((int)ExitCode.OptionsError));
     }
 
     [Test]
@@ -82,8 +42,7 @@ public sealed class ConsolePresenterTests
 
         var request = new RequestModel
         {
-            Id = "some_flag",
-            Enabled = false
+            Id = "some_flag"
         };
 
         var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
@@ -107,12 +66,10 @@ public sealed class ConsolePresenterTests
 
         var request = new RequestModel
         {
-            Id = "some_flag",
-            Enabled = false
+            Id = "some_flag"
         };
 
         var presenter = new ConsolePresenter(request, localizerMock.Object, writerMock.Object);
-
         presenter.NotFound();
 
         writerMock.Verify(w => w.WriteLine("Feature Flag \"some_flag\" doesn\'t exist."));

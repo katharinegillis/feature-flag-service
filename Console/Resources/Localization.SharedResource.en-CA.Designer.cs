@@ -87,9 +87,21 @@ namespace Console.Resources {
             }
         }
         
+        internal static string Feature_Flag___0___updated_ {
+            get {
+                return ResourceManager.GetString("Feature Flag \"{0}\" updated.", resourceCulture);
+            }
+        }
+        
         internal static string Unknown_command_ {
             get {
                 return ResourceManager.GetString("Unknown command.", resourceCulture);
+            }
+        }
+        
+        internal static string Feature_Flag___0___deleted_ {
+            get {
+                return ResourceManager.GetString("Feature Flag \"{0}\" deleted.", resourceCulture);
             }
         }
     }
