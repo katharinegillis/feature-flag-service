@@ -56,6 +56,7 @@
     <data name="SentenceErrorsHeadingText" xml:space="preserve">
         <value>ERROR(S):</value>
     </data>
+    <!-- ReSharper disable once OverriddenWithSameValue -->
     <data name="SentenceHelpCommandTextOption" xml:space="preserve">
         <value>Display this help screen.</value>
     </data>

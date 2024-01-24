@@ -95,6 +95,7 @@
     <data name="SentenceUnknownOptionError" xml:space="preserve">
         <value>L'option '{0}' est inconnue.</value>
     </data>
+    <!-- ReSharper disable once OverriddenWithSameValue -->
     <data name="SentenceUsageHeadingText" xml:space="preserve">
         <value>USAGE:</value>
     </data>
