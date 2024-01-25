@@ -1,9 +1,9 @@
-using Application.Interactors.UpdateFeatureFlag;
+using Application.Interactors.DeleteFeatureFlag;
 using Console.Common;
 using Console.Localization;
 using Utilities.LocalizationService;
 
-namespace Console.Controllers.FeatureFlags.Update;
+namespace Console.Controllers.FeatureFlags.Delete;
 
 public sealed class ConsolePresenterFactory(ILocalizationService<SharedResource> localizer, IConsoleWriter writer)
     : IConsolePresenterFactory

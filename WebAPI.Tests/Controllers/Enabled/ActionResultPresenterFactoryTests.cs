@@ -3,7 +3,7 @@ using WebAPI.Controllers.Enabled;
 
 namespace WebAPI.Tests.Controllers.Enabled;
 
-public class ActionResultPresenterFactoryTests
+public sealed class ActionResultPresenterFactoryTests
 {
     [Test]
     public void ActionResultPresenterFactory_Should_Be_An_IActionResultPresenterFactory()

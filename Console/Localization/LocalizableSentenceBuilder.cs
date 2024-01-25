@@ -8,7 +8,7 @@ using CommandLine.Text;
 
 namespace Console.Localization
 {
-    public class LocalizableSentenceBuilder : SentenceBuilder
+    public sealed class LocalizableSentenceBuilder : SentenceBuilder
     {
         public override Func<string> RequiredWord
         {

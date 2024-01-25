@@ -89,4 +89,32 @@ public sealed class DbFeatureFlagRepository(FeatureFlagContext context, IFactory
             });
         }
     }
+
+    public Task<Result<bool, Error>> Delete(string id)
+    {
+        var featureFlag = new FeatureFlag
+        {
+            FeatureFlagId = id
+        };
+
+        try
+        {
+            context.FeatureFlags.Remove(featureFlag);
+
+            context.SaveChanges();
+
+            return Task.FromResult<Result<bool, Error>>(true);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            return Task.FromResult<Result<bool, Error>>(new NotFoundError());
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult<Result<bool, Error>>(new Error
+            {
+                Message = $"{ex.Message}{(ex.InnerException != null ? $"; {ex.InnerException?.Message}" : "")}"
+            });
+        }
+    }
 }

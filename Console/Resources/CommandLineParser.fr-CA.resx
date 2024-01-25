@@ -95,6 +95,7 @@
     <data name="SentenceUnknownOptionError" xml:space="preserve">
         <value>L'option '{0}' est inconnue.</value>
     </data>
+    <!-- ReSharper disable once OverriddenWithSameValue -->
     <data name="SentenceUsageHeadingText" xml:space="preserve">
         <value>USAGE:</value>
     </data>
@@ -103,5 +104,8 @@
     </data>
     <data name="SentenceOptionGroupWord" xml:space="preserve">
         <value>Groupe</value>
+    </data>
+    <data name="HelpDeleteFeatureFlagVerb" xml:space="preserve">
+        <value>Supprimer un indicateur de fonctionnalité</value>
     </data>
 </root>

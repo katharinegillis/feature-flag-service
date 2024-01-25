@@ -1,6 +1,6 @@
 namespace Application.Interactors.GetFeatureFlag;
 
-public class CodePresenterFactory : ICodePresenterFactory
+public sealed class CodePresenterFactory : ICodePresenterFactory
 {
     public ICodePresenter Create()
     {

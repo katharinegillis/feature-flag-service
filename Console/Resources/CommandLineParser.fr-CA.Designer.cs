@@ -206,5 +206,11 @@ namespace Console.Resources {
                 return ResourceManager.GetString("SentenceOptionGroupWord", resourceCulture);
             }
         }
+        
+        public static string HelpDeleteFeatureFlagVerb {
+            get {
+                return ResourceManager.GetString("HelpDeleteFeatureFlagVerb", resourceCulture);
+            }
+        }
     }
 }

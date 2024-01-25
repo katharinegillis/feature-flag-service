@@ -50,4 +50,7 @@
     <data name="Unknown command." xml:space="preserve">
         <value>Unknown command.</value>
     </data>
+    <data name="Feature Flag &quot;{0}&quot; deleted." xml:space="preserve">
+        <value>Feature Flag "{0}" deleted.</value>
+    </data>
 </root>
