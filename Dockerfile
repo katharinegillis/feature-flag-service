@@ -14,6 +14,7 @@ EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
+ARG VERSION=1.0.0
 WORKDIR /src
 
 COPY ["./Domain", "/src/Domain"]
@@ -31,12 +32,18 @@ RUN dotnet restore
 COPY ["./Console", "/src/Console"]
 WORKDIR /src/Console
 RUN dotnet restore
-RUN dotnet build "Console.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN if [ "$VERSION" ]; \
+    then dotnet build "Console.csproj" -c $BUILD_CONFIGURATION -o /app/build  /p:Version=$VERSION /p:AssemblyVersion=$VERSION /p:FileVersion=$VERSION; \
+    else dotnet build "Console.csproj" -c $BUILD_CONFIGURATION -o /app/build; \
+    fi
 
 COPY ["./WebAPI", "/src/WebAPI"]
 WORKDIR /src/WebAPI
 RUN dotnet restore
-RUN dotnet build "WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN if [ "$VERSION" ]; \
+    then dotnet build "WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build /p:Version=$VERSION /p:AssemblyVersion=$VERSION /p:FileVersion=$VERSION; \
+    else dotnet build "WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build; \
+    fi
 
 
 FROM build AS publish
