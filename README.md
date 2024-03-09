@@ -29,4 +29,4 @@ Dependencies:
 
 ## Production
 
-Automatically builds to the kcordes/featureflagservice image in DockerHub. Updating to create patch version bump.
+Automatically builds to the kcordes/featureflagservice image in DockerHub.

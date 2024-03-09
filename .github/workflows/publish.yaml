@@ -27,7 +27,7 @@ jobs:
           input_string: ${{ steps.semver.outputs.next }}
           
       - name: Build images
-        run: MAJOR=${{ steps.semver_parser.outputs.major }} MINOR=${{ steps.semver_parser.outputs.minor }} PATCH=${{ steps.semver_parser.outputs.patch }} docker compose -f compose.build.yaml build
+        run: VERSION=${{ steps.semver.outputs.nextStrict }} MAJOR=${{ steps.semver_parser.outputs.major }} MINOR=${{ steps.semver_parser.outputs.minor }} PATCH=${{ steps.semver_parser.outputs.patch }} docker compose -f compose.build.yaml build
         
       - name: Log into DockerHub
         uses: docker/login-action@v2
