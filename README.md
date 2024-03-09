@@ -29,4 +29,4 @@ Dependencies:
 
 ## Production
 
-Automatically builds to the kcordes/featureflagservice image in DockerHub.
+Automatically builds to the https://hub.docker.com/r/kcordes/featureflagservice image in DockerHub.
