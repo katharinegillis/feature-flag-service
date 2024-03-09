@@ -9,11 +9,8 @@
         <Product>Feature Flag Service Console App</Product>
         <Company>katiecordescodes.com</Company>
         <AssemblyTitle>Feature Flag Service Console App</AssemblyTitle>
-        <Version>1.0.0</Version>
         <Title>Feature Flag Service Console App</Title>
         <Authors>katiecordescodes.com</Authors>
-        <AssemblyVersion>1.0.0</AssemblyVersion>
-        <FileVersion>1.0.0</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>
