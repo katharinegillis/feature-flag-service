@@ -39,6 +39,17 @@ jobs:
 
       - name: Push up the images
         run: VERSION=${{ steps.semver.outputs.nextStrict }} MAJOR=${{ steps.semver_parser.outputs.major }} MINOR=${{ steps.semver_parser.outputs.minor }} PATCH=${{ steps.semver_parser.outputs.patch }} docker compose -f compose.build.yaml push
+        
+      - name: Publish the DockerHub readme
+        uses: christian-korneck/update-container-description-action@v1
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKER_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        with:
+          destination_container_repo: kcordes/featureflagservice
+          provider: dockerhub
+          short_description: 'Feature flag microservice'
+          readme_file: 'DOCKERHUB-README.md'
           
       - name: Tag
         run: git tag ${{ steps.semver.outputs.next }} && git push origin ${{ steps.semver.outputs.next }}
