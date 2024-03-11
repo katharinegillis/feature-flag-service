@@ -3,6 +3,7 @@ using Domain.FeatureFlags;
 
 namespace Application.Tests.UnitTests.Interactors.GetFeatureFlag;
 
+[Category("Unit")]
 public sealed class CodePresenterTests
 {
     [Test]

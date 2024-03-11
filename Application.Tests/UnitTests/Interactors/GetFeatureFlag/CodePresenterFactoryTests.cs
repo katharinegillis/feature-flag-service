@@ -2,6 +2,7 @@ using Application.Interactors.GetFeatureFlag;
 
 namespace Application.Tests.UnitTests.Interactors.GetFeatureFlag;
 
+[Category("Unit")]
 public sealed class CodePresenterFactoryTests
 {
     [Test]

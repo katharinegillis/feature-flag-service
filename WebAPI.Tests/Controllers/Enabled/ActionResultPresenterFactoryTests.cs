@@ -3,6 +3,7 @@ using WebAPI.Controllers.Enabled;
 
 namespace WebAPI.Tests.Controllers.Enabled;
 
+[Category("Unit")]
 public sealed class ActionResultPresenterFactoryTests
 {
     [Test]

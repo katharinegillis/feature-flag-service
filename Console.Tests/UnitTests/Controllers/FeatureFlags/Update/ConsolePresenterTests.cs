@@ -8,6 +8,7 @@ using Utilities.LocalizationService;
 
 namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Update;
 
+[Category("Unit")]
 public sealed class ConsolePresenterTests
 {
     [Test]

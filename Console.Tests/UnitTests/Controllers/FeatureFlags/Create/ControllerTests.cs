@@ -5,6 +5,7 @@ using Moq;
 
 namespace Console.Tests.UnitTests.Controllers.FeatureFlags.Create;
 
+[Category("Unit")]
 public sealed class ControllerTests
 {
     [Test]

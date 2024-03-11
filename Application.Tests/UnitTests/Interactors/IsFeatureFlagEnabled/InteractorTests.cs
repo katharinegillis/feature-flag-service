@@ -9,6 +9,7 @@ using Moq;
 
 namespace Application.Tests.UnitTests.Interactors.IsFeatureFlagEnabled;
 
+[Category("Unit")]
 public sealed class InteractorTests
 {
     [Test]
