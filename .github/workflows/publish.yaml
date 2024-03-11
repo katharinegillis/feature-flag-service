@@ -4,8 +4,13 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '*.Tests/**'
+    paths:
+      - 'Application/**'
+      - 'Console/**'
+      - 'Domain/**'
+      - 'Infrastructure/**'
+      - 'WebAPI/**'
+  workflow_dispatch:
 
 jobs:
   publish:
