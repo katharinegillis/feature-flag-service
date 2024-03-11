@@ -3,6 +3,7 @@ using Domain.FeatureFlags;
 
 namespace Domain.Tests.UnitTests.FeatureFlags;
 
+[Category("Unit")]
 public sealed class ModelTests
 {
     [Test]

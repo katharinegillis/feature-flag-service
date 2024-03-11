@@ -5,6 +5,7 @@ using Moq;
 
 namespace Application.Tests.UnitTests.Interactors.DeleteFeatureFlag;
 
+[Category("Unit")]
 public sealed class InteractorTests
 {
     [Test]

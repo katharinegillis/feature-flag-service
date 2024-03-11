@@ -10,6 +10,7 @@ using Moq;
 
 namespace Infrastructure.Tests.UnitTests.Repositories;
 
+[Category("Unit")]
 public sealed class DbFeatureFlagRepositoryTests
 {
     [Test]

@@ -5,6 +5,7 @@ using Moq;
 
 namespace Application.Tests.UnitTests.Interactors.CreateFeatureFlag;
 
+[Category("Unit")]
 public sealed class InteractorTests
 {
     [Test]
