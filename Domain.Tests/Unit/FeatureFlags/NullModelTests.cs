@@ -1,7 +1,7 @@
 using Domain.Common;
 using Domain.FeatureFlags;
 
-namespace Domain.Tests.UnitTests.FeatureFlags;
+namespace Domain.Tests.Unit.FeatureFlags;
 
 [Category("Unit")]
 public sealed class NullModelTests
