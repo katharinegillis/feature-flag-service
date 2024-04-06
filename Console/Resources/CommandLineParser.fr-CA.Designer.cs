@@ -189,12 +189,6 @@ namespace Console.Resources {
             }
         }
         
-        public static string SentenceUsageHeadingText {
-            get {
-                return ResourceManager.GetString("SentenceUsageHeadingText", resourceCulture);
-            }
-        }
-        
         public static string SentenceVersionCommandText {
             get {
                 return ResourceManager.GetString("SentenceVersionCommandText", resourceCulture);
