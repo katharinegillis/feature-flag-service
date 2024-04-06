@@ -93,12 +93,6 @@ namespace Console.Resources {
             }
         }
         
-        internal static string _0____1__ {
-            get {
-                return ResourceManager.GetString("{0}: {1}.", resourceCulture);
-            }
-        }
-        
         internal static string Feature_Flag___0___deleted_ {
             get {
                 return ResourceManager.GetString("Feature Flag \"{0}\" deleted.", resourceCulture);
