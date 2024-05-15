@@ -9,5 +9,6 @@ public static class RepositoryExtensions
     {
         services.AddScoped<Domain.FeatureFlags.IFactory, Domain.FeatureFlags.Factory>();
         services.AddScoped<Domain.FeatureFlags.IRepository, Repositories.DbFeatureFlagRepository>();
+        services.AddScoped<Domain.FeatureFlags.IReadRepository, Repositories.DbFeatureFlagRepository>();
     }
 }

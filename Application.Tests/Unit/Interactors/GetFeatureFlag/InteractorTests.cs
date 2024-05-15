@@ -10,7 +10,7 @@ public sealed class InteractorTests
     [Test]
     public void GetFeatureFlagInteractor_Is_An_InputPort()
     {
-        var repository = Substitute.For<IRepository>();
+        var repository = Substitute.For<IReadRepository>();
 
         var interactor = new Interactor(repository);
 
@@ -26,7 +26,7 @@ public sealed class InteractorTests
             Enabled = true
         };
 
-        var repository = Substitute.For<IRepository>();
+        var repository = Substitute.For<IReadRepository>();
         repository.Get("some_flag").Returns(model);
 
         var interactor = new Interactor(repository);
@@ -46,7 +46,7 @@ public sealed class InteractorTests
     [Test]
     public async Task GetFeatureFlagInteractor_Returns_NotFound()
     {
-        var repository = Substitute.For<IRepository>();
+        var repository = Substitute.For<IReadRepository>();
         repository.Get("some_flag").Returns(new NullModel());
 
         var interactor = new Interactor(repository);
