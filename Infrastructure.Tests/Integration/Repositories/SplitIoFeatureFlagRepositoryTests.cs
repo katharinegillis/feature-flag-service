@@ -1,6 +1,7 @@
 using Domain.FeatureFlags;
 using Infrastructure.Configuration;
 using Infrastructure.Persistence.Repositories;
+using Microsoft.Extensions.Options;
 using NSubstitute;
 using Splitio.Services.Client.Interfaces;
 
@@ -24,9 +25,11 @@ public sealed class SplitIoFeatureFlagRepositoryTests
             TreatmentKey = "system_key"
         };
 
+        var splitOptionsWrapper = Options.Create(splitOptions);
+
         var factory = new Factory();
 
-        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptions, factory);
+        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
 
         var result = await repository.Get("some_flag");
 
@@ -52,10 +55,12 @@ public sealed class SplitIoFeatureFlagRepositoryTests
             SdkKey = "test_key",
             TreatmentKey = "system_key"
         };
+        
+        var splitOptionsWrapper = Options.Create(splitOptions);
 
         var factory = new Factory();
 
-        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptions, factory);
+        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
 
         var result = await repository.Get("some_flag");
 
@@ -81,10 +86,12 @@ public sealed class SplitIoFeatureFlagRepositoryTests
             SdkKey = "test_key",
             TreatmentKey = "system_key"
         };
+        
+        var splitOptionsWrapper = Options.Create(splitOptions);
 
         var factory = new Factory();
 
-        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptions, factory);
+        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
 
         var result = await repository.Get("some_flag");
 
@@ -121,10 +128,12 @@ public sealed class SplitIoFeatureFlagRepositoryTests
             SdkKey = "test_key",
             TreatmentKey = "system_key"
         };
+        
+        var splitOptionsWrapper = Options.Create(splitOptions);
 
         var factory = new Factory();
 
-        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptions, factory);
+        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
 
         var result = await repository.List();
 

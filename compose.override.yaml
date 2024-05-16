@@ -22,6 +22,8 @@
       - default
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      SPLITIO__SDKKEY: d56c1jh3n9sar8h19ufcetbk53eb667ta4lf
+      SPLITIO__TREATMENTKEY: default
 
 networks:
   traefik:

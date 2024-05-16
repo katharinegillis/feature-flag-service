@@ -7,18 +7,10 @@ using Repositories = Infrastructure.Persistence.Repositories;
 
 namespace WebAPI.Extensions;
 
-// ReSharper disable once UnusedType.Global
-public static class RepositoryExtensions
+public static class InfrastructureExtensions
 {
-    private static void AddCommon(this IServiceCollection services)
+    public static void AddInfrastructureSqliteRepositories(this IServiceCollection services)
     {
-        services.AddScoped<Domain.FeatureFlags.IFactory, Domain.FeatureFlags.Factory>();
-    }
-    
-    public static void AddSqliteRepositories(this IServiceCollection services)
-    {
-        AddCommon(services);
-        
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
@@ -31,20 +23,10 @@ public static class RepositoryExtensions
         services.AddScoped<Domain.FeatureFlags.IReadRepository, Repositories.DbFeatureFlagRepository>();
     }
 
-    public static void AddSplitIoRepositories(this IServiceCollection services, string splitioSdkKey, string splitioTreatmentKey)
+    public static void AddInfrastructureSplitIoRepositories(this IServiceCollection services, SplitIoOptions splitIoOptions)
     {
-        AddCommon(services);
-        
-        var splitIoOptions = new SplitIoOptions
-        {
-            SdkKey = splitioSdkKey,
-            TreatmentKey = splitioTreatmentKey
-            
-        };
-        services.AddSingleton(typeof(ISplitIoOptions), splitIoOptions);
-
         var config = new ConfigurationOptions();
-        var factory = new SplitFactory(splitioSdkKey, config);
+        var factory = new SplitFactory(splitIoOptions.SdkKey, config);
         var sdk = factory.Client();
         
         sdk.BlockUntilReady(10000);
@@ -52,5 +34,10 @@ public static class RepositoryExtensions
         services.AddSingleton(typeof(ISplitFactory), factory);
 
         services.AddScoped<Domain.FeatureFlags.IReadRepository, Repositories.SplitIoFeatureFlagRepository>();
+    }
+
+    public static void AddInfrastructureSplitIoConfig(this IServiceCollection services, IConfiguration config)
+    {
+        services.Configure<SplitIoOptions>(config.GetSection(SplitIoOptions.SplitIo));
     }
 }

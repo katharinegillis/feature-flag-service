@@ -1,31 +1,40 @@
+using System.Configuration;
+using Infrastructure.Configuration;
 using WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddPresenters();
-builder.Services.AddInteractors();
+builder.Services.AddDomainFactories();
 
-var splitioSdkKey = Environment.GetEnvironmentVariable("SPLITIO_SDK_KEY") ?? "";
-var splitioTreatmentKey = Environment.GetEnvironmentVariable("SPLITIO_TREATMENT_KEY") ?? "default";
+builder.Services.AddApplicationInteractors();
+builder.Services.AddApplicationPresenters();
 
-if (splitioSdkKey != "")
+var splitIoOptionsBuilder = builder.Configuration.GetSection(SplitIoOptions.SplitIo);
+
+builder.Services.AddInfrastructureSplitIoConfig(builder.Configuration);
+
+var splitIoOptions = splitIoOptionsBuilder.Get<SplitIoOptions>();
+
+if (splitIoOptions != null && splitIoOptions.SdkKey != "")
 {
     try
     {
-        builder.Services.AddSplitIoRepositories(splitioSdkKey, splitioTreatmentKey);
+        builder.Services.AddInfrastructureSplitIoRepositories(splitIoOptions);
     }
     catch (Exception e)
     {
         Console.WriteLine(e);
         Console.WriteLine("Split.IO client unable to start up. Falling back on sqlite datasource.");
-        builder.Services.AddSqliteRepositories();
+        builder.Services.AddInfrastructureSqliteRepositories();
     }
 }
 else
 {
-    builder.Services.AddSqliteRepositories();
+    builder.Services.AddInfrastructureSqliteRepositories();
 }
+
+builder.Services.AddWebApiPresenters();
 
 builder.Services.AddControllers();
 

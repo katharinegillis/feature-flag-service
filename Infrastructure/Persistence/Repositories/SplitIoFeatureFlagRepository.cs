@@ -1,18 +1,20 @@
 using Domain.FeatureFlags;
 using Infrastructure.Configuration;
+using Microsoft.Extensions.Options;
 using Splitio.Services.Client.Interfaces;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public sealed class SplitIoFeatureFlagRepository(ISplitFactory splitFactory, ISplitIoOptions options, IFactory factory)
+public sealed class SplitIoFeatureFlagRepository(ISplitFactory splitFactory, IOptions<SplitIoOptions> options, IFactory factory)
     : IReadRepository
 {
     private readonly ISplitClient _splitClient = splitFactory.Client();
     private readonly ISplitManager _splitManager = splitFactory.Manager();
+    private readonly SplitIoOptions _options = options.Value;
 
     public Task<IModel> Get(string id)
     {
-        var treatment = _splitClient.GetTreatment(options.TreatmentKey, id);
+        var treatment = _splitClient.GetTreatment(_options.TreatmentKey, id);
         return treatment switch
         {
             "on" => Task.FromResult(factory.Create(id, true)),
@@ -24,7 +26,7 @@ public sealed class SplitIoFeatureFlagRepository(ISplitFactory splitFactory, ISp
     public async Task<IEnumerable<IModel>> List()
     {
         var splitNames = await _splitManager.SplitNamesAsync();
-        var treatments = _splitClient.GetTreatments(options.TreatmentKey, splitNames);
+        var treatments = _splitClient.GetTreatments(_options.TreatmentKey, splitNames);
         return treatments.Select(treatment => treatment.Value switch
         {
             "on" => factory.Create(treatment.Key, true),
