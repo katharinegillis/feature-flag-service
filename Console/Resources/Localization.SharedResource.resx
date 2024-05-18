@@ -26,6 +26,7 @@
     <data name="Feature Flag &quot;{0}&quot; created." xml:space="preserve">
         <value>Feature Flag "{0}" created.</value>
     </data>
+    <!-- ReSharper disable once NotOverriddenInSpecificCulture -->
     <data name="{0}: {1}." xml:space="preserve">
         <value>{0}: {1}.</value>
     </data>

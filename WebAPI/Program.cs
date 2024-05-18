@@ -1,4 +1,3 @@
-using System.Configuration;
 using Infrastructure.Configuration;
 using WebAPI.Extensions;
 
