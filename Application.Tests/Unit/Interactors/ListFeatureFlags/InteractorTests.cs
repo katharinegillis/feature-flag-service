@@ -4,13 +4,12 @@ using NSubstitute;
 
 namespace Application.Tests.Unit.Interactors.ListFeatureFlags;
 
-[Category("Unit")]
 public sealed class InteractorTests
 {
     [Test]
     public void ListFeatureFlagsInteractor_Is_An_InputPort()
     {
-        var repository = Substitute.For<IRepository>();
+        var repository = Substitute.For<IReadRepository>();
 
         var interactor = new Interactor(repository);
 
@@ -34,7 +33,7 @@ public sealed class InteractorTests
             }
         };
 
-        var repository = Substitute.For<IRepository>();
+        var repository = Substitute.For<IReadRepository>();
         repository.List().Returns(featureFlags);
 
         var interactor = new Interactor(repository);

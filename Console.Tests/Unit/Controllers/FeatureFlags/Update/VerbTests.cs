@@ -4,7 +4,6 @@ using Console.Controllers.FeatureFlags.Update;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Update;
 
-[Category("Unit")]
 public sealed class VerbTests
 {
     [Test]
@@ -54,6 +53,12 @@ public sealed class VerbTests
     public void UpdateVerb_Should_Be_A_Verb()
     {
         Assert.That(Attribute.IsDefined(typeof(Verb), typeof(VerbAttribute)));
+    }
+    
+    [Test]
+    public void UpdateVerb_Should_Not_Be_A_ReadOnlyVerb()
+    {
+        Assert.That(Attribute.IsDefined(typeof(Verb), typeof(ReadOnlyVerbAttribute)), Is.False);
     }
 
     [Test]

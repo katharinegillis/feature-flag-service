@@ -2,7 +2,7 @@ using Domain.FeatureFlags;
 
 namespace Application.Interactors.ListFeatureFlags;
 
-public sealed class Interactor(IRepository repository) : IInputPort
+public sealed class Interactor(IReadRepository repository) : IInputPort
 {
     public async Task Execute(IOutputPort presenter)
     {

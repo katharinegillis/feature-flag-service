@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Console;
 using Console.Extensions;
+using Infrastructure.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,12 +11,35 @@ var builder = Host.CreateApplicationBuilder(args);
 builder.Configuration.AddJsonFile("consolesettings.json", optional: true);
 builder.Logging.ClearProviders();
 
-builder.Services.AddSqliteServer();
-builder.Services.AddRepositories();
-builder.Services.AddPresenters();
-builder.Services.AddInteractors();
-builder.Services.AddControllers();
-builder.Services.AddLocalizationServices();
+builder.Services.AddDomainFactories();
+
+builder.Services.AddApplicationInteractors();
+
+var splitIoOptionsBuilder = builder.Configuration.GetSection(SplitIoOptions.SplitIo);
+
+builder.Services.AddInfrastructureSplitIoConfig(builder.Configuration);
+
+var splitIoOptions = splitIoOptionsBuilder.Get<SplitIoOptions>();
+
+if (splitIoOptions != null && splitIoOptions.SdkKey != "")
+{
+    try
+    {
+        builder.Services.AddInfrastructureSplitIoRepositories(splitIoOptions);
+    }
+    catch (Exception)
+    {
+        builder.Services.AddInfrastructureSqliteRepositories();
+    }
+}
+else
+{
+    builder.Services.AddInfrastructureSqliteRepositories();
+}
+
+builder.Services.AddConsoleControllers();
+builder.Services.AddConsoleLocalization();
+builder.Services.AddConsolePresenters();
 
 var cultureName = Environment.GetEnvironmentVariable("CONSOLE_CULTURE") ?? "en-CA";
 

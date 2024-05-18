@@ -4,7 +4,6 @@ using Console.Common;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Create;
 
-[Category("Unit")]
 public sealed class VerbTests
 {
     [Test]
@@ -55,6 +54,12 @@ public sealed class VerbTests
     public void CreateVerb_Should_Be_A_Verb()
     {
         Assert.That(Attribute.IsDefined(typeof(Verb), typeof(VerbAttribute)));
+    }
+    
+    [Test]
+    public void CreateVerb_Should_Not_Be_A_ReadOnlyVerb()
+    {
+        Assert.That(Attribute.IsDefined(typeof(Verb), typeof(ReadOnlyVerbAttribute)), Is.False);
     }
 
     [Test]

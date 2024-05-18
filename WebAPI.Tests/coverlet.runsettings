@@ -6,7 +6,7 @@
         <Configuration>
           <Format>cobertura</Format>
           <Include>[*]WebAPI.*</Include>
-          <Exclude>[*]WebAPI.Persistence.*,[*]WebAPI.Migrations.*,[*]WebAPI.Extensions.*</Exclude> <!-- [Assembly-Filter]Type-Filter -->
+          <Exclude>[*]WebAPI.Persistence.*,[*]WebAPI.Migrations.*,[*]WebAPI.Extensions.*,[*]WebAPI.Program,[*]Program</Exclude> <!-- [Assembly-Filter]Type-Filter -->
           <ExcludeAssembliesWithoutSources>MissingAny</ExcludeAssembliesWithoutSources>
         </Configuration>
       </DataCollector>

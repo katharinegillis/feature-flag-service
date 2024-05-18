@@ -11,7 +11,6 @@ using NSubstitute.ExceptionExtensions;
 
 namespace Infrastructure.Tests.Unit.Repositories;
 
-[Category("Unit")]
 public sealed class DbFeatureFlagRepositoryTests
 {
     [Test]

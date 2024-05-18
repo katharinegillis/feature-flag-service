@@ -7,11 +7,10 @@ using Delete = Application.Interactors.DeleteFeatureFlag;
 
 namespace Console.Extensions;
 
-public static class InteractorExtensions
+public static class ApplicationExtensions
 {
-    public static void AddInteractors(this IServiceCollection services)
+    public static void AddApplicationInteractors(this IServiceCollection services)
     {
-        services.AddScoped<Domain.FeatureFlags.IFactory, Domain.FeatureFlags.Factory>();
         services.AddScoped<Create.IInputPort, Create.Interactor>();
         services.AddScoped<Get.IInputPort, Get.Interactor>();
         services.AddScoped<List.IInputPort, List.Interactor>();

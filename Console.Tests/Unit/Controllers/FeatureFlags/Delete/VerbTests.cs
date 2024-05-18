@@ -5,7 +5,6 @@ using Verb = Console.Controllers.FeatureFlags.Delete.Verb;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Delete;
 
-[Category("Unit")]
 public sealed class VerbTests
 {
     [Test]
@@ -46,6 +45,12 @@ public sealed class VerbTests
     public void DeleteVerb_Should_Be_A_Verb()
     {
         Assert.That(Attribute.IsDefined(typeof(Verb), typeof(VerbAttribute)));
+    }
+    
+    [Test]
+    public void DeleteVerb_Should_Not_Be_A_ReadOnlyVerb()
+    {
+        Assert.That(Attribute.IsDefined(typeof(Verb), typeof(ReadOnlyVerbAttribute)), Is.False);
     }
 
     [Test]

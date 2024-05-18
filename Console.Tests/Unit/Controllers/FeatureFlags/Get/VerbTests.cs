@@ -4,7 +4,6 @@ using Console.Common;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Get;
 
-[Category("Unit")]
 public sealed class VerbTests
 {
     [Test]
@@ -27,6 +26,12 @@ public sealed class VerbTests
     public void GetVerb_Should_Be_A_Verb()
     {
         Assert.That(Attribute.IsDefined(typeof(Verb), typeof(VerbAttribute)));
+    }
+    
+    [Test]
+    public void GetVerb_Should_Be_A_ReadOnlyVerb()
+    {
+        Assert.That(Attribute.IsDefined(typeof(Verb), typeof(ReadOnlyVerbAttribute)));
     }
 
     [Test]
