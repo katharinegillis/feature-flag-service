@@ -55,6 +55,12 @@ public sealed class VerbTests
     {
         Assert.That(Attribute.IsDefined(typeof(Verb), typeof(VerbAttribute)));
     }
+    
+    [Test]
+    public void UpdateVerb_Should_Not_Be_A_ReadOnlyVerb()
+    {
+        Assert.That(Attribute.IsDefined(typeof(Verb), typeof(ReadOnlyVerbAttribute)), Is.False);
+    }
 
     [Test]
     public void UpdateVerb_Id_Property_Should_Be_An_Option()

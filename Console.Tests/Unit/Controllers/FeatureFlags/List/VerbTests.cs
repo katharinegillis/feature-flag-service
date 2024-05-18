@@ -28,4 +28,10 @@ public sealed class VerbTests
     {
         Assert.That(Attribute.IsDefined(typeof(Verb), typeof(VerbAttribute)));
     }
+    
+    [Test]
+    public void ListVerb_Should_Be_A_ReadOnlyVerb()
+    {
+        Assert.That(Attribute.IsDefined(typeof(Verb), typeof(ReadOnlyVerbAttribute)));
+    }
 }
