@@ -104,18 +104,21 @@ public sealed class SplitIoFeatureFlagRepositoryTests
         splitManager.SplitNamesAsync().Returns(Task.FromResult(new List<string>
         {
             "some_flag",
-            "some_other_flag"
+            "some_other_flag",
+            "some_missing_flag"
         }));
 
         var splitClient = Substitute.For<ISplitClient>();
         splitClient.GetTreatments("system_key", Arg.Is<List<string>>(names => names.SequenceEqual(new List<string>
         {
             "some_flag",
-            "some_other_flag"
+            "some_other_flag",
+            "some_missing_flag"
         }))).Returns(new Dictionary<string, string>
         {
             { "some_flag", "on" },
-            { "some_other_flag", "off" }
+            { "some_other_flag", "off" },
+            { "some_missing_flag", "control" }
         });
 
         var splitFactory = Substitute.For<ISplitFactory>();
