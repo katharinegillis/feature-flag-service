@@ -3,6 +3,7 @@ using CommandLine;
 using CommandLine.Text;
 using Console.Common;
 using Console.Localization;
+using Domain.FeatureFlags;
 using Microsoft.Extensions.Hosting;
 using Utilities.LocalizationService;
 
@@ -19,7 +20,7 @@ public sealed class App(
 
         var args = Environment.GetCommandLineArgs().Skip(1);
 
-        var types = LoadVerbs();
+        var types = LoadVerbs(serviceProvider);
 
         await Parser.Default.ParseArguments(args, types)
             .WithParsedAsync(RunAsync);
@@ -27,10 +28,12 @@ public sealed class App(
         applicationLifetime.StopApplication();
     }
 
-    private static Type[] LoadVerbs()
+    private static Type[] LoadVerbs(IServiceProvider serviceProvider)
     {
+        var isReadOnlyRepository = serviceProvider.GetService(typeof(IRepository)) == null;
         return Assembly.GetExecutingAssembly().GetTypes()
-            .Where(t => t.GetCustomAttribute<VerbAttribute>() != null).ToArray();
+            .Where(t => t.GetCustomAttribute<VerbAttribute>() != null &&
+                        (!isReadOnlyRepository || t.GetCustomAttribute<ReadOnlyVerbAttribute>() != null)).ToArray();
     }
 
     private async Task RunAsync(object obj)
