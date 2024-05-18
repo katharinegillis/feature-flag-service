@@ -2,7 +2,6 @@ using Domain.FeatureFlags;
 
 namespace Domain.Tests.Unit.FeatureFlags;
 
-[Category("Unit")]
 public sealed class FactoryTests
 {
     [Test]

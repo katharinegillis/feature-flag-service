@@ -4,7 +4,6 @@ using Console.Controllers.FeatureFlags.Update;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Update;
 
-[Category("Unit")]
 public sealed class VerbTests
 {
     [Test]

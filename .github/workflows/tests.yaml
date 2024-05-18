@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Tests
 
 on:
   pull_request:
@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  unit-tests:
-    name: Run Unit Tests
+  tests:
+    name: Run Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -19,8 +19,8 @@ jobs:
         with:
           dotnet-version: 8.X
       
-      - name: Run Unit Tests
-        run: find *.Tests -maxdepth 0 -type d \( ! -name . \) -exec bash -c "cd '{}' && dotnet test --collect:\"XPlat Code Coverage\" --settings coverlet.runsettings --filter TestCategory=Unit" \;
+      - name: Run Tests
+        run: find *.Tests -maxdepth 0 -type d \( ! -name . \) -exec bash -c "cd '{}' && dotnet test --collect:\"XPlat Code Coverage\" --settings coverlet.runsettings" \;
         
       - name: Code Coverage Report
         uses: irongut/CodeCoverageSummary@v1.3.0

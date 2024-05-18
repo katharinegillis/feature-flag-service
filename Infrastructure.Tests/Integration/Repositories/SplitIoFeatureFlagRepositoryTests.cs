@@ -7,7 +7,6 @@ using Splitio.Services.Client.Interfaces;
 
 namespace Infrastructure.Tests.Integration.Repositories;
 
-[Category("Integration")]
 public sealed class SplitIoFeatureFlagRepositoryTests
 {
     [Test]
