@@ -1,15 +1,14 @@
-using Application.Interactors.FeatureFlag.Get;
-using Console.Controllers.FeatureFlags.Get;
+using Application.Interactors.Config.Show;
 using Console.Common;
+using Console.Controllers.Config.Show;
 using NSubstitute;
-using Controller = Console.Controllers.FeatureFlags.Get.Controller;
 
-namespace Console.Tests.Unit.Controllers.FeatureFlags.Get;
+namespace Console.Tests.Unit.Controllers.Config.Show;
 
 public sealed class ControllerTests
 {
     [Test]
-    public void GetController_Should_Be_Executable()
+    public void ShowController_Should_Be_Executable()
     {
         var factory = Substitute.For<IConsolePresenterFactory>();
         var interactor = Substitute.For<IInputPort>();
@@ -20,7 +19,7 @@ public sealed class ControllerTests
     }
 
     [Test]
-    public void GetController_Should_Have_Options()
+    public void ShowController_Should_Have_Options()
     {
         var factory = Substitute.For<IConsolePresenterFactory>();
         var interactor = Substitute.For<IInputPort>();
@@ -31,7 +30,7 @@ public sealed class ControllerTests
     }
 
     [Test]
-    public async Task GetController_Should_Succeed()
+    public async Task ShowController_Should_Succeed()
     {
         var presenter = Substitute.For<IConsolePresenter>();
         presenter.ExitCode.Returns((int)ExitCode.Success);
