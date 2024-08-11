@@ -61,6 +61,8 @@ public sealed class DbFeatureFlagRepository(FeatureFlagContext context, IFactory
             .AsEnumerable());
     }
 
+    public string Name { get; } = "Database";
+
     public Task<Result<bool, Error>> Update(IModel model)
     {
         var featureFlag = new FeatureFlag

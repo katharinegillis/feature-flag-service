@@ -54,7 +54,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
             SdkKey = "test_key",
             TreatmentKey = "system_key"
         };
-        
+
         var splitOptionsWrapper = Options.Create(splitOptions);
 
         var factory = new Factory();
@@ -85,7 +85,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
             SdkKey = "test_key",
             TreatmentKey = "system_key"
         };
-        
+
         var splitOptionsWrapper = Options.Create(splitOptions);
 
         var factory = new Factory();
@@ -130,7 +130,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
             SdkKey = "test_key",
             TreatmentKey = "system_key"
         };
-        
+
         var splitOptionsWrapper = Options.Create(splitOptions);
 
         var factory = new Factory();
@@ -154,5 +154,21 @@ public sealed class SplitIoFeatureFlagRepositoryTests
                 Enabled = false
             }));
         });
+    }
+
+    [Test]
+    public void SplitIoFeatureFlagRepository_Name_Should_Return_SplitIo()
+    {
+        var splitFactory = Substitute.For<ISplitFactory>();
+
+        var splitOptions = new SplitIoOptions();
+
+        var splitOptionsWrapper = Options.Create(splitOptions);
+
+        var factory = new Factory();
+
+        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
+
+        Assert.That(repository.Name, Is.EqualTo("Split"));
     }
 }

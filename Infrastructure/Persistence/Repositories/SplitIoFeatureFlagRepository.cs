@@ -5,7 +5,10 @@ using Splitio.Services.Client.Interfaces;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public sealed class SplitIoFeatureFlagRepository(ISplitFactory splitFactory, IOptions<SplitIoOptions> options, IFactory factory)
+public sealed class SplitIoFeatureFlagRepository(
+    ISplitFactory splitFactory,
+    IOptions<SplitIoOptions> options,
+    IFactory factory)
     : IReadRepository
 {
     private readonly ISplitClient _splitClient = splitFactory.Client();
@@ -34,4 +37,6 @@ public sealed class SplitIoFeatureFlagRepository(ISplitFactory splitFactory, IOp
             _ => factory.Create()
         });
     }
+
+    public string Name { get; } = "Split";
 }
