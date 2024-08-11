@@ -9,7 +9,7 @@ namespace WebAPI.Extensions;
 
 public static class InfrastructureExtensions
 {
-    public static void AddInfrastructureSqliteRepositories(this IServiceCollection services)
+    public static void AddInfrastructureSqliteRepository(this IServiceCollection services)
     {
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -18,26 +18,26 @@ public static class InfrastructureExtensions
 
         services.AddDbContext<FeatureFlagContext>(options =>
             options.UseSqlite(configuration.GetConnectionString("FeatureFlagContext")));
-        
+
         services.AddScoped<Domain.FeatureFlags.IRepository, Repositories.DbFeatureFlagRepository>();
         services.AddScoped<Domain.FeatureFlags.IReadRepository, Repositories.DbFeatureFlagRepository>();
     }
 
-    public static void AddInfrastructureSplitIoRepositories(this IServiceCollection services, SplitIoOptions splitIoOptions)
+    public static void AddInfrastructureSplitRepository(this IServiceCollection services, SplitOptions splitOptions)
     {
         var config = new ConfigurationOptions();
-        var factory = new SplitFactory(splitIoOptions.SdkKey, config);
+        var factory = new SplitFactory(splitOptions.SdkKey, config);
         var sdk = factory.Client();
-        
+
         sdk.BlockUntilReady(10000);
 
         services.AddSingleton(typeof(ISplitFactory), factory);
 
-        services.AddScoped<Domain.FeatureFlags.IReadRepository, Repositories.SplitIoFeatureFlagRepository>();
+        services.AddScoped<Domain.FeatureFlags.IReadRepository, Repositories.SplitFeatureFlagRepository>();
     }
 
-    public static void AddInfrastructureSplitIoConfig(this IServiceCollection services, IConfiguration config)
+    public static void AddInfrastructureSplitConfig(this IServiceCollection services, IConfiguration config)
     {
-        services.Configure<SplitIoOptions>(config.GetSection(SplitIoOptions.SplitIo));
+        services.Configure<SplitOptions>(config.GetSection(SplitOptions.Split));
     }
 }

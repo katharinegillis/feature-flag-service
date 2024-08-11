@@ -7,10 +7,10 @@ using Splitio.Services.Client.Interfaces;
 
 namespace Infrastructure.Tests.Integration.Repositories;
 
-public sealed class SplitIoFeatureFlagRepositoryTests
+public sealed class SplitFeatureFlagRepositoryTests
 {
     [Test]
-    public async Task SplitIoFeatureFlagRepository_Get_Should_Return_A_Treatment_On_As_Enabled_Feature_Flag()
+    public async Task SplitFeatureFlagRepository_Get_Should_Return_A_Treatment_On_As_Enabled_Feature_Flag()
     {
         var splitClient = Substitute.For<ISplitClient>();
         splitClient.GetTreatment("system_key", "some_flag").Returns("on");
@@ -18,7 +18,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
         var splitFactory = Substitute.For<ISplitFactory>();
         splitFactory.Client().Returns(splitClient);
 
-        var splitOptions = new SplitIoOptions
+        var splitOptions = new SplitOptions
         {
             SdkKey = "test_key",
             TreatmentKey = "system_key"
@@ -28,7 +28,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
 
         var factory = new Factory();
 
-        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
+        var repository = new SplitFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
 
         var result = await repository.Get("some_flag");
 
@@ -41,7 +41,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
     }
 
     [Test]
-    public async Task SplitIoFeatureFlagRepository_Get_Should_Return_A_Treatment_Off_As_Disabled_Feature_Flag()
+    public async Task SplitFeatureFlagRepository_Get_Should_Return_A_Treatment_Off_As_Disabled_Feature_Flag()
     {
         var splitClient = Substitute.For<ISplitClient>();
         splitClient.GetTreatment("system_key", "some_flag").Returns("off");
@@ -49,7 +49,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
         var splitFactory = Substitute.For<ISplitFactory>();
         splitFactory.Client().Returns(splitClient);
 
-        var splitOptions = new SplitIoOptions
+        var splitOptions = new SplitOptions
         {
             SdkKey = "test_key",
             TreatmentKey = "system_key"
@@ -59,7 +59,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
 
         var factory = new Factory();
 
-        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
+        var repository = new SplitFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
 
         var result = await repository.Get("some_flag");
 
@@ -72,7 +72,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
     }
 
     [Test]
-    public async Task SplitIoFeatureFlagRepository_Get_Should_Return_A_Treatment_Control_As_Null_Feature_Flag()
+    public async Task SplitFeatureFlagRepository_Get_Should_Return_A_Treatment_Control_As_Null_Feature_Flag()
     {
         var splitClient = Substitute.For<ISplitClient>();
         splitClient.GetTreatment("system_key", "some_flag").Returns("control");
@@ -80,7 +80,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
         var splitFactory = Substitute.For<ISplitFactory>();
         splitFactory.Client().Returns(splitClient);
 
-        var splitOptions = new SplitIoOptions
+        var splitOptions = new SplitOptions
         {
             SdkKey = "test_key",
             TreatmentKey = "system_key"
@@ -90,7 +90,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
 
         var factory = new Factory();
 
-        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
+        var repository = new SplitFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
 
         var result = await repository.Get("some_flag");
 
@@ -98,7 +98,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
     }
 
     [Test]
-    public async Task SplitIoFeatureFlagRepository_List_Should_Return_List_Of_FeatureFlags()
+    public async Task SplitFeatureFlagRepository_List_Should_Return_List_Of_FeatureFlags()
     {
         var splitManager = Substitute.For<ISplitManager>();
         splitManager.SplitNamesAsync().Returns(Task.FromResult(new List<string>
@@ -125,7 +125,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
         splitFactory.Client().Returns(splitClient);
         splitFactory.Manager().Returns(splitManager);
 
-        var splitOptions = new SplitIoOptions
+        var splitOptions = new SplitOptions
         {
             SdkKey = "test_key",
             TreatmentKey = "system_key"
@@ -135,7 +135,7 @@ public sealed class SplitIoFeatureFlagRepositoryTests
 
         var factory = new Factory();
 
-        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
+        var repository = new SplitFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
 
         var result = await repository.List();
 
@@ -157,17 +157,17 @@ public sealed class SplitIoFeatureFlagRepositoryTests
     }
 
     [Test]
-    public void SplitIoFeatureFlagRepository_Name_Should_Return_SplitIo()
+    public void SplitFeatureFlagRepository_Name_Should_Return_Split()
     {
         var splitFactory = Substitute.For<ISplitFactory>();
 
-        var splitOptions = new SplitIoOptions();
+        var splitOptions = new SplitOptions();
 
         var splitOptionsWrapper = Options.Create(splitOptions);
 
         var factory = new Factory();
 
-        var repository = new SplitIoFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
+        var repository = new SplitFeatureFlagRepository(splitFactory, splitOptionsWrapper, factory);
 
         Assert.That(repository.Name, Is.EqualTo("Split"));
     }

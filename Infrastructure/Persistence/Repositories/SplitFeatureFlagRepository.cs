@@ -5,15 +5,15 @@ using Splitio.Services.Client.Interfaces;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public sealed class SplitIoFeatureFlagRepository(
+public sealed class SplitFeatureFlagRepository(
     ISplitFactory splitFactory,
-    IOptions<SplitIoOptions> options,
+    IOptions<SplitOptions> options,
     IFactory factory)
     : IReadRepository
 {
     private readonly ISplitClient _splitClient = splitFactory.Client();
     private readonly ISplitManager _splitManager = splitFactory.Manager();
-    private readonly SplitIoOptions _options = options.Value;
+    private readonly SplitOptions _options = options.Value;
 
     public Task<IModel> Get(string id)
     {
