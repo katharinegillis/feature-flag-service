@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
-using Create = Application.Interactors.CreateFeatureFlag;
-using Get = Application.Interactors.GetFeatureFlag;
-using List = Application.Interactors.ListFeatureFlags;
-using Update = Application.Interactors.UpdateFeatureFlag;
-using Delete = Application.Interactors.DeleteFeatureFlag;
+using Create = Application.Interactors.FeatureFlag.Create;
+using Get = Application.Interactors.FeatureFlag.Get;
+using List = Application.Interactors.FeatureFlag.List;
+using Update = Application.Interactors.FeatureFlag.Update;
+using Delete = Application.Interactors.FeatureFlag.Delete;
 
 namespace Console.Extensions;
 

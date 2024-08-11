@@ -1,4 +1,4 @@
-using Application.Interactors.UpdateFeatureFlag;
+using Application.Interactors.FeatureFlag.Update;
 using Console.Common;
 using Console.Localization;
 using Utilities.LocalizationService;

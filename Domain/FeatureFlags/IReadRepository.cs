@@ -6,5 +6,6 @@ public interface IReadRepository
 
     public Task<IEnumerable<IModel>> List();
 
+    // ReSharper disable once UnusedMemberInSuper.Global
     public string Name { get; }
 }

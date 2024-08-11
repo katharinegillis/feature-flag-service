@@ -1,4 +1,4 @@
-using Application.Interactors.IsFeatureFlagEnabled;
+using Application.Interactors.FeatureFlag.IsEnabled;
 using WebAPI.Common;
 
 namespace WebAPI.Controllers.Enabled;

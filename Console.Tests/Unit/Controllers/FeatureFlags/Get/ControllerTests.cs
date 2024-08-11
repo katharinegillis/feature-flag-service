@@ -1,4 +1,4 @@
-using Application.Interactors.GetFeatureFlag;
+using Application.Interactors.FeatureFlag.Get;
 using Console.Controllers.FeatureFlags.Get;
 using Console.Common;
 using NSubstitute;

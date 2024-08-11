@@ -38,5 +38,5 @@ public sealed class SplitFeatureFlagRepository(
         });
     }
 
-    public string Name { get; } = "Split";
+    public string Name => "Split";
 }

@@ -1,4 +1,4 @@
-using Application.Interactors.UpdateFeatureFlag;
+using Application.Interactors.FeatureFlag.Update;
 
 namespace Console.Controllers.FeatureFlags.Update;
 

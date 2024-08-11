@@ -1,4 +1,4 @@
-using Application.Interactors.CreateFeatureFlag;
+using Application.Interactors.FeatureFlag.Create;
 using Console.Controllers.FeatureFlags.Create;
 using Console.Common;
 using Console.Localization;

@@ -1,4 +1,4 @@
-using Application.Interactors.ListFeatureFlags;
+using Application.Interactors.FeatureFlag.List;
 using Console.Common;
 using Console.Controllers.FeatureFlags.List;
 using NSubstitute;
