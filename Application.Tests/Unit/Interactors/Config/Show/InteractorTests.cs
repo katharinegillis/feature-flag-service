@@ -2,7 +2,7 @@ using Application.Interactors.Config.Show;
 using Domain.FeatureFlags;
 using NSubstitute;
 
-namespace Application.Tests.Unit.Config.Show;
+namespace Application.Tests.Unit.Interactors.Config.Show;
 
 public sealed class InteractorTests
 {
@@ -17,7 +17,7 @@ public sealed class InteractorTests
     }
 
     [Test]
-    public void ConfigShowInteractor_Returns_A_Config_Value_For_Datasource()
+    public async Task ConfigShowInteractor_Returns_A_Config_Value_For_Datasource()
     {
         var repository = Substitute.For<IReadRepository>();
         repository.Name.Returns("Some Repository");
@@ -31,7 +31,7 @@ public sealed class InteractorTests
 
         var presenter = Substitute.For<IOutputPort>();
 
-        interactor.Execute(request, presenter);
+        await interactor.Execute(request, presenter);
 
         presenter.Received().Ok("Some Repository");
     }
