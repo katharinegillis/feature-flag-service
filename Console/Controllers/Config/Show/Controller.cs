@@ -1,5 +1,6 @@
 using Application.Interactors.Config.Show;
 using Console.Common;
+using Domain.Common;
 
 namespace Console.Controllers.Config.Show;
 
@@ -12,8 +13,38 @@ public sealed class Controller(IConsolePresenterFactory factory, IInputPort inte
         _options = (IOptions)options;
     }
 
-    public Task<int> Execute()
+    public async Task<int> Execute()
     {
-        // TODO How to handle the string options to enum request
+        RequestModel request;
+
+        IConsolePresenter presenter;
+        
+        switch (_options.Name.ToLower())
+        {
+            case "datasource":
+                request = new RequestModel
+                {
+                    Name = RequestModel.NameOptions.Datasource
+                };
+                break;
+            default:
+                var errors = new List<ValidationError>
+                {
+                    new()
+                    {
+                        Field = "First argument",
+                        Message = "Must be one of: datasource"
+                    }
+                };
+                presenter = factory.Create(null);
+                presenter.BadRequest(errors);
+                return presenter.ExitCode;
+        }
+
+        presenter = factory.Create(request);
+
+        await interactor.Execute(request, presenter);
+
+        return presenter.ExitCode;
     }
 }
