@@ -9,5 +9,5 @@ public sealed class Verb : IHasControllerType, IOptions
 {
     public Type ControllerType { get; } = typeof(Controller);
 
-    [Value(0, Required = true)] public string Name { get; set; } = null!;
+    [Value(0, Required = true, HelpText = "HelpShowConfigValue", ResourceType = typeof(Resources.CommandLineParser))] public string Name { get; set; } = null!;
 }

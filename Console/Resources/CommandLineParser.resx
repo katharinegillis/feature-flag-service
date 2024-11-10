@@ -108,4 +108,10 @@
     <data name="HelpDeleteFeatureFlagVerb" xml:space="preserve">
         <value>Delete a feature flag</value>
     </data>
+    <data name="HelpShowConfigVerb" xml:space="preserve">
+        <value>Show a config value</value>
+    </data>
+    <data name="HelpShowConfigValue" xml:space="preserve">
+        <value>Config value name</value>
+    </data>
 </root>

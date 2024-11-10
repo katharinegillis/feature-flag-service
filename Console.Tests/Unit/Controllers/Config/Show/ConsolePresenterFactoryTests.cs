@@ -1,5 +1,9 @@
 using Application.Interactors.Config.Show;
+using Console.Common;
 using Console.Controllers.Config.Show;
+using Console.Localization;
+using NSubstitute;
+using Utilities.LocalizationService;
 
 namespace Console.Tests.Unit.Controllers.Config.Show;
 
@@ -8,7 +12,10 @@ public sealed class ConsolePresenterFactoryTests
     [Test]
     public void ConsolePresenterFactory_Should_Be_An_IConsolePresenterFactory()
     {
-        var factory = new ConsolePresenterFactory();
+        var localizer = Substitute.For<ILocalizationService<SharedResource>>();
+        var writer = Substitute.For<IConsoleWriter>();
+        
+        var factory = new ConsolePresenterFactory(localizer, writer);
         
         Assert.That(factory, Is.InstanceOf<IConsolePresenterFactory>());
     }
@@ -20,8 +27,11 @@ public sealed class ConsolePresenterFactoryTests
         {
             Name = RequestModel.NameOptions.Datasource
         };
+        
+        var localizer = Substitute.For<ILocalizationService<SharedResource>>();
+        var writer = Substitute.For<IConsoleWriter>();
 
-        var factory = new ConsolePresenterFactory();
+        var factory = new ConsolePresenterFactory(localizer, writer);
 
         var presenter = factory.Create(request);
         

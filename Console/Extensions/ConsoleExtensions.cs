@@ -5,6 +5,7 @@ using Create = Console.Controllers.FeatureFlags.Create;
 using List = Console.Controllers.FeatureFlags.List;
 using Update = Console.Controllers.FeatureFlags.Update;
 using Delete = Console.Controllers.FeatureFlags.Delete;
+using Show = Console.Controllers.Config.Show;
 using Console.Common;
 
 namespace Console.Extensions;
@@ -18,6 +19,7 @@ public static class ConsoleExtensions
         services.AddTransient<List.Controller>();
         services.AddTransient<Update.Controller>();
         services.AddTransient<Delete.Controller>();
+        services.AddTransient<Show.Controller>();
     }
 
     public static void AddConsoleLocalization(this IServiceCollection services)
@@ -36,5 +38,6 @@ public static class ConsoleExtensions
         services.AddScoped<List.IConsolePresenterFactory, List.ConsolePresenterFactory>();
         services.AddScoped<Update.IConsolePresenterFactory, Update.ConsolePresenterFactory>();
         services.AddScoped<Delete.IConsolePresenterFactory, Delete.ConsolePresenterFactory>();
+        services.AddScoped<Show.IConsolePresenterFactory, Show.ConsolePresenterFactory>();
     }
 }

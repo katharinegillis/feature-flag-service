@@ -1,7 +1,10 @@
 using Application.Interactors.Config.Show;
 using Console.Common;
 using Console.Controllers.Config.Show;
+using Console.Localization;
 using Domain.Common;
+using NSubstitute;
+using Utilities.LocalizationService;
 
 namespace Console.Tests.Unit.Controllers.Config.Show;
 
@@ -15,7 +18,11 @@ public class ConsolePresenterTests
             Name = RequestModel.NameOptions.Datasource
         };
         
-        var presenter = new ConsolePresenter(request);
+        var localizer = Substitute.For<ILocalizationService<SharedResource>>();
+
+        var writer = Substitute.For<IConsoleWriter>();
+        
+        var presenter = new ConsolePresenter(request, localizer, writer);
         
         Assert.That(presenter, Is.InstanceOf<IConsolePresenter>());
     }
@@ -27,8 +34,13 @@ public class ConsolePresenterTests
         {
             Name = RequestModel.NameOptions.Datasource
         };
+        
+        var localizer = Substitute.For<ILocalizationService<SharedResource>>();
+        localizer.Translate("Datasource \"{0}\"", "Some datasource").Returns("Datasource \"Some datasource\"");
 
-        var presenter = new ConsolePresenter(request);
+        var writer = Substitute.For<IConsoleWriter>();
+
+        var presenter = new ConsolePresenter(request, localizer, writer);
         
         presenter.Ok("Some datasource");
         
@@ -38,7 +50,14 @@ public class ConsolePresenterTests
     [Test]
     public void ConsolePresenter_BadRequest_Should_ExitCode_OptionsError()
     {
-        var presenter = new ConsolePresenter(null);
+        var localizer = Substitute.For<ILocalizationService<SharedResource>>();
+        localizer.Translate("First argument").Returns("First argument");
+        localizer.Translate("Must be one of: datasource").Returns("Must be one of: datasource");
+        localizer.Translate("{0}: {1}.", "First argument", "Must be one of: datasource").Returns("First argument: Must be one of: datasource.");
+
+        var writer = Substitute.For<IConsoleWriter>();
+        
+        var presenter = new ConsolePresenter(null, localizer, writer);
         
         presenter.BadRequest(new List<ValidationError>());
         

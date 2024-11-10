@@ -212,5 +212,17 @@ namespace Console.Resources {
                 return ResourceManager.GetString("HelpDeleteFeatureFlagVerb", resourceCulture);
             }
         }
+        
+        public static string HelpShowConfigVerb {
+            get {
+                return ResourceManager.GetString("HelpShowConfigVerb", resourceCulture);
+            }
+        }
+        
+        public static string HelpShowConfigValue {
+            get {
+                return ResourceManager.GetString("HelpShowConfigValue", resourceCulture);
+            }
+        }
     }
 }
