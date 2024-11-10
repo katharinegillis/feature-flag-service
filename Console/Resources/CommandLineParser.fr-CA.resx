@@ -104,4 +104,10 @@
     <data name="HelpDeleteFeatureFlagVerb" xml:space="preserve">
         <value>Supprimer un indicateur de fonctionnalité</value>
     </data>
+    <data name="HelpShowConfigVerb" xml:space="preserve">
+        <value>Afficher une valeur de configuration</value>
+    </data>
+    <data name="HelpShowConfigValue" xml:space="preserve">
+        <value>Nom de la valeur de configuration</value>
+    </data>
 </root>

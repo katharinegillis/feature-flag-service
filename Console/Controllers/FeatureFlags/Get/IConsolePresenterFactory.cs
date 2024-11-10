@@ -1,4 +1,4 @@
-using Application.Interactors.GetFeatureFlag;
+using Application.Interactors.FeatureFlag.Get;
 
 namespace Console.Controllers.FeatureFlags.Get;
 

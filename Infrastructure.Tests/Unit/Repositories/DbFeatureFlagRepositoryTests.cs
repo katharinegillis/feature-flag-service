@@ -434,4 +434,15 @@ public sealed class DbFeatureFlagRepositoryTests
             }));
         });
     }
+
+    [Test]
+    public void DbFeatureFlagRepository_Name_Should_Return_Database()
+    {
+        var context = Substitute.For<FeatureFlagContext>();
+        var factory = Substitute.For<IFactory>();
+
+        var repository = new DbFeatureFlagRepository(context, factory);
+
+        Assert.That(repository.Name, Is.EqualTo("Database"));
+    }
 }

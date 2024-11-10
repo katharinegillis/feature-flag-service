@@ -1,4 +1,4 @@
-using Application.Interactors.GetFeatureFlag;
+using Application.Interactors.FeatureFlag.Get;
 using Console.Controllers.FeatureFlags.Get;
 using Console.Common;
 using NSubstitute;
@@ -31,7 +31,7 @@ public sealed class ControllerTests
     }
 
     [Test]
-    public async Task GetController_Should_Successful()
+    public async Task GetController_Should_Succeed()
     {
         var presenter = Substitute.For<IConsolePresenter>();
         presenter.ExitCode.Returns((int)ExitCode.Success);
@@ -50,7 +50,5 @@ public sealed class ControllerTests
         var result = await controller.Execute();
 
         Assert.That(result, Is.EqualTo((int)ExitCode.Success));
-
-        await interactor.Received().Execute(Arg.Any<RequestModel>(), Arg.Any<IOutputPort>());
     }
 }

@@ -1,4 +1,4 @@
-using Application.Interactors.DeleteFeatureFlag;
+using Application.Interactors.FeatureFlag.Delete;
 using Console.Common;
 using Console.Controllers.FeatureFlags.Delete;
 using Console.Localization;

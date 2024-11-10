@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Unit\"/>
+        <Folder Include="Unit\Interactors\FeatureFlag\"/>
     </ItemGroup>
 
 </Project>

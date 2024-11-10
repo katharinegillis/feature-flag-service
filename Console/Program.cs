@@ -15,26 +15,26 @@ builder.Services.AddDomainFactories();
 
 builder.Services.AddApplicationInteractors();
 
-var splitIoOptionsBuilder = builder.Configuration.GetSection(SplitIoOptions.SplitIo);
+var splitOptionsBuilder = builder.Configuration.GetSection(SplitOptions.Split);
 
-builder.Services.AddInfrastructureSplitIoConfig(builder.Configuration);
+builder.Services.AddInfrastructureSplitConfig(builder.Configuration);
 
-var splitIoOptions = splitIoOptionsBuilder.Get<SplitIoOptions>();
+var splitOptions = splitOptionsBuilder.Get<SplitOptions>();
 
-if (splitIoOptions != null && splitIoOptions.SdkKey != "")
+if (splitOptions != null && splitOptions.SdkKey != "")
 {
     try
     {
-        builder.Services.AddInfrastructureSplitIoRepositories(splitIoOptions);
+        builder.Services.AddInfrastructureSplitRepository(splitOptions);
     }
     catch (Exception)
     {
-        builder.Services.AddInfrastructureSqliteRepositories();
+        builder.Services.AddInfrastructureSqliteRepository();
     }
 }
 else
 {
-    builder.Services.AddInfrastructureSqliteRepositories();
+    builder.Services.AddInfrastructureSqliteRepository();
 }
 
 builder.Services.AddConsoleControllers();
