@@ -1,10 +1,11 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace WebAPI.E2E.Drivers;
 
-public sealed class ConsoleDriver
+public sealed partial class ConsoleDriver
 {
     private ProcessStartInfo _psi;
     
@@ -24,7 +25,6 @@ public sealed class ConsoleDriver
     public async Task<bool> CreateFeatureFlag(string id, bool enabled)
     {
         _psi.Arguments = $"compose exec featureflagservice console featureflag:create -i {id} -e {(enabled ? "true" : "false")}";
-        Console.WriteLine(_psi.Arguments);
 
         using var process = Process.Start(_psi);
 
@@ -35,14 +35,43 @@ public sealed class ConsoleDriver
         
         await process.WaitForExitAsync();
 
-        var output = await process.StandardOutput.ReadToEndAsync();
-        Console.WriteLine(output);
-        var error = await process.StandardError.ReadToEndAsync();
-        Console.WriteLine(error);
-        Console.WriteLine(process.ExitCode);
+        return process.ExitCode == 0;
+    }
+
+    public async Task<bool> DeleteFeatureFlag(string id)
+    {
+        _psi.Arguments = $"compose exec featureflagservice console featureflag:delete -i {id}";
+
+        using var process = Process.Start(_psi);
+
+        if (process == null)
+        {
+            return false;
+        }
+
+        await process.WaitForExitAsync();
 
         return process.ExitCode == 0;
-        
-        // TODO: Convert this into a repository kind of class that makes the ids unique for each test and keeps track of the id the test uses vs. the id the repository uses so tests can run in parallel
     }
+
+    public async Task<string> ConfigShowDataSource()
+    {
+        _psi.Arguments = "compose exec featureflagservice console config:show datasource";
+
+        using var process = Process.Start(_psi);
+
+        if (process == null)
+        {
+            return "unknown";
+        }
+
+        await process.WaitForExitAsync();
+
+        var output = await process.StandardOutput.ReadToEndAsync();
+
+        return process.ExitCode != 0 ? "unknown" : DatasourceRegex().Match(output).Groups[1].Value;
+    }
+
+    [GeneratedRegex("^Datasource \"(.+?)\"$")]
+    private static partial Regex DatasourceRegex();
 }

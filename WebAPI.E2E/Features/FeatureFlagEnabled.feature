@@ -1,4 +1,4 @@
-﻿Feature: FeatureFlagEnabled
+Feature: FeatureFlagEnabled
 
 @sqlite
 @splitio

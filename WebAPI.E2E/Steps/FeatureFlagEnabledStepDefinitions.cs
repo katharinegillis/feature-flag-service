@@ -1,7 +1,9 @@
-﻿using TechTalk.SpecFlow.Assist;
+﻿using System.Diagnostics;
+using Microsoft.Playwright;
+using NUnit.Framework;
 using WebAPI.E2E.DataSources;
 using WebAPI.E2E.Drivers;
-using WebAPI.E2E.Models;
+using System.Text.Json;
 
 namespace WebAPI.E2E.Steps;
 
@@ -13,33 +15,60 @@ public sealed class FeatureFlagEnabledStepDefinitions
     private readonly ScenarioContext _scenarioContext;
     private readonly ConsoleDriver _consoleDriver;
     private readonly FeatureFlagDataSource _dataSource;
+    private readonly IAPIRequestContext _request;
 
-    public FeatureFlagEnabledStepDefinitions(ScenarioContext scenarioContext)
+    private const string FlagsCreated = "flagsCreated";
+    private const string Response = "response";
+
+    public FeatureFlagEnabledStepDefinitions(ScenarioContext scenarioContext, Hooks.Hooks hooks)
     {
         _scenarioContext = scenarioContext;
+        _scenarioContext[FlagsCreated] = new List<string>();
         _consoleDriver = new ConsoleDriver();
         _dataSource = new FeatureFlagDataSource(_consoleDriver);
+        _request = hooks.Request;
     }
 
-    [Given(@"the feature flags exist")]
-    public async Task GivenTheFeatureFlagsExist(Table table)
+    [Given(@"the testing feature flags exist")]
+    public async Task GivenTheTestingFeatureFlagsExist()
     {
-        var featureFlags = table.CreateSet<FeatureFlag>();
-        foreach (var featureFlag in featureFlags)
+        if (await _consoleDriver.ConfigShowDataSource() == "Database")
         {
-            Console.WriteLine(await _consoleDriver.CreateFeatureFlag(featureFlag.Id, featureFlag.Enabled));
+            var testFlagCreated = await _dataSource.CreateFeatureFlag("e2e_test_enabled", true);
+            Assert.That(testFlagCreated, Is.True);
+            
+            if (testFlagCreated)
+            {
+                _scenarioContext.Get<List<string>>(FlagsCreated).Add("e2e_test_enabled");
+            }
         }
     }
 
-    [When(@"the feature flag enabled endpoint is opened for the e2e_test_enabled flag")]
-    public void WhenTheFeatureFlagEnabledEndpointIsOpenedForTheEeTestEnabledFlag()
+    [When(@"the feature flag enabled endpoint is opened for the enabled test flag")]
+    public async Task WhenTheFeatureFlagEnabledEndpointIsOpenedForTheEnabledTestFlag()
     {
-        ScenarioContext.StepIsPending();
+        var flagId = await _dataSource.GetUniqueId("e2e_test_enabled");
+        
+        var response = await _request.GetAsync($"/{flagId}/enabled");
+        Assert.That(response.Ok, Is.True);
+        
+        _scenarioContext[Response] = response;
     }
 
     [Then(@"the result should be true")]
-    public void ThenTheResultShouldBeTrue()
+    public async Task ThenTheResultShouldBeTrue()
     {
-        ScenarioContext.StepIsPending();
+        var jsonResponse = await _scenarioContext.Get<IAPIResponse>(Response).JsonAsync();
+        Assert.That(jsonResponse, Is.Not.Null);
+        Assert.That(jsonResponse!.Value.GetBoolean(), Is.True);
+    }
+
+    [AfterScenario]
+    public async Task AfterScenario()
+    {
+        foreach (var flagId in _scenarioContext.Get<List<string>>(FlagsCreated))
+        {
+            await _dataSource.DeleteFeatureFlag("e2e_test_enabled");
+        }
     }
 }
