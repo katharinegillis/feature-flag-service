@@ -34,20 +34,28 @@ public sealed class FeatureFlagEnabledStepDefinitions
     {
         if (await _consoleDriver.ConfigShowDataSource() == "Database")
         {
-            var testFlagCreated = await _dataSource.CreateFeatureFlag("e2e_test_enabled", true);
-            Assert.That(testFlagCreated, Is.True);
+            var enabledTestFlagCreated = await _dataSource.CreateFeatureFlag("e2e_test_enabled", true);
+            Assert.That(enabledTestFlagCreated, Is.True);
             
-            if (testFlagCreated)
+            if (enabledTestFlagCreated)
             {
                 _scenarioContext.Get<List<string>>(FlagsCreated).Add("e2e_test_enabled");
+            }
+            
+            var disabledTestFlagCreated = await _dataSource.CreateFeatureFlag("e2e_test_disabled", false);
+            Assert.That(disabledTestFlagCreated, Is.True);
+            
+            if (disabledTestFlagCreated)
+            {
+                _scenarioContext.Get<List<string>>(FlagsCreated).Add("e2e_test_disabled");
             }
         }
     }
 
-    [When(@"the feature flag enabled endpoint is opened for the enabled test flag")]
-    public async Task WhenTheFeatureFlagEnabledEndpointIsOpenedForTheEnabledTestFlag()
+    [When(@"the feature flag enabled endpoint is opened for the (enabled|disabled) test flag")]
+    public async Task WhenTheFeatureFlagEnabledEndpointIsOpenedForTheEnabledDisabledTestFlag(string flagType)
     {
-        var flagId = await _dataSource.GetUniqueId("e2e_test_enabled");
+        var flagId = await _dataSource.GetUniqueId($"e2e_test_{flagType}");
         
         var response = await _request.GetAsync($"/{flagId}/enabled");
         Assert.That(response.Ok, Is.True);
@@ -55,12 +63,19 @@ public sealed class FeatureFlagEnabledStepDefinitions
         _scenarioContext[Response] = response;
     }
 
-    [Then(@"the result should be true")]
-    public async Task ThenTheResultShouldBeTrue()
+    [Then(@"the result should be (true|false)")]
+    public async Task ThenTheResultShouldBeTrue(string expectedResult)
     {
         var jsonResponse = await _scenarioContext.Get<IAPIResponse>(Response).JsonAsync();
         Assert.That(jsonResponse, Is.Not.Null);
-        Assert.That(jsonResponse!.Value.GetBoolean(), Is.True);
+        
+        if (expectedResult == "true")
+        {
+            Assert.That(jsonResponse!.Value.GetBoolean(), Is.True);
+            return;
+        }
+        
+        Assert.That(jsonResponse!.Value.GetBoolean(), Is.False);
     }
 
     [AfterScenario]

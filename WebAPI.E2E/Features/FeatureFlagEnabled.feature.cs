@@ -106,6 +106,40 @@ this.ScenarioInitialize(scenarioInfo);
             }
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get a disabled feature flag")]
+        [NUnit.Framework.CategoryAttribute("sqlite")]
+        [NUnit.Framework.CategoryAttribute("splitio")]
+        public void GetADisabledFeatureFlag()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "sqlite",
+                    "splitio"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a disabled feature flag", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 12
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 13
+    testRunner.Given("the testing feature flags exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 14
+    testRunner.When("the feature flag enabled endpoint is opened for the disabled test flag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 15
+    testRunner.Then("the result should be false", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
