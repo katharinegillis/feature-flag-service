@@ -23,7 +23,7 @@ jobs:
         run: docker compose -f compose.yaml -f compose.e2e.yaml up -d
       
       - name: Run tests in SQLITE mode
-        run: find *.E2E -maxdepth 0 -type d \( ! -name . \) -exec bash -c "cd '{}' && dotnet test --filter TestCategory=sqlite \;
+        run: find *.E2E -maxdepth 0 -type d \( ! -name . \) -exec bash -c "cd '{}' && dotnet test --filter TestCategory=sqlite" \;
         
       - name: Shutdown the service
         run: docker compose -f compose.yaml -f compose.e2e.yaml down
@@ -38,7 +38,7 @@ jobs:
         run: docker compose -f compose.yaml -f compose.e2e.yaml exec featureflagservice console config:show datasource
         
       - name: Run tests in Split mode
-        run: find *.E2E -maxdepth 0 -type d \( ! -name . \) -exec bash -c "cd '{}' && dotnet test --filter TestCategory=split \;
+        run: find *.E2E -maxdepth 0 -type d \( ! -name . \) -exec bash -c "cd '{}' && dotnet test --filter TestCategory=split" \;
       
       - name: Shutdown the service
         run: docker compose -f compose.yaml -f compose.e2e.yaml down
