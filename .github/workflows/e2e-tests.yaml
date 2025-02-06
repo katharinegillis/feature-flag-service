@@ -27,7 +27,9 @@ jobs:
         
       - uses: GuillaumeFalourd/wait-sleep-action@v1
         with:
-          time: '60'
+          time: '10'
+          
+      - run: docker compose -f compose.yaml -f compose.e2e.yaml log
         
       - name: Test creating a flag
         run: docker compose -f compose.yaml -f compose.e2e.yaml exec featureflagservice console featureflag:create -i "test_flag" -e true
@@ -46,7 +48,7 @@ jobs:
           
       - uses: GuillaumeFalourd/wait-sleep-action@v1
         with:
-          time: '60'
+          time: '10'
           
       - name: Check the datasource
         run: docker compose -f compose.yaml -f compose.e2e.yaml exec featureflagservice console config:show datasource
