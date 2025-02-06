@@ -76,16 +76,14 @@ namespace WebAPI.E2E.Features
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Get an enabled feature flag")]
         [NUnit.Framework.CategoryAttribute("sqlite")]
-        [NUnit.Framework.CategoryAttribute("splitio")]
         public void GetAnEnabledFeatureFlag()
         {
             string[] tagsOfScenario = new string[] {
-                    "sqlite",
-                    "splitio"};
+                    "sqlite"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get an enabled feature flag", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 5
-this.ScenarioInitialize(scenarioInfo);
+#line 4
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -100,15 +98,15 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "e2e_test_enabled",
                             "true"});
-#line 6
-    testRunner.Given("the following feature flags exist", ((string)(null)), table1, "Given ");
+#line 5
+        testRunner.Given("the following feature flags exist", ((string)(null)), table1, "Given ");
 #line hidden
-#line 9
-    testRunner.When("the feature flag enabled endpoint is opened for the e2e_test_enabled feature flag" +
+#line 8
+        testRunner.When("the feature flag enabled endpoint is opened for the e2e_test_enabled feature flag" +
                         "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 10
-    testRunner.Then("the result should be true", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 9
+        testRunner.Then("the result should be true", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -116,17 +114,15 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Get a disabled feature flag")]
-        [NUnit.Framework.CategoryAttribute("sqlite")]
-        [NUnit.Framework.CategoryAttribute("splitio")]
+        [NUnit.Framework.CategoryAttribute("split")]
         public void GetADisabledFeatureFlag()
         {
             string[] tagsOfScenario = new string[] {
-                    "sqlite",
-                    "splitio"};
+                    "split"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a disabled feature flag", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 14
-this.ScenarioInitialize(scenarioInfo);
+#line 12
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -141,15 +137,15 @@ this.ScenarioInitialize(scenarioInfo);
                 table2.AddRow(new string[] {
                             "e2e_test_disabled",
                             "false"});
-#line 15
-    testRunner.Given("the following feature flags exist", ((string)(null)), table2, "Given ");
+#line 13
+        testRunner.Given("the following feature flags exist", ((string)(null)), table2, "Given ");
 #line hidden
-#line 18
-    testRunner.When("the feature flag enabled endpoint is opened for the e2e_test_disabled feature fla" +
+#line 16
+        testRunner.When("the feature flag enabled endpoint is opened for the e2e_test_disabled feature fla" +
                         "g", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 19
-    testRunner.Then("the result should be false", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 17
+        testRunner.Then("the result should be false", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

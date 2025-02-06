@@ -1,7 +1,7 @@
 Feature: FeatureFlagEnabled
 
     @sqlite
-    @splitio
+    @split
     Scenario: Get an enabled feature flag
         Given the following feature flags exist
           | Id               | Enabled |
@@ -10,7 +10,7 @@ Feature: FeatureFlagEnabled
         Then the result should be true
 
     @sqlite
-    @splitio
+    @split
     Scenario: Get a disabled feature flag
         Given the following feature flags exist
           | Id                | Enabled |
