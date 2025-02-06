@@ -24,7 +24,14 @@ public sealed partial class ConsoleDriver
 
         if (process == null) return false;
 
+        var error = process.StandardError.ReadToEndAsync();
+
         await process.WaitForExitAsync();
+
+        if (process.ExitCode != 0)
+        {
+            Console.WriteLine(error);
+        }
 
         return process.ExitCode == 0;
     }
