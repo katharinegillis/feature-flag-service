@@ -94,13 +94,20 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
+                            "Enabled"});
+                table1.AddRow(new string[] {
+                            "e2e_test_enabled",
+                            "true"});
 #line 6
-    testRunner.Given("the testing feature flags exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("the following feature flags exist", ((string)(null)), table1, "Given ");
 #line hidden
-#line 7
-    testRunner.When("the feature flag enabled endpoint is opened for the enabled test flag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 9
+    testRunner.When("the feature flag enabled endpoint is opened for the e2e_test_enabled feature flag" +
+                        "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 8
+#line 10
     testRunner.Then("the result should be true", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -118,7 +125,7 @@ this.ScenarioInitialize(scenarioInfo);
                     "splitio"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a disabled feature flag", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 12
+#line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -128,13 +135,20 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 13
-    testRunner.Given("the testing feature flags exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 14
-    testRunner.When("the feature flag enabled endpoint is opened for the disabled test flag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
+                            "Enabled"});
+                table2.AddRow(new string[] {
+                            "e2e_test_disabled",
+                            "false"});
 #line 15
+    testRunner.Given("the following feature flags exist", ((string)(null)), table2, "Given ");
+#line hidden
+#line 18
+    testRunner.When("the feature flag enabled endpoint is opened for the e2e_test_disabled feature fla" +
+                        "g", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 19
     testRunner.Then("the result should be false", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
