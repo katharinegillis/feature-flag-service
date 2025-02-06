@@ -18,6 +18,9 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.X
+          
+      - name: Create SQLITE database
+        run: mkdir .data && touch .data/featureFlagContext.db
 
       - name: Run service in SQLITE mode
         run: docker compose -f compose.yaml -f compose.e2e.yaml up -d
