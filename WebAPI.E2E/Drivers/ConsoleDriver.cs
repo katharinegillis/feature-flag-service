@@ -12,7 +12,7 @@ public sealed partial class ConsoleDriver
         RedirectStandardError = true,
         UseShellExecute = false,
         CreateNoWindow = true,
-        FileName = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "/usr/bin/docker" : "CMD.exe"
+        FileName = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "docker" : "CMD.exe"
     };
 
     public async Task<bool> CreateFeatureFlag(string id, bool enabled)
