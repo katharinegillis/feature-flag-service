@@ -19,11 +19,15 @@ jobs:
         with:
           dotnet-version: 8.X
           
-      - name: Create SQLITE database
-        run: mkdir .data && touch .data/featureFlagContext.db
+      - name: Create data folder
+        run: mkdir .data
 
       - name: Run service in SQLITE mode
         run: docker compose -f compose.yaml -f compose.e2e.yaml up -d
+        
+      - uses: GuillaumeFalourd/wait-sleep-action@v1
+        with:
+          time: '60'
         
       - name: Test creating a flag
         run: docker compose -f compose.yaml -f compose.e2e.yaml exec featureflagservice console featureflag:create -i "test_flag" -e true
@@ -39,6 +43,10 @@ jobs:
         env:
           SPLIT__SDKKEY: ${{ secrets.SPLIT__SDKKEY }}
           SPLIT__TREATMENTKEY: default
+          
+      - uses: GuillaumeFalourd/wait-sleep-action@v1
+        with:
+          time: '60'
           
       - name: Check the datasource
         run: docker compose -f compose.yaml -f compose.e2e.yaml exec featureflagservice console config:show datasource
