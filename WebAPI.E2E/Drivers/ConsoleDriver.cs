@@ -12,7 +12,7 @@ public sealed partial class ConsoleDriver
         RedirectStandardError = true,
         UseShellExecute = false,
         CreateNoWindow = true,
-        FileName = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "docker" : "CMD.exe"
+        FileName = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "/usr/bin/docker" : "CMD.exe"
     };
 
     public async Task<bool> CreateFeatureFlag(string id, bool enabled)
@@ -24,14 +24,7 @@ public sealed partial class ConsoleDriver
 
         if (process == null) return false;
 
-        var error = process.StandardError.ReadToEndAsync();
-
         await process.WaitForExitAsync();
-
-        if (process.ExitCode != 0)
-        {
-            Console.WriteLine(error);
-        }
 
         return process.ExitCode == 0;
     }
