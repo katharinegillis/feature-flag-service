@@ -29,7 +29,7 @@ jobs:
         with:
           time: '10'
           
-      - run: docker compose -f compose.yaml -f compose.e2e.yaml log
+      - run: docker compose -f compose.yaml -f compose.e2e.yaml logs
         
       - name: Test creating a flag
         run: docker compose -f compose.yaml -f compose.e2e.yaml exec featureflagservice console featureflag:create -i "test_flag" -e true
