@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>WebAPI.E2E</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="TechTalk.SpecFlow"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Docker.DotNet" Version="3.125.15"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0"/>
+        <PackageReference Include="Microsoft.Playwright" Version="1.50.0"/>
+        <PackageReference Include="Microsoft.Playwright.NUnit" Version="1.50.0"/>
+        <PackageReference Include="RandomString4Net" Version="1.9.0"/>
+        <PackageReference Include="SpecFlow" Version="3.9.74"/>
+        <PackageReference Include="SpecFlow.NUnit" Version="3.9.74"/>
+        <PackageReference Include="SpecFlow.NUnit.Runners" Version="3.9.74" />
+        <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57"/>
+        <PackageReference Include="FluentAssertions" Version="6.2.0"/>
+        <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.9.74" />
+    </ItemGroup>
+
+</Project>

@@ -53,6 +53,10 @@ RUN dotnet publish "Console.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 
 WORKDIR /src/WebAPI
 RUN dotnet publish "WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet tool install -g dotnet-ef
+ENV PATH $PATH:/root/.dotnet/tools
+RUN dotnet ef migrations bundle
+RUN mv /src/WebAPI/efbundle /app/publish
 
 
 FROM base AS final
@@ -60,6 +64,7 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 COPY ./console.sh /app/console
 COPY ./console-fr.sh /app/console-fr
+COPY ./entrypoint.sh /app/entrypoint.sh
 USER root
 RUN chown webapp:webapp /app/console
 RUN chown webapp:webapp /app/console-fr
@@ -68,4 +73,4 @@ RUN chmod +x /app/console-fr
 USER webapp
 RUN echo "export PATH=/app:${PATH}" >> /home/webapp/.bashrc
 ENV PATH=$PATH:/app
-ENTRYPOINT ["dotnet", "WebAPI.dll"]
+ENTRYPOINT ["/bin/bash", "/app/entrypoint.sh"]

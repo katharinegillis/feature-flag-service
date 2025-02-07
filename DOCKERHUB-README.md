@@ -20,11 +20,11 @@ The feature flag data is stored with Split.Io. You will need an account with the
 services:
   featureflagservice:
     image: kcordes/featureflagservice
-  volumes:
-    - ./.data:/data
-  environment:
-    SPLITIO__SDKKEY: <the server-side sdk key from your split.io account>
-    SPLITIO__TREATMENTKEY: <the user identifier you want to use ex. default>
+    volumes:
+      - ./.data:/data
+    environment:
+      SPLIT__SDKKEY: <the server-side sdk key from your split.io account>
+      SPLIT__TREATMENTKEY: <the user identifier you want to use ex. default>
 ```
 
 If the image fails to connect to Split.IO in 10 seconds after starting up, it will default back to the Sqlite configuration.

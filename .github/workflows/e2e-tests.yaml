@@ -1,0 +1,52 @@
+name: E2E Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: Run E2E Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Set up .Net 8.x
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.X
+          
+      - name: Create data folder
+        run: mkdir .data && chmod 777 .data
+
+      - name: Run service in SQLITE mode
+        run: docker compose -f compose.yaml -f compose.e2e.yaml up -d
+        
+      - uses: GuillaumeFalourd/wait-sleep-action@v1
+        with:
+          time: '10'
+      
+      - name: Run tests in SQLite mode
+        run: dotnet test --filter TestCategory=SQLite
+        
+      - name: Shutdown the service
+        run: docker compose -f compose.yaml -f compose.e2e.yaml down
+        
+      - name: Run service in Split mode
+        run: docker compose -f compose.yaml -f compose.e2e.yaml up -d
+        env:
+          SPLIT__SDKKEY: ${{ secrets.SPLIT__SDKKEY }}
+          SPLIT__TREATMENTKEY: default
+          
+      - uses: GuillaumeFalourd/wait-sleep-action@v1
+        with:
+          time: '10'
+        
+      - name: Run tests in Split mode
+        run: dotnet test --filter TestCategory=Split
+      
+      - name: Shutdown the service
+        run: docker compose -f compose.yaml -f compose.e2e.yaml down
