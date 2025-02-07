@@ -7,6 +7,7 @@ using IGetFeatureFlagCodePresenterFactory = Application.Interactors.FeatureFlag.
 
 namespace Application.Tests.Unit.Interactors.FeatureFlag.IsEnabled;
 
+[Category("Unit")]
 public sealed class InteractorTests
 {
     [Test]

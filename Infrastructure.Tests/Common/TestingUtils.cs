@@ -3,6 +3,7 @@ using NSubstitute;
 
 namespace Infrastructure.Tests.Common;
 
+[Category("Unit")]
 public static class TestingUtils
 {
     public static DbSet<T> CreateDbSetMockFromList<T>(IEnumerable<T> data) where T : class

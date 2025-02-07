@@ -5,6 +5,7 @@ using NSubstitute;
 
 namespace Console.Tests.Unit.Controllers.Config.Show;
 
+[Category("Unit")]
 public sealed class ControllerTests
 {
     [Test]

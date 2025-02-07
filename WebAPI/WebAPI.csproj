@@ -16,6 +16,7 @@
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="2.0.0-preview1-final"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
@@ -28,12 +29,6 @@
         <None Remove="compose.override.yaml"/>
         <None Remove="Dockerfile"/>
         <None Remove=".dockerignore"/>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="System.Configuration.ConfigurationManager">
-        <HintPath>..\..\..\.nuget\packages\system.configuration.configurationmanager\4.7.0\ref\netstandard2.0\System.Configuration.ConfigurationManager.dll</HintPath>
-      </Reference>
     </ItemGroup>
 
 </Project>

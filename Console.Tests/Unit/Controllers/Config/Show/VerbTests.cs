@@ -4,6 +4,7 @@ using Console.Controllers.Config.Show;
 
 namespace Console.Tests.Unit.Controllers.Config.Show;
 
+[Category("Unit")]
 public sealed class VerbTests
 {
     [Test]

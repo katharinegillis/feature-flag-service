@@ -5,6 +5,7 @@ using NSubstitute;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Delete;
 
+[Category("Unit")]
 public sealed class ControllerTests
 {
     [Test]

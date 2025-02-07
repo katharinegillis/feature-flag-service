@@ -5,6 +5,7 @@ using Verb = Console.Controllers.FeatureFlags.Delete.Verb;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Delete;
 
+[Category("Unit")]
 public sealed class VerbTests
 {
     [Test]
