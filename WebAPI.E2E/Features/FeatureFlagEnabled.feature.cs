@@ -75,13 +75,13 @@ namespace WebAPI.E2E.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Get an enabled feature flag")]
-        [NUnit.Framework.CategoryAttribute("sqlite")]
-        [NUnit.Framework.CategoryAttribute("split")]
+        [NUnit.Framework.CategoryAttribute("SQLite")]
+        [NUnit.Framework.CategoryAttribute("Split")]
         public void GetAnEnabledFeatureFlag()
         {
             string[] tagsOfScenario = new string[] {
-                    "sqlite",
-                    "split"};
+                    "SQLite",
+                    "Split"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get an enabled feature flag", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
@@ -108,7 +108,7 @@ namespace WebAPI.E2E.Features
                         "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 10
-        testRunner.Then("the result should be true", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("the result should be false", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -116,13 +116,13 @@ namespace WebAPI.E2E.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Get a disabled feature flag")]
-        [NUnit.Framework.CategoryAttribute("sqlite")]
-        [NUnit.Framework.CategoryAttribute("split")]
+        [NUnit.Framework.CategoryAttribute("SQLite")]
+        [NUnit.Framework.CategoryAttribute("Split")]
         public void GetADisabledFeatureFlag()
         {
             string[] tagsOfScenario = new string[] {
-                    "sqlite",
-                    "split"};
+                    "SQLite",
+                    "Split"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a disabled feature flag", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 14

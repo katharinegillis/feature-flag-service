@@ -29,8 +29,8 @@ jobs:
         with:
           time: '10'
       
-      - name: Run tests in SQLITE mode
-        run: find *.E2E -maxdepth 0 -type d \( ! -name . \) -exec bash -c "cd '{}' && dotnet test --filter TestCategory=sqlite" \;
+      - name: Run tests in SQLite mode
+        run: dotnet test --filter TestCategory=SQLite
         
       - name: Shutdown the service
         run: docker compose -f compose.yaml -f compose.e2e.yaml down
@@ -46,7 +46,7 @@ jobs:
           time: '10'
         
       - name: Run tests in Split mode
-        run: find *.E2E -maxdepth 0 -type d \( ! -name . \) -exec bash -c "cd '{}' && dotnet test --filter TestCategory=split" \;
+        run: dotnet test --filter TestCategory=Split
       
       - name: Shutdown the service
         run: docker compose -f compose.yaml -f compose.e2e.yaml down
