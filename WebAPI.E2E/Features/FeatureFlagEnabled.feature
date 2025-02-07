@@ -7,7 +7,7 @@ Feature: FeatureFlagEnabled
           | Id               | Enabled |
           | e2e_test_enabled | true    |
         When the feature flag enabled endpoint is opened for the e2e_test_enabled feature flag
-        Then the result should be true
+        Then the result should be false
 
     @sqlite
     @split

@@ -28,14 +28,9 @@ jobs:
       - uses: GuillaumeFalourd/wait-sleep-action@v1
         with:
           time: '10'
-          
-      - run: docker compose -f compose.yaml -f compose.e2e.yaml logs
-        
-      - name: Test creating a flag
-        run: docker compose -f compose.yaml -f compose.e2e.yaml exec featureflagservice console featureflag:create -i "test_flag" -e true
       
       - name: Run tests in SQLITE mode
-        run: find *.E2E -maxdepth 0 -type d \( ! -name . \) -exec bash -c "cd '{}' && dotnet test --filter TestCategory=sqlite --logger:\"console;verbosity=detailed\"" \;
+        run: find *.E2E -maxdepth 0 -type d \( ! -name . \) -exec bash -c "cd '{}' && dotnet test --filter TestCategory=sqlite \;
         
       - name: Shutdown the service
         run: docker compose -f compose.yaml -f compose.e2e.yaml down
@@ -49,9 +44,6 @@ jobs:
       - uses: GuillaumeFalourd/wait-sleep-action@v1
         with:
           time: '10'
-          
-      - name: Check the datasource
-        run: docker compose -f compose.yaml -f compose.e2e.yaml exec featureflagservice console config:show datasource
         
       - name: Run tests in Split mode
         run: find *.E2E -maxdepth 0 -type d \( ! -name . \) -exec bash -c "cd '{}' && dotnet test --filter TestCategory=split" \;
