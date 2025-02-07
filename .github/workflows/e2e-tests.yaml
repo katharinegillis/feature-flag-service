@@ -20,7 +20,7 @@ jobs:
           dotnet-version: 8.X
           
       - name: Create data folder
-        run: mkdir .data
+        run: mkdir .data && chmod 777 .data
 
       - name: Run service in SQLITE mode
         run: docker compose -f compose.yaml -f compose.e2e.yaml up -d
