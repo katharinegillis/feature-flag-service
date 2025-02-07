@@ -8,6 +8,7 @@ using Utilities.LocalizationService;
 
 namespace Console.Tests.Unit.Controllers.Config.Show;
 
+[Category("Unit")]
 public class ConsolePresenterTests
 {
     [Test]

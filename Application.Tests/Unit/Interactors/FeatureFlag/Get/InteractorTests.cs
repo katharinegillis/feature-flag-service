@@ -4,6 +4,7 @@ using NSubstitute;
 
 namespace Application.Tests.Unit.Interactors.FeatureFlag.Get;
 
+[Category("Unit")]
 public sealed class InteractorTests
 {
     [Test]

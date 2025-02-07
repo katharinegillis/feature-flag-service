@@ -6,6 +6,7 @@ using WebAPI.Controllers.Enabled;
 
 namespace WebAPI.Tests.Unit.Controllers.Enabled;
 
+[Category("Unit")]
 public sealed class GetControllerTests
 {
     [Test]
