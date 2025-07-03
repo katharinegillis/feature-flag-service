@@ -11,6 +11,7 @@ public sealed class UseCase(IReadRepository repository) : IUseCase
             case RequestModel.NameOptions.Datasource:
                 presenter.Ok(repository.Name);
                 break;
+            case RequestModel.NameOptions.Unknown:
             default:
                 throw new ArgumentOutOfRangeException(nameof(request));
         }

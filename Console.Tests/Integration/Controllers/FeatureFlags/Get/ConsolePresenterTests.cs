@@ -8,7 +8,8 @@ using Utilities.LocalizationService;
 
 namespace Console.Tests.Integration.Controllers.FeatureFlags.Get;
 
-[Category("Unit")]
+[Parallelizable]
+[Category("Integration")]
 public sealed class ConsolePresenterTests : AbstractControllerTest
 {
     [Test]

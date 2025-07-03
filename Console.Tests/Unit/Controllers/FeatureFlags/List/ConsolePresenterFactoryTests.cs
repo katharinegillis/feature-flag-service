@@ -5,6 +5,7 @@ using FeatureFlagList = Console.Controllers.FeatureFlags.List;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.List;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class ConsolePresenterFactoryTests
 {

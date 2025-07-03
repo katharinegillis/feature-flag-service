@@ -9,6 +9,7 @@ using Utilities.LocalizationService;
 namespace Console.Tests.Integration.Controllers.Config.Show;
 
 [Parallelizable]
+[Category("Integration")]
 public class ConsolePresenterTests : AbstractControllerTest
 {
     [Test]

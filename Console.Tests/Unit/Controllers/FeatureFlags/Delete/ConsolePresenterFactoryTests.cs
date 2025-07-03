@@ -7,6 +7,7 @@ using ConsoleFeatureFlagDelete = Console.Controllers.FeatureFlags.Delete;
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Delete;
 
 [Parallelizable]
+[Category("Unit")]
 public sealed class ConsolePresenterFactoryTests
 {
     [Test]

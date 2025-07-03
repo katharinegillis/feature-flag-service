@@ -6,6 +6,7 @@ using ConsoleFeatureFlagCreate = Console.Controllers.FeatureFlags.Create;
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Create;
 
 [Parallelizable]
+[Category("Unit")]
 public sealed class ControllerTests
 {
     [Test]

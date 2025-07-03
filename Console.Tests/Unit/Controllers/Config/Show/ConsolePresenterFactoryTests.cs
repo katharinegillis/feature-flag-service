@@ -7,6 +7,7 @@ using ConsoleConfigShow = Console.Controllers.Config.Show;
 namespace Console.Tests.Unit.Controllers.Config.Show;
 
 [Parallelizable]
+[Category("Unit")]
 public sealed class ConsolePresenterFactoryTests
 {
     [Test]

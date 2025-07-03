@@ -6,6 +6,7 @@ using ConsoleFeatureFlagUpdate = Console.Controllers.FeatureFlags.Update;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Update;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class ConsolePresenterFactoryTests
 {

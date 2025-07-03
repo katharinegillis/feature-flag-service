@@ -6,6 +6,7 @@ using Controller = Console.Controllers.FeatureFlags.Get.Controller;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Get;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class ControllerTests
 {

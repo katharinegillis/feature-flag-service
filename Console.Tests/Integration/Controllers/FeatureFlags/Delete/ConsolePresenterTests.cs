@@ -6,6 +6,7 @@ using ConsoleFeatureFlagDelete = Console.Controllers.FeatureFlags.Delete;
 namespace Console.Tests.Integration.Controllers.FeatureFlags.Delete;
 
 [Parallelizable]
+[Category("Integration")]
 public sealed class ConsolePresenterTests : AbstractControllerTest
 {
     [Test]

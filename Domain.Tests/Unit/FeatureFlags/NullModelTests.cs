@@ -3,6 +3,7 @@ using Domain.FeatureFlags;
 
 namespace Domain.Tests.Unit.FeatureFlags;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class NullModelTests
 {

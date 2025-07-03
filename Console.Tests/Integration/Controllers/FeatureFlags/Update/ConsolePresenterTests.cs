@@ -5,7 +5,8 @@ using Domain.Common;
 
 namespace Console.Tests.Integration.Controllers.FeatureFlags.Update;
 
-[Category("Unit")]
+[Parallelizable]
+[Category("Integration")]
 public sealed class ConsolePresenterTests : AbstractControllerTest
 {
     [Test]

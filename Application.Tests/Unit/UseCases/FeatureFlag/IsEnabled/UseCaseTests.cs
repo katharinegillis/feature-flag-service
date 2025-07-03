@@ -6,6 +6,7 @@ using FeatureFlags = Domain.FeatureFlags;
 namespace Application.Tests.Unit.UseCases.FeatureFlag.IsEnabled;
 
 [Parallelizable]
+[Category("Unit")]
 public sealed class UseCaseTests
 {
     [Test]

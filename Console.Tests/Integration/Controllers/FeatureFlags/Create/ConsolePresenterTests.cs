@@ -5,7 +5,8 @@ using ConsoleFeatureFlagCreate = Console.Controllers.FeatureFlags.Create;
 
 namespace Console.Tests.Integration.Controllers.FeatureFlags.Create;
 
-[Category("Unit")]
+[Parallelizable]
+[Category("Integration")]
 public sealed class ConsolePresenterTests : AbstractControllerTest
 {
     [Test]

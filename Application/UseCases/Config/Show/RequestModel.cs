@@ -4,6 +4,7 @@ public sealed class RequestModel : IEquatable<RequestModel>
 {
     public enum NameOptions
     {
+        Unknown,
         Datasource
     }
 

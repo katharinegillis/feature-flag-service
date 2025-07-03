@@ -77,14 +77,16 @@ namespace WebAPI.E2E.Features
         [NUnit.Framework.DescriptionAttribute("Get an enabled feature flag")]
         [NUnit.Framework.CategoryAttribute("SQLite")]
         [NUnit.Framework.CategoryAttribute("Split")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public void GetAnEnabledFeatureFlag()
         {
             string[] tagsOfScenario = new string[] {
                     "SQLite",
-                    "Split"};
+                    "Split",
+                    "E2E"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get an enabled feature flag", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 5
+#line 6
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -100,14 +102,14 @@ namespace WebAPI.E2E.Features
                 table1.AddRow(new string[] {
                             "e2e_test_enabled",
                             "true"});
-#line 6
+#line 7
         testRunner.Given("the following feature flags exist", ((string)(null)), table1, "Given ");
 #line hidden
-#line 9
+#line 10
         testRunner.When("the feature flag enabled endpoint is opened for the e2e_test_enabled feature flag" +
                         "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 10
+#line 11
         testRunner.Then("the result should be true", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -118,14 +120,16 @@ namespace WebAPI.E2E.Features
         [NUnit.Framework.DescriptionAttribute("Get a disabled feature flag")]
         [NUnit.Framework.CategoryAttribute("SQLite")]
         [NUnit.Framework.CategoryAttribute("Split")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
         public void GetADisabledFeatureFlag()
         {
             string[] tagsOfScenario = new string[] {
                     "SQLite",
-                    "Split"};
+                    "Split",
+                    "E2E"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a disabled feature flag", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 14
+#line 16
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -141,14 +145,14 @@ namespace WebAPI.E2E.Features
                 table2.AddRow(new string[] {
                             "e2e_test_disabled",
                             "false"});
-#line 15
+#line 17
         testRunner.Given("the following feature flags exist", ((string)(null)), table2, "Given ");
 #line hidden
-#line 18
+#line 20
         testRunner.When("the feature flag enabled endpoint is opened for the e2e_test_disabled feature fla" +
                         "g", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 19
+#line 21
         testRunner.Then("the result should be false", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

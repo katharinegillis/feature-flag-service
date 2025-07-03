@@ -3,6 +3,7 @@ using FeatureFlagGet = Application.UseCases.FeatureFlag.Get;
 namespace Application.Tests.Unit.UseCases.FeatureFlag.Get;
 
 [Parallelizable]
+[Category("Unit")]
 public sealed class CodePresenterFactoryTests
 {
     [Test]
