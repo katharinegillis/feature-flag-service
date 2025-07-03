@@ -24,6 +24,13 @@ public readonly struct Result<T, TE>
         return new Result<T, TE>(default!, e, false);
     }
 
-    public static implicit operator Result<T, TE>(T v) => new(v, default!, true);
-    public static implicit operator Result<T, TE>(TE e) => new(default!, e, false);
+    public static implicit operator Result<T, TE>(T v)
+    {
+        return new Result<T, TE>(v, default!, true);
+    }
+
+    public static implicit operator Result<T, TE>(TE e)
+    {
+        return new Result<T, TE>(default!, e, false);
+    }
 }

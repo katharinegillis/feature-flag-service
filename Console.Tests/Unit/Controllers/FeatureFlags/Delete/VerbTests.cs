@@ -1,65 +1,95 @@
 using CommandLine;
 using Console.Common;
-using Console.Controllers.FeatureFlags.Delete;
-using Verb = Console.Controllers.FeatureFlags.Delete.Verb;
+using ConsoleFeatureFlagDelete = Console.Controllers.FeatureFlags.Delete;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Delete;
 
-[Category("Unit")]
+[Parallelizable]
 public sealed class VerbTests
 {
     [Test]
-    public void DeleteVerb_Should_Be_An_IHasControllerType()
+    public void FeatureFlagDeleteVerb__Is_An_IHasControllerType()
     {
-        var verb = new Verb();
+        // Act
+        var subject = new ConsoleFeatureFlagDelete.Verb();
 
-        Assert.That(verb, Is.InstanceOf<IHasControllerType>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<IHasControllerType>());
     }
 
     [Test]
-    public void DeleteVerb_Should_Associate_A_DeleteController()
+    public void FeatureFlagDeleteVerb__Should_Associate_A_DeleteController()
     {
-        var verb = new Verb();
+        // Act
+        var subject = new ConsoleFeatureFlagDelete.Verb();
 
-        Assert.That(verb.ControllerType, Is.EqualTo(typeof(Controller)));
+        // Assert
+        Assert.That(subject.ControllerType, Is.EqualTo(typeof(ConsoleFeatureFlagDelete.Controller)));
     }
 
     [Test]
-    public void DeleteVerb_Should_Be_A_IOptions()
+    public void FeatureFlagDeleteVerb__Is_An_IOptions()
     {
-        var verb = new Verb();
+        // Act
+        var subject = new ConsoleFeatureFlagDelete.Verb();
 
-        Assert.That(verb, Is.InstanceOf<IOptions>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<ConsoleFeatureFlagDelete.IOptions>());
     }
 
     [Test]
-    public void DeleteVerb_Should_Have_An_Id()
+    public void FeatureFlagDeleteVerb__Id__Initializes_Id()
     {
-        // ReSharper disable once UseObjectOrCollectionInitializer
-        var verb = new Verb();
-        verb.Id = "some_flag";
+        // Act
+        const string flagId = "some_flag";
+        var subject = new ConsoleFeatureFlagDelete.Verb
+        {
+            Id = flagId
+        };
 
-        Assert.That(verb.Id, Is.EqualTo("some_flag"));
+        // Assert
+        Assert.That(subject.Id, Is.EqualTo(flagId));
     }
 
     [Test]
-    public void DeleteVerb_Should_Be_A_Verb()
+    public void FeatureFlagDeleteVerb__Id__Sets_Id()
     {
-        Assert.That(Attribute.IsDefined(typeof(Verb), typeof(VerbAttribute)));
-    }
-    
-    [Test]
-    public void DeleteVerb_Should_Not_Be_A_ReadOnlyVerb()
-    {
-        Assert.That(Attribute.IsDefined(typeof(Verb), typeof(ReadOnlyVerbAttribute)), Is.False);
+        // Act
+        const string initFlagId = "some_flag";
+        const string setFlagId = "another_flag";
+        var subject = new ConsoleFeatureFlagDelete.Verb
+        {
+            Id = initFlagId
+        };
+        subject.Id = setFlagId;
+
+        // Assert
+        Assert.That(subject.Id, Is.EqualTo(setFlagId));
     }
 
     [Test]
-    public void DeleteVerb_Id_Property_Should_Be_An_Option()
+    public void FeatureFlagDeleteVerb__Has_A_Verb_Attribute()
     {
-        var t = typeof(Verb);
+        // Assert
+        Assert.That(Attribute.IsDefined(typeof(ConsoleFeatureFlagDelete.Verb), typeof(VerbAttribute)));
+    }
+
+    [Test]
+    public void FeatureFlagDeleteVerb__Does_Not_Have_A_ReadOnlyVerb_Attribute()
+    {
+        // Assert
+        Assert.That(Attribute.IsDefined(typeof(ConsoleFeatureFlagDelete.Verb), typeof(ReadOnlyVerbAttribute)),
+            Is.False);
+    }
+
+    [Test]
+    public void FeatureFlagDeleteVerb__Id__Property_Has_Option_Attribute()
+    {
+        // Act
+        var t = typeof(ConsoleFeatureFlagDelete.Verb);
         var property = t.GetProperty("Id");
 
+        // Assert
         Assert.That(property != null && Attribute.IsDefined(property, typeof(OptionAttribute)));
     }
 }

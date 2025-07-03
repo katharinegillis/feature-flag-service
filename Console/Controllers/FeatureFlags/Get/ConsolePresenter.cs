@@ -1,4 +1,4 @@
-using Application.Interactors.FeatureFlag.Get;
+using Application.UseCases.FeatureFlag.Get;
 using Console.Common;
 using Console.Localization;
 using Domain.FeatureFlags;
@@ -8,26 +8,35 @@ namespace Console.Controllers.FeatureFlags.Get;
 
 public sealed class ConsolePresenter(
     RequestModel request,
-    ILocalizationService<SharedResource> localizer,
-    IConsoleWriter writer)
+    ILocalizationService<SharedResource> localizer)
     : IConsolePresenter
 {
     public void Ok(IModel featureFlag)
     {
-        writer.WriteLine(localizer.Translate("Id: \"{0}\", Enabled: \"{1}\"", featureFlag.Id,
-            localizer.Translate(featureFlag.Enabled ? "true" : "false")));
-
-        ExitCode = (int)Console.Common.ExitCode.Success;
+        ActionResult = new ConsoleActionResult
+        {
+            Lines = new List<string>
+            {
+                localizer.Translate("Id: \"{0}\", Enabled: \"{1}\"", featureFlag.Id,
+                    localizer.Translate(featureFlag.Enabled ? "true" : "false"))
+            },
+            ExitCode = (int)ExitCode.Success
+        };
     }
 
     public void NotFound()
     {
-        writer.WriteLine(localizer.Translate("Feature Flag \"{0}\" doesn\'t exist.", request.Id));
-
-        ExitCode = (int)Console.Common.ExitCode.Success;
+        ActionResult = new ConsoleActionResult
+        {
+            Lines = new List<string>
+            {
+                localizer.Translate("Feature Flag \"{0}\" doesn\'t exist.", request.Id)
+            },
+            ExitCode = (int)ExitCode.Success
+        };
     }
 
     public RequestModel Request => request;
 
-    public int ExitCode { get; private set; }
+    public IConsoleActionResult ActionResult { get; private set; } = new ConsoleActionResult();
 }

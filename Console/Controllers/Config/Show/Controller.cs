@@ -1,24 +1,19 @@
-using Application.Interactors.Config.Show;
+using Application.UseCases.Config.Show;
 using Console.Common;
 using Domain.Common;
 
 namespace Console.Controllers.Config.Show;
 
-public sealed class Controller(IConsolePresenterFactory factory, IInputPort interactor) : IExecutable, IHasOptions
+public sealed class Controller(IConsolePresenterFactory factory, IUseCase interactor) : IExecutable, IHasOptions
 {
     private IOptions _options = null!;
 
-    public void SetOptions(object options)
-    {
-        _options = (IOptions)options;
-    }
-
-    public async Task<int> Execute()
+    public Task<IConsoleActionResult> Execute()
     {
         RequestModel request;
 
         IConsolePresenter presenter;
-        
+
         switch (_options.Name.ToLower())
         {
             case "datasource":
@@ -38,13 +33,18 @@ public sealed class Controller(IConsolePresenterFactory factory, IInputPort inte
                 };
                 presenter = factory.Create(null);
                 presenter.BadRequest(errors);
-                return presenter.ExitCode;
+                return Task.FromResult(presenter.ActionResult);
         }
 
         presenter = factory.Create(request);
 
-        await interactor.Execute(request, presenter);
+        interactor.Execute(request, presenter);
 
-        return presenter.ExitCode;
+        return Task.FromResult(presenter.ActionResult);
+    }
+
+    public void SetOptions(object options)
+    {
+        _options = (IOptions)options;
     }
 }

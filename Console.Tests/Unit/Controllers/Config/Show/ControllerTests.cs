@@ -1,103 +1,149 @@
-using Application.Interactors.Config.Show;
 using Console.Common;
-using Console.Controllers.Config.Show;
+using Domain.Common;
 using NSubstitute;
+using ConfigShow = Application.UseCases.Config.Show;
+using ConsoleConfigShow = Console.Controllers.Config.Show;
 
 namespace Console.Tests.Unit.Controllers.Config.Show;
 
-[Category("Unit")]
+[Parallelizable]
 public sealed class ControllerTests
 {
     [Test]
-    public void ShowController_Should_Be_Executable()
+    public void ConfigShowController__Is_An_IExecutable()
     {
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        var interactor = Substitute.For<IInputPort>();
+        // Arrange
+        var factory = Substitute.For<ConsoleConfigShow.IConsolePresenterFactory>();
+        var interactor = Substitute.For<ConfigShow.IUseCase>();
 
-        var controller = new Controller(factory, interactor);
+        // Act
+        var subject = new ConsoleConfigShow.Controller(factory, interactor);
 
-        Assert.That(controller, Is.InstanceOf<IExecutable>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<IExecutable>());
     }
 
     [Test]
-    public void ShowController_Should_Have_Options()
+    public void ConfigShowController__Is_An_IOptions()
     {
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        var interactor = Substitute.For<IInputPort>();
+        // Arrange
+        var factory = Substitute.For<ConsoleConfigShow.IConsolePresenterFactory>();
+        var interactor = Substitute.For<ConfigShow.IUseCase>();
 
-        var controller = new Controller(factory, interactor);
+        // Act
+        var controller = new ConsoleConfigShow.Controller(factory, interactor);
 
+        // Assert
         Assert.That(controller, Is.InstanceOf<IHasOptions>());
     }
 
     [Test]
-    public async Task ShowController_Should_Succeed_With_Datasource()
+    public async Task ConfigShowController__Execute__Should_Succeed_With_Datasource()
     {
-        var presenter = Substitute.For<IConsolePresenter>();
-        presenter.ExitCode.Returns((int)ExitCode.Success);
+        // Arrange
+        var request = new ConfigShow.RequestModel
+        {
+            Name = ConfigShow.RequestModel.NameOptions.Datasource
+        };
 
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        factory.Create(Arg.Any<RequestModel>()).Returns(presenter);
+        var actionResult = Substitute.For<IConsoleActionResult>();
 
-        var interactor = Substitute.For<IInputPort>();
+        var presenter = Substitute.For<ConsoleConfigShow.IConsolePresenter>();
+        presenter.ActionResult.Returns(actionResult);
 
-        var controller = new Controller(factory, interactor);
+        var factory = Substitute.For<ConsoleConfigShow.IConsolePresenterFactory>();
+        factory.Create(Arg.Any<ConfigShow.RequestModel>()).Returns(presenter);
 
-        var options = Substitute.For<IOptions>();
+        var interactor = Substitute.For<ConfigShow.IUseCase>();
+
+        var options = Substitute.For<ConsoleConfigShow.IOptions>();
         options.Name.Returns("datasource");
 
+        // Act
+        var controller = new ConsoleConfigShow.Controller(factory, interactor);
         controller.SetOptions(options);
-
         var result = await controller.Execute();
 
-        Assert.That(result, Is.EqualTo((int)ExitCode.Success));
+        // Assert
+        Assert.Multiple(() =>
+        {
+            interactor.Received().Execute(Arg.Is<ConfigShow.RequestModel>(x => x.Equals(request)), presenter);
+            Assert.That(result, Is.SameAs(actionResult));
+        });
     }
 
     [Test]
-    public async Task ShowController_Should_Succeed_With_Uppercase_Datasource()
+    public async Task ConfigShowController__Execute__Should_Succeed_With_Uppercase_Datasource()
     {
-        var presenter = Substitute.For<IConsolePresenter>();
-        presenter.ExitCode.Returns((int)ExitCode.Success);
+        // Arrange
+        var request = new ConfigShow.RequestModel
+        {
+            Name = ConfigShow.RequestModel.NameOptions.Datasource
+        };
 
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        factory.Create(Arg.Any<RequestModel>()).Returns(presenter);
+        var actionResult = Substitute.For<IConsoleActionResult>();
 
-        var interactor = Substitute.For<IInputPort>();
+        var presenter = Substitute.For<ConsoleConfigShow.IConsolePresenter>();
+        presenter.ActionResult.Returns(actionResult);
 
-        var controller = new Controller(factory, interactor);
+        var factory = Substitute.For<ConsoleConfigShow.IConsolePresenterFactory>();
+        factory.Create(Arg.Any<ConfigShow.RequestModel>()).Returns(presenter);
 
-        var options = Substitute.For<IOptions>();
+        var interactor = Substitute.For<ConfigShow.IUseCase>();
+
+        var options = Substitute.For<ConsoleConfigShow.IOptions>();
         options.Name.Returns("DATASOURCE");
 
+        // Act
+        var controller = new ConsoleConfigShow.Controller(factory, interactor);
         controller.SetOptions(options);
-
         var result = await controller.Execute();
-        
-        Assert.That(result, Is.EqualTo((int)ExitCode.Success));
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            interactor.Received().Execute(Arg.Is<ConfigShow.RequestModel>(x => x.Equals(request)), presenter);
+            Assert.That(result, Is.SameAs(actionResult));
+        });
     }
 
     [Test]
-    public async Task ShowController_Should_Be_NotFound_With_Unknown()
+    public async Task ConfigShowController__Execute__Calls_BadRequest_With_Unknown()
     {
-        var presenter = Substitute.For<IConsolePresenter>();
-        presenter.ExitCode.Returns((int)ExitCode.Success);
+        // Arrange
+        var errors = new List<ValidationError>
+        {
+            new()
+            {
+                Message = "Must be one of: datasource",
+                Field = "First argument"
+            }
+        };
 
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        factory.Create(Arg.Any<RequestModel>()).Returns(presenter);
+        var actionResult = Substitute.For<IConsoleActionResult>();
 
-        var interactor = Substitute.For<IInputPort>();
+        var presenter = Substitute.For<ConsoleConfigShow.IConsolePresenter>();
+        presenter.ActionResult.Returns(actionResult);
 
-        var controller = new Controller(factory, interactor);
+        var factory = Substitute.For<ConsoleConfigShow.IConsolePresenterFactory>();
+        factory.Create(Arg.Any<ConfigShow.RequestModel>()).Returns(presenter);
 
-        var options = Substitute.For<IOptions>();
+        var interactor = Substitute.For<ConfigShow.IUseCase>();
+
+        var options = Substitute.For<ConsoleConfigShow.IOptions>();
         options.Name.Returns("unknown");
-        
-        controller.SetOptions(options);
 
+        // Act
+        var controller = new ConsoleConfigShow.Controller(factory, interactor);
+        controller.SetOptions(options);
         var result = await controller.Execute();
-        
-        Assert.That(result, Is.EqualTo((int)ExitCode.Success));
-        
-        // Should this be an integration test, or test that presenter.NotFound was called
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            interactor.DidNotReceive().Execute(Arg.Any<ConfigShow.RequestModel>(), Arg.Any<ConfigShow.IPresenter>());
+            presenter.Received().BadRequest(Arg.Is<List<ValidationError>>(x => errors.SequenceEqual(x)));
+            Assert.That(result, Is.SameAs(actionResult));
+        });
     }
 }

@@ -1,5 +1,5 @@
-using Get = Application.Interactors.FeatureFlag.Get;
-using IsEnabled = Application.Interactors.FeatureFlag.IsEnabled;
+using Get = Application.UseCases.FeatureFlag.Get;
+using IsEnabled = Application.UseCases.FeatureFlag.IsEnabled;
 
 namespace WebAPI.Extensions;
 
@@ -7,8 +7,8 @@ public static class ApplicationExtensions
 {
     public static void AddApplicationInteractors(this IServiceCollection services)
     {
-        services.AddScoped<Get.IInputPort, Get.Interactor>();
-        services.AddScoped<IsEnabled.IInputPort, IsEnabled.Interactor>();
+        services.AddScoped<Get.IUseCase, Get.UseCase>();
+        services.AddScoped<IsEnabled.IUseCase, IsEnabled.UseCase>();
     }
 
     public static void AddApplicationPresenters(this IServiceCollection services)

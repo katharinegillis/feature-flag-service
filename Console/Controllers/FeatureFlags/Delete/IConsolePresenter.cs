@@ -1,9 +1,9 @@
-using Application.Interactors.FeatureFlag.Delete;
+using Application.UseCases.FeatureFlag.Delete;
 using Console.Common;
 
 namespace Console.Controllers.FeatureFlags.Delete;
 
-public interface IConsolePresenter : IHasExitCode, IOutputPort
+public interface IConsolePresenter : IHasActionResult, IPresenter
 {
     public RequestModel Request { get; }
 }

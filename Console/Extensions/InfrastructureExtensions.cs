@@ -1,3 +1,4 @@
+using Domain.FeatureFlags;
 using Infrastructure.Configuration;
 using Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -21,8 +22,8 @@ public static class InfrastructureExtensions
         services.AddDbContext<FeatureFlagContext>(options =>
             options.UseSqlite(configuration.GetConnectionString("FeatureFlagContext")));
 
-        services.AddScoped<Domain.FeatureFlags.IRepository, Repositories.DbFeatureFlagRepository>();
-        services.AddScoped<Domain.FeatureFlags.IReadRepository, Repositories.DbFeatureFlagRepository>();
+        services.AddScoped<IRepository, Repositories.DbFeatureFlagRepository>();
+        services.AddScoped<IReadRepository, Repositories.DbFeatureFlagRepository>();
     }
 
     public static void AddInfrastructureSplitRepository(this IServiceCollection services,
@@ -36,7 +37,7 @@ public static class InfrastructureExtensions
 
         services.AddSingleton(typeof(ISplitFactory), factory);
 
-        services.AddScoped<Domain.FeatureFlags.IReadRepository, Repositories.SplitFeatureFlagRepository>();
+        services.AddScoped<IReadRepository, Repositories.SplitFeatureFlagRepository>();
     }
 
     public static void AddInfrastructureSplitConfig(this IServiceCollection services, IConfiguration config)

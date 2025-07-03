@@ -1,10 +1,10 @@
-using Application.Interactors.Config.Show;
+using Application.UseCases.Config.Show;
 using Console.Common;
 using Domain.Common;
 
 namespace Console.Controllers.Config.Show;
 
-public interface IConsolePresenter : IOutputPort, IHasExitCode
+public interface IConsolePresenter : IPresenter, IHasActionResult
 {
     public RequestModel? Request { get; }
 

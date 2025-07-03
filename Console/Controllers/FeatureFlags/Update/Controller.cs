@@ -1,18 +1,13 @@
-using Application.Interactors.FeatureFlag.Update;
+using Application.UseCases.FeatureFlag.Update;
 using Console.Common;
 
 namespace Console.Controllers.FeatureFlags.Update;
 
-public sealed class Controller(IConsolePresenterFactory factory, IInputPort interactor) : IExecutable, IHasOptions
+public sealed class Controller(IConsolePresenterFactory factory, IUseCase interactor) : IExecutable, IHasOptions
 {
     private IOptions _options = null!;
 
-    public void SetOptions(object options)
-    {
-        _options = (IOptions)options;
-    }
-
-    public async Task<int> Execute()
+    public async Task<IConsoleActionResult> Execute()
     {
         var request = new RequestModel
         {
@@ -24,6 +19,11 @@ public sealed class Controller(IConsolePresenterFactory factory, IInputPort inte
 
         await interactor.Execute(request, presenter);
 
-        return presenter.ExitCode;
+        return presenter.ActionResult;
+    }
+
+    public void SetOptions(object options)
+    {
+        _options = (IOptions)options;
     }
 }

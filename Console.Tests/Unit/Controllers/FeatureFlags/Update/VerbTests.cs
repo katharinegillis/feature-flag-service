@@ -1,6 +1,6 @@
 using CommandLine;
 using Console.Common;
-using Console.Controllers.FeatureFlags.Update;
+using ConsoleFeatureFlagUpdate = Console.Controllers.FeatureFlags.Update;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Update;
 
@@ -8,75 +8,123 @@ namespace Console.Tests.Unit.Controllers.FeatureFlags.Update;
 public sealed class VerbTests
 {
     [Test]
-    public void UpdateVerb_Should_Be_A_IHasControllerType()
+    public void FeatureFlagUpdateVerb__Is_An_IHasControllerType()
     {
-        var verb = new Verb();
+        // Act
+        var subject = new ConsoleFeatureFlagUpdate.Verb();
 
-        Assert.That(verb, Is.InstanceOf<IHasControllerType>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<IHasControllerType>());
     }
 
     [Test]
-    public void UpdateVerb_Should_Associate_An_UpdateController()
+    public void FeatureFlagUpdateVerb__Should_Associate_An_UpdateController()
     {
-        var verb = new Verb();
+        // Act
+        var subject = new ConsoleFeatureFlagUpdate.Verb();
 
-        Assert.That(verb.ControllerType, Is.EqualTo(typeof(Controller)));
+        // Assert
+        Assert.That(subject.ControllerType, Is.EqualTo(typeof(ConsoleFeatureFlagUpdate.Controller)));
     }
 
     [Test]
-    public void UpdateVerb_Should_Be_A_IOptions()
+    public void FeatureFlagUpdateVerb__Is_An_IOptions()
     {
-        var verb = new Verb();
-        Assert.That(verb, Is.InstanceOf<IOptions>());
+        // Act
+        var subject = new ConsoleFeatureFlagUpdate.Verb();
+
+        // Assert
+        Assert.That(subject, Is.InstanceOf<ConsoleFeatureFlagUpdate.IOptions>());
     }
 
     [Test]
-    public void UpdateVerb_Should_Have_An_Id()
+    public void FeatureFlagUpdateVerb__Id__Initializes_Id()
     {
-        // ReSharper disable once UseObjectOrCollectionInitializer
-        var verb = new Verb();
-        verb.Id = "some_flag";
+        // Act
+        var subject = new ConsoleFeatureFlagUpdate.Verb
+        {
+            Id = "some_flag"
+        };
 
-        Assert.That(verb.Id, Is.EqualTo("some_flag"));
+        // Assert
+        Assert.That(subject.Id, Is.EqualTo("some_flag"));
     }
 
     [Test]
-    public void UpdateVerb_Should_Have_Enabled_Flag()
+    public void FeatureFlagUpdateVerb__Id__Sets_Id()
     {
-        // ReSharper disable once UseObjectOrCollectionInitializer
-        var verb = new Verb();
-        verb.Enabled = true;
+        // Act
+        var subject = new ConsoleFeatureFlagUpdate.Verb
+        {
+            Id = "some_flag"
+        };
+        subject.Id = "another_flag";
 
-        Assert.That(verb.Enabled, Is.True);
+        // Assert
+        Assert.That(subject.Id, Is.EqualTo("another_flag"));
     }
 
     [Test]
-    public void UpdateVerb_Should_Be_A_Verb()
+    public void FeatureFlagUpdateVerb__Enabled__Initializes_Enabled()
     {
-        Assert.That(Attribute.IsDefined(typeof(Verb), typeof(VerbAttribute)));
-    }
-    
-    [Test]
-    public void UpdateVerb_Should_Not_Be_A_ReadOnlyVerb()
-    {
-        Assert.That(Attribute.IsDefined(typeof(Verb), typeof(ReadOnlyVerbAttribute)), Is.False);
+        // Act
+        var subject = new ConsoleFeatureFlagUpdate.Verb
+        {
+            Enabled = true
+        };
+
+        // Assert
+        Assert.That(subject.Enabled, Is.True);
     }
 
     [Test]
-    public void UpdateVerb_Id_Property_Should_Be_An_Option()
+    public void FeatureFlagUpdateVerb__Enabled__Sets_Enabled()
     {
-        var t = typeof(Verb);
+        // Act
+        var subject = new ConsoleFeatureFlagUpdate.Verb
+        {
+            Enabled = true
+        };
+        subject.Enabled = false;
+
+        // Assert
+        Assert.That(subject.Enabled, Is.False);
+    }
+
+    [Test]
+    public void FeatureFlagUpdateVerb__Has_A_Verb_Attribute()
+    {
+        // Assert
+        Assert.That(Attribute.IsDefined(typeof(ConsoleFeatureFlagUpdate.Verb), typeof(VerbAttribute)));
+    }
+
+    [Test]
+    public void FeatureFlagUpdateVerb__Does_Not_Have_A_ReadOnlyVerb_Attribute()
+    {
+        // Assert
+        Assert.That(Attribute.IsDefined(typeof(ConsoleFeatureFlagUpdate.Verb), typeof(ReadOnlyVerbAttribute)),
+            Is.False);
+    }
+
+    [Test]
+    public void FeatureFlagUpdateVerb__Id__Property_Has_Option_Attribute()
+    {
+        // Act
+        var t = typeof(ConsoleFeatureFlagUpdate.Verb);
         var property = t.GetProperty("Id");
 
+        // Assert
         Assert.That(property != null && Attribute.IsDefined(property, typeof(OptionAttribute)));
     }
 
     [Test]
-    public void UpdateVerb_Enabled_Property_Should_Be_An_Option()
+    public void FeatureFlagUpdateVerb__Enabled__Property_Has_An_Option_Attribute()
     {
-        var t = typeof(Verb);
+        // Act
+        var t = typeof(ConsoleFeatureFlagUpdate.Verb);
         var property = t.GetProperty("Enabled");
 
+        // Assert
         Assert.That(property != null && Attribute.IsDefined(property, typeof(OptionAttribute)));
     }
 }

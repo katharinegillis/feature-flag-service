@@ -1,4 +1,4 @@
-using Application.Interactors.FeatureFlag.IsEnabled;
+using Application.UseCases.FeatureFlag.IsEnabled;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.Enabled;

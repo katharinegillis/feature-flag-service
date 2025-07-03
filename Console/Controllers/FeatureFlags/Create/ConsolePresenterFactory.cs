@@ -1,15 +1,14 @@
-using Application.Interactors.FeatureFlag.Create;
-using Console.Common;
+using Application.UseCases.FeatureFlag.Create;
 using Console.Localization;
 using Utilities.LocalizationService;
 
 namespace Console.Controllers.FeatureFlags.Create;
 
-public sealed class ConsolePresenterFactory(ILocalizationService<SharedResource> localizer, IConsoleWriter writer)
+public sealed class ConsolePresenterFactory(ILocalizationService<SharedResource> localizer)
     : IConsolePresenterFactory
 {
     public IConsolePresenter Create(RequestModel request)
     {
-        return new ConsolePresenter(request, localizer, writer);
+        return new ConsolePresenter(request, localizer);
     }
 }

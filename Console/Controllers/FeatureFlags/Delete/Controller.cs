@@ -1,13 +1,13 @@
-using Application.Interactors.FeatureFlag.Delete;
+using Application.UseCases.FeatureFlag.Delete;
 using Console.Common;
 
 namespace Console.Controllers.FeatureFlags.Delete;
 
-public sealed class Controller(IConsolePresenterFactory factory, IInputPort interactor) : IExecutable, IHasOptions
+public sealed class Controller(IConsolePresenterFactory factory, IUseCase interactor) : IExecutable, IHasOptions
 {
     private IOptions _options = null!;
 
-    public async Task<int> Execute()
+    public async Task<IConsoleActionResult> Execute()
     {
         var request = new RequestModel
         {
@@ -18,7 +18,7 @@ public sealed class Controller(IConsolePresenterFactory factory, IInputPort inte
 
         await interactor.Execute(request, presenter);
 
-        return presenter.ExitCode;
+        return presenter.ActionResult;
     }
 
     public void SetOptions(object options)

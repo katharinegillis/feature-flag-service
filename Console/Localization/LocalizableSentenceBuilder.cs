@@ -1,5 +1,6 @@
 using CommandLine;
 using CommandLine.Text;
+using Console.Resources;
 
 // ReSharper disable All
 // This came from the CommandLine Parser codebase and was minimally changed to work with my project structure.
@@ -12,23 +13,23 @@ namespace Console.Localization
     {
         public override Func<string> RequiredWord
         {
-            get { return () => Resources.CommandLineParser.SentenceRequiredWord; }
+            get { return () => CommandLineParser.SentenceRequiredWord; }
         }
 
         public override Func<string> OptionGroupWord
         {
-            get { return () => Resources.CommandLineParser.SentenceOptionGroupWord; }
+            get { return () => CommandLineParser.SentenceOptionGroupWord; }
         }
 
         public override Func<string> ErrorsHeadingText
         {
             // Cannot be pluralized
-            get { return () => Resources.CommandLineParser.SentenceErrorsHeadingText; }
+            get { return () => CommandLineParser.SentenceErrorsHeadingText; }
         }
 
         public override Func<string> UsageHeadingText
         {
-            get { return () => Resources.CommandLineParser.SentenceUsageHeadingText; }
+            get { return () => CommandLineParser.SentenceUsageHeadingText; }
         }
 
         public override Func<bool, string> HelpCommandText
@@ -36,14 +37,14 @@ namespace Console.Localization
             get
             {
                 return isOption => isOption
-                    ? Resources.CommandLineParser.SentenceHelpCommandTextOption
-                    : Resources.CommandLineParser.SentenceHelpCommandTextVerb;
+                    ? CommandLineParser.SentenceHelpCommandTextOption
+                    : CommandLineParser.SentenceHelpCommandTextVerb;
             }
         }
 
         public override Func<bool, string> VersionCommandText
         {
-            get { return _ => Resources.CommandLineParser.SentenceVersionCommandText; }
+            get { return _ => CommandLineParser.SentenceVersionCommandText; }
         }
 
         public override Func<Error, string> FormatError
@@ -55,43 +56,43 @@ namespace Console.Localization
                     switch (error.Tag)
                     {
                         case ErrorType.BadFormatTokenError:
-                            return String.Format(Resources.CommandLineParser.SentenceBadFormatTokenError,
+                            return String.Format(CommandLineParser.SentenceBadFormatTokenError,
                                 ((BadFormatTokenError)error).Token);
                         case ErrorType.MissingValueOptionError:
-                            return String.Format(Resources.CommandLineParser.SentenceMissingValueOptionError,
+                            return String.Format(CommandLineParser.SentenceMissingValueOptionError,
                                 ((MissingValueOptionError)error).NameInfo.NameText);
                         case ErrorType.UnknownOptionError:
-                            return String.Format(Resources.CommandLineParser.SentenceUnknownOptionError,
+                            return String.Format(CommandLineParser.SentenceUnknownOptionError,
                                 ((UnknownOptionError)error).Token);
                         case ErrorType.MissingRequiredOptionError:
                             var errMisssing = ((MissingRequiredOptionError)error);
                             return errMisssing.NameInfo.Equals(NameInfo.EmptyName)
-                                ? Resources.CommandLineParser.SentenceMissingRequiredOptionError
-                                : String.Format(Resources.CommandLineParser.SentenceMissingRequiredOptionError,
+                                ? CommandLineParser.SentenceMissingRequiredOptionError
+                                : String.Format(CommandLineParser.SentenceMissingRequiredOptionError,
                                     errMisssing.NameInfo.NameText);
                         case ErrorType.BadFormatConversionError:
                             var badFormat = ((BadFormatConversionError)error);
                             return badFormat.NameInfo.Equals(NameInfo.EmptyName)
-                                ? Resources.CommandLineParser.SentenceBadFormatConversionErrorValue
-                                : String.Format(Resources.CommandLineParser.SentenceBadFormatConversionErrorOption,
+                                ? CommandLineParser.SentenceBadFormatConversionErrorValue
+                                : String.Format(CommandLineParser.SentenceBadFormatConversionErrorOption,
                                     badFormat.NameInfo.NameText);
                         case ErrorType.SequenceOutOfRangeError:
                             var seqOutRange = ((SequenceOutOfRangeError)error);
                             return seqOutRange.NameInfo.Equals(NameInfo.EmptyName)
-                                ? Resources.CommandLineParser.SentenceSequenceOutOfRangeErrorValue
-                                : String.Format(Resources.CommandLineParser.SentenceSequenceOutOfRangeErrorOption,
+                                ? CommandLineParser.SentenceSequenceOutOfRangeErrorValue
+                                : String.Format(CommandLineParser.SentenceSequenceOutOfRangeErrorOption,
                                     seqOutRange.NameInfo.NameText);
                         case ErrorType.BadVerbSelectedError:
-                            return String.Format(Resources.CommandLineParser.SentenceBadVerbSelectedError,
+                            return String.Format(CommandLineParser.SentenceBadVerbSelectedError,
                                 ((BadVerbSelectedError)error).Token);
                         case ErrorType.NoVerbSelectedError:
-                            return Resources.CommandLineParser.SentenceNoVerbSelectedError;
+                            return CommandLineParser.SentenceNoVerbSelectedError;
                         case ErrorType.RepeatedOptionError:
-                            return String.Format(Resources.CommandLineParser.SentenceRepeatedOptionError,
+                            return String.Format(CommandLineParser.SentenceRepeatedOptionError,
                                 ((RepeatedOptionError)error).NameInfo.NameText);
                         case ErrorType.SetValueExceptionError:
                             var setValueError = (SetValueExceptionError)error;
-                            return String.Format(Resources.CommandLineParser.SentenceSetValueExceptionError,
+                            return String.Format(CommandLineParser.SentenceSetValueExceptionError,
                                 setValueError.NameInfo.NameText, setValueError.Exception.Message);
                     }
 
@@ -129,7 +130,7 @@ namespace Console.Localization
                                         .Distinct()
                                     select String.Format("'{0}', ", x.NameInfo.NameText)).ToArray());
                             return
-                                String.Format(Resources.CommandLineParser.SentenceMutuallyExclusiveSetErrors,
+                                String.Format(CommandLineParser.SentenceMutuallyExclusiveSetErrors,
                                     names.Substring(0, names.Length - 2), incompat.Substring(0, incompat.Length - 2));
                         }).ToArray();
                     return string.Join(Environment.NewLine, msgs);

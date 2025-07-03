@@ -1,4 +1,4 @@
-using Application.Interactors.FeatureFlag.Create;
+using Application.UseCases.FeatureFlag.Create;
 
 namespace Console.Controllers.FeatureFlags.Create;
 

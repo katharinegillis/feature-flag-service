@@ -1,9 +1,9 @@
-using Application.Interactors.FeatureFlag.Create;
+using Application.UseCases.FeatureFlag.Create;
 using Console.Common;
 
 namespace Console.Controllers.FeatureFlags.Create;
 
-public interface IConsolePresenter : IOutputPort, IHasExitCode
+public interface IConsolePresenter : IPresenter, IHasActionResult
 {
     public RequestModel Request { get; }
 }

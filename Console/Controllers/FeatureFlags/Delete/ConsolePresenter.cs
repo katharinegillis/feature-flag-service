@@ -1,4 +1,4 @@
-using Application.Interactors.FeatureFlag.Delete;
+using Application.UseCases.FeatureFlag.Delete;
 using Console.Common;
 using Console.Localization;
 using Domain.Common;
@@ -8,31 +8,45 @@ namespace Console.Controllers.FeatureFlags.Delete;
 
 public sealed class ConsolePresenter(
     RequestModel request,
-    ILocalizationService<SharedResource> localizer,
-    IConsoleWriter writer) : IConsolePresenter
+    ILocalizationService<SharedResource> localizer) : IConsolePresenter
 {
-    public int ExitCode { get; private set; }
-
     public void Ok()
     {
-        writer.WriteLine(localizer.Translate("Feature Flag \"{0}\" deleted.", request.Id));
-
-        ExitCode = (int)Console.Common.ExitCode.Success;
+        ActionResult = new ConsoleActionResult
+        {
+            Lines = new List<string>
+            {
+                localizer.Translate("Feature Flag \"{0}\" deleted.", request.Id)
+            },
+            ExitCode = (int)ExitCode.Success
+        };
     }
 
     public void NotFound()
     {
-        writer.WriteLine(localizer.Translate("Feature Flag \"{0}\" doesn\'t exist.", request.Id));
-
-        ExitCode = (int)Console.Common.ExitCode.OptionsError;
+        ActionResult = new ConsoleActionResult
+        {
+            Lines = new List<string>
+            {
+                localizer.Translate("Feature Flag \"{0}\" doesn\'t exist.", request.Id)
+            },
+            ExitCode = (int)ExitCode.OptionsError
+        };
     }
 
     public void Error(Error error)
     {
-        writer.WriteLine(localizer.Translate("Error: {0}.", localizer.Translate(error.Message)));
-
-        ExitCode = (int)Console.Common.ExitCode.Error;
+        ActionResult = new ConsoleActionResult
+        {
+            Lines = new List<string>
+            {
+                localizer.Translate("Error: {0}.", localizer.Translate(error.Message))
+            },
+            ExitCode = (int)ExitCode.Error
+        };
     }
 
     public RequestModel Request => request;
+
+    public IConsoleActionResult ActionResult { get; private set; } = new ConsoleActionResult();
 }
