@@ -5,19 +5,20 @@ using Utilities.LocalizationService;
 
 namespace Console.Controllers.FeatureFlags.List;
 
-public sealed class ConsolePresenter(ILocalizationService<SharedResource> localizer, IConsoleWriter writer)
+public sealed class ConsolePresenter(ILocalizationService<SharedResource> localizer)
     : IConsolePresenter
 {
-    public int ExitCode { get; private set; }
-
     public void Ok(IEnumerable<IModel> featureFlags)
     {
-        foreach (var featureFlag in featureFlags)
-        {
-            writer.WriteLine(localizer.Translate("Id: \"{0}\", Enabled: \"{1}\"", featureFlag.Id,
-                localizer.Translate(featureFlag.Enabled ? "true" : "false")));
-        }
+        var lines = featureFlags.Select(featureFlag => localizer.Translate("Id: \"{0}\", Enabled: \"{1}\"",
+            featureFlag.Id, localizer.Translate(featureFlag.Enabled ? "true" : "false"))).ToList();
 
-        ExitCode = (int)Console.Common.ExitCode.Success;
+        ActionResult = new ConsoleActionResult
+        {
+            Lines = lines,
+            ExitCode = (int)ExitCode.Success
+        };
     }
+
+    public IConsoleActionResult ActionResult { get; private set; } = new ConsoleActionResult();
 }

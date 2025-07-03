@@ -28,6 +28,11 @@ public sealed class App(
         applicationLifetime.StopApplication();
     }
 
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
+
     private static Type[] LoadVerbs(IServiceProvider serviceProvider)
     {
         var isReadOnlyRepository = serviceProvider.GetService(typeof(IRepository)) == null;
@@ -46,16 +51,12 @@ public sealed class App(
             return;
         }
 
-        if (command is IHasOptions commandWithOptions)
-        {
-            commandWithOptions.SetOptions(obj);
-        }
+        if (command is IHasOptions commandWithOptions) commandWithOptions.SetOptions(obj);
 
-        Environment.ExitCode = await command.Execute();
-    }
+        var result = await command.Execute();
 
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
+        foreach (var line in result.Lines) System.Console.WriteLine(line);
+
+        Environment.ExitCode = result.ExitCode;
     }
 }

@@ -11,9 +11,9 @@ public sealed class SplitFeatureFlagRepository(
     IFactory factory)
     : IReadRepository
 {
+    private readonly SplitOptions _options = options.Value;
     private readonly ISplitClient _splitClient = splitFactory.Client();
     private readonly ISplitManager _splitManager = splitFactory.Manager();
-    private readonly SplitOptions _options = options.Value;
 
     public Task<IModel> Get(string id)
     {

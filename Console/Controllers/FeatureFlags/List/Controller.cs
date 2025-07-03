@@ -1,16 +1,16 @@
-using Application.Interactors.FeatureFlag.List;
+using Application.UseCases.FeatureFlag.List;
 using Console.Common;
 
 namespace Console.Controllers.FeatureFlags.List;
 
-public sealed class Controller(IConsolePresenterFactory factory, IInputPort interactor) : IExecutable
+public sealed class Controller(IConsolePresenterFactory factory, IUseCase interactor) : IExecutable
 {
-    public async Task<int> Execute()
+    public async Task<IConsoleActionResult> Execute()
     {
         var presenter = factory.Create();
 
         await interactor.Execute(presenter);
 
-        return presenter.ExitCode;
+        return presenter.ActionResult;
     }
 }

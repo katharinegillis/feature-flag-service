@@ -1,58 +1,79 @@
-using Application.Interactors.FeatureFlag.Create;
-using Console.Controllers.FeatureFlags.Create;
 using Console.Common;
 using NSubstitute;
+using FeatureFlagCreate = Application.UseCases.FeatureFlag.Create;
+using ConsoleFeatureFlagCreate = Console.Controllers.FeatureFlags.Create;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Create;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class ControllerTests
 {
     [Test]
-    public void CreateController_Should_Be_Executable()
+    public void FeatureFlagCreateController__Is_An_IExecutable()
     {
-        var interactor = Substitute.For<IInputPort>();
-        var factory = Substitute.For<IConsolePresenterFactory>();
+        // Arrange
+        var interactor = Substitute.For<FeatureFlagCreate.IUseCase>();
+        var factory = Substitute.For<ConsoleFeatureFlagCreate.IConsolePresenterFactory>();
 
-        var controller = new Controller(factory, interactor);
+        // Act
+        var subject = new ConsoleFeatureFlagCreate.Controller(factory, interactor);
 
-        Assert.That(controller, Is.InstanceOf<IExecutable>());
+        // Arrange
+        Assert.That(subject, Is.InstanceOf<IExecutable>());
     }
 
     [Test]
-    public void CreateController_Should_Have_Options()
+    public void FeatureFlagCreateController__Is_An_IOptions()
     {
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        var interactor = Substitute.For<IInputPort>();
+        //Arrange
+        var factory = Substitute.For<ConsoleFeatureFlagCreate.IConsolePresenterFactory>();
+        var interactor = Substitute.For<FeatureFlagCreate.IUseCase>();
 
-        var controller = new Controller(factory, interactor);
+        // Act
+        var subject = new ConsoleFeatureFlagCreate.Controller(factory, interactor);
 
-        Assert.That(controller, Is.InstanceOf<IHasOptions>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<IHasOptions>());
     }
 
     [Test]
-    public async Task CreateController_Creates_Flag()
+    public async Task FeatureFlagCreateController__Execute__Creates_Flag()
     {
-        var presenter = Substitute.For<IConsolePresenter>();
-        presenter.ExitCode.Returns((int)ExitCode.Success);
+        // Arrange
+        const string flagId = "new_flag";
+        const bool enabled = true;
 
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        factory.Create(Arg.Any<RequestModel>()).Returns(presenter);
+        var request = new FeatureFlagCreate.RequestModel
+        {
+            Id = flagId,
+            Enabled = enabled
+        };
 
-        var createFeatureFlagInteractor = Substitute.For<IInputPort>();
+        var actionResult = Substitute.For<IConsoleActionResult>();
 
-        var controller = new Controller(factory, createFeatureFlagInteractor);
+        var presenter = Substitute.For<ConsoleFeatureFlagCreate.IConsolePresenter>();
+        presenter.ActionResult.Returns(actionResult);
 
-        var options = Substitute.For<IOptions>();
-        options.Id.Returns("some_flag");
-        options.Enabled.Returns(true);
+        var factory = Substitute.For<ConsoleFeatureFlagCreate.IConsolePresenterFactory>();
+        factory.Create(Arg.Any<FeatureFlagCreate.RequestModel>()).Returns(presenter);
 
-        controller.SetOptions(options);
+        var interactor = Substitute.For<FeatureFlagCreate.IUseCase>();
 
-        var result = await controller.Execute();
+        var options = Substitute.For<ConsoleFeatureFlagCreate.IOptions>();
+        options.Id.Returns(flagId);
+        options.Enabled.Returns(enabled);
 
-        Assert.That(result, Is.EqualTo((int)ExitCode.Success));
+        // Act
+        var subject = new ConsoleFeatureFlagCreate.Controller(factory, interactor);
+        subject.SetOptions(options);
+        var result = await subject.Execute();
 
-        await createFeatureFlagInteractor.Received().Execute(Arg.Any<RequestModel>(), Arg.Any<IOutputPort>());
+        // Assert
+        Assert.Multiple(() =>
+        {
+            interactor.Received().Execute(request, presenter);
+            Assert.That(result, Is.SameAs(actionResult));
+        });
     }
 }

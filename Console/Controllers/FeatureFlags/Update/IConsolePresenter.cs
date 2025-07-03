@@ -1,9 +1,9 @@
-using Application.Interactors.FeatureFlag.Update;
+using Application.UseCases.FeatureFlag.Update;
 using Console.Common;
 
 namespace Console.Controllers.FeatureFlags.Update;
 
-public interface IConsolePresenter : IOutputPort, IHasExitCode
+public interface IConsolePresenter : IPresenter, IHasActionResult
 {
     public RequestModel Request { get; }
 }

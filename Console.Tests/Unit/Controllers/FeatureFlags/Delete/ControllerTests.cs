@@ -1,57 +1,76 @@
-using Application.Interactors.FeatureFlag.Delete;
 using Console.Common;
-using Console.Controllers.FeatureFlags.Delete;
 using NSubstitute;
+using FeatureFlagDelete = Application.UseCases.FeatureFlag.Delete;
+using ConsoleFeatureFlagDelete = Console.Controllers.FeatureFlags.Delete;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Delete;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class ControllerTests
 {
     [Test]
-    public void DeleteController_Should_Be_Executable()
+    public void FeatureFlagDeleteController__Is_An_IExecutable()
     {
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        var interactor = Substitute.For<IInputPort>();
+        // Arrange
+        var factory = Substitute.For<ConsoleFeatureFlagDelete.IConsolePresenterFactory>();
+        var interactor = Substitute.For<FeatureFlagDelete.IUseCase>();
 
-        var controller = new Controller(factory, interactor);
+        // Act
+        var subject = new ConsoleFeatureFlagDelete.Controller(factory, interactor);
 
-        Assert.That(controller, Is.InstanceOf<IExecutable>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<IExecutable>());
     }
 
     [Test]
-    public void DeleteController_Should_Have_Options()
+    public void FeatureFlagDeleteController__Is_An_IOptions()
     {
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        var interactor = Substitute.For<IInputPort>();
+        // Arrange
+        var factory = Substitute.For<ConsoleFeatureFlagDelete.IConsolePresenterFactory>();
+        var interactor = Substitute.For<FeatureFlagDelete.IUseCase>();
 
-        var controller = new Controller(factory, interactor);
+        // Act
+        var subject = new ConsoleFeatureFlagDelete.Controller(factory, interactor);
 
-        Assert.That(controller, Is.InstanceOf<IHasOptions>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<IHasOptions>());
     }
 
     [Test]
-    public async Task DeleteController_Deletes_Flag()
+    public async Task FeatureFlagDeleteController__Execute__Deletes_Flag()
     {
-        var presenter = Substitute.For<IConsolePresenter>();
-        presenter.ExitCode.Returns((int)ExitCode.Success);
+        // Arrange
+        const string flagId = "some_flag";
 
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        factory.Create(Arg.Any<RequestModel>()).Returns(presenter);
+        var request = new FeatureFlagDelete.RequestModel
+        {
+            Id = flagId
+        };
 
-        var interactor = Substitute.For<IInputPort>();
+        var actionResult = Substitute.For<IConsoleActionResult>();
 
-        var controller = new Controller(factory, interactor);
+        var presenter = Substitute.For<ConsoleFeatureFlagDelete.IConsolePresenter>();
+        presenter.ActionResult.Returns(actionResult);
 
-        var options = Substitute.For<IOptions>();
-        options.Id.Returns("some_flag");
+        var factory = Substitute.For<ConsoleFeatureFlagDelete.IConsolePresenterFactory>();
+        factory.Create(Arg.Any<FeatureFlagDelete.RequestModel>()).Returns(presenter);
 
-        controller.SetOptions(options);
+        var interactor = Substitute.For<FeatureFlagDelete.IUseCase>();
 
-        var result = await controller.Execute();
+        var options = Substitute.For<ConsoleFeatureFlagDelete.IOptions>();
+        options.Id.Returns(flagId);
 
-        Assert.That(result, Is.EqualTo((int)ExitCode.Success));
+        // Act
+        var subject = new ConsoleFeatureFlagDelete.Controller(factory, interactor);
+        subject.SetOptions(options);
+        var result = await subject.Execute();
 
-        await interactor.Received().Execute(Arg.Any<RequestModel>(), Arg.Any<IOutputPort>());
+        // Assert
+        Assert.Multiple(() =>
+        {
+            interactor.Received().Execute(request, presenter);
+            Assert.That(result, Is.SameAs(actionResult));
+        });
     }
 }

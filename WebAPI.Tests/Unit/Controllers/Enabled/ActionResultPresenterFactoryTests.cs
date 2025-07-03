@@ -1,8 +1,9 @@
-using Application.Interactors.FeatureFlag.IsEnabled;
+using Application.UseCases.FeatureFlag.IsEnabled;
 using WebAPI.Controllers.Enabled;
 
 namespace WebAPI.Tests.Unit.Controllers.Enabled;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class ActionResultPresenterFactoryTests
 {

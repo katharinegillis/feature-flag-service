@@ -1,42 +1,45 @@
-using Application.Interactors.FeatureFlag.Update;
-using Console.Common;
-using Console.Controllers.FeatureFlags.Update;
 using Console.Localization;
 using NSubstitute;
 using Utilities.LocalizationService;
+using FeatureFlagUpdate = Application.UseCases.FeatureFlag.Update;
+using ConsoleFeatureFlagUpdate = Console.Controllers.FeatureFlags.Update;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Update;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class ConsolePresenterFactoryTests
 {
     [Test]
-    public void ConsolePresenterFactory_Should_Be_A_IConsolePresenterFactory()
+    public void FeatureFlagUpdateConsolePresenterFactory__Is_An_IConsolePresenterFactory()
     {
+        // Arrange
         var localizer = Substitute.For<ILocalizationService<SharedResource>>();
-        var writer = Substitute.For<IConsoleWriter>();
 
-        var factory = new ConsolePresenterFactory(localizer, writer);
+        // Act
+        var subject = new ConsoleFeatureFlagUpdate.ConsolePresenterFactory(localizer);
 
-        Assert.That(factory, Is.InstanceOf<IConsolePresenterFactory>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<ConsoleFeatureFlagUpdate.IConsolePresenterFactory>());
     }
 
     [Test]
-    public void ConsolePresenterFactory_Should_Create_ConsolePresenter_With_Request()
+    public void FeatureFlagUpdateConsolePresenterFactory__Create__Creates_ConsolePresenter_With_Request()
     {
-        var request = new RequestModel
+        // Arrange
+        var request = new FeatureFlagUpdate.RequestModel
         {
             Id = "some_flag",
             Enabled = false
         };
 
         var localizer = Substitute.For<ILocalizationService<SharedResource>>();
-        var writer = Substitute.For<IConsoleWriter>();
 
-        var factory = new ConsolePresenterFactory(localizer, writer);
+        // Act
+        var subject = new ConsoleFeatureFlagUpdate.ConsolePresenterFactory(localizer);
+        var result = subject.Create(request);
 
-        var presenter = factory.Create(request);
-
-        Assert.That(presenter.Request, Is.EqualTo(request));
+        // Assert
+        Assert.That(result.Request, Is.EqualTo(request));
     }
 }

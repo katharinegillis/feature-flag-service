@@ -2,6 +2,7 @@ Feature: FeatureFlagEnabled
 
     @SQLite
     @Split
+    @E2E
     Scenario: Get an enabled feature flag
         Given the following feature flags exist
           | Id               | Enabled |
@@ -11,6 +12,7 @@ Feature: FeatureFlagEnabled
 
     @SQLite
     @Split
+    @E2E
     Scenario: Get a disabled feature flag
         Given the following feature flags exist
           | Id                | Enabled |

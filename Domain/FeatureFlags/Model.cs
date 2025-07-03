@@ -15,18 +15,13 @@ public sealed class Model : IModel
         var errors = new List<ValidationError>();
 
         if (Id.Length > 100)
-        {
             errors.Add(new ValidationError
             {
                 Field = "Id",
                 Message = "Max length is 100"
             });
-        }
 
-        if (errors.Count != 0)
-        {
-            return errors;
-        }
+        if (errors.Count != 0) return errors;
 
         return true;
     }

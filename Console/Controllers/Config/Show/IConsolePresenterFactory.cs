@@ -1,4 +1,4 @@
-using Application.Interactors.Config.Show;
+using Application.UseCases.Config.Show;
 
 namespace Console.Controllers.Config.Show;
 

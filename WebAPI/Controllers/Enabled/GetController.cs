@@ -1,11 +1,11 @@
-using Application.Interactors.FeatureFlag.IsEnabled;
+using Application.UseCases.FeatureFlag.IsEnabled;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.Enabled;
 
 public sealed class GetController(
     IActionResultPresenterFactory factory,
-    IInputPort interactor,
+    IUseCase interactor,
     ILogger<GetController> logger)
     : ControllerBase
 {
@@ -21,10 +21,7 @@ public sealed class GetController(
 
         await interactor.Execute(request, presenter);
 
-        if (presenter.IsError)
-        {
-            logger.LogError("{message}", presenter.Message);
-        }
+        if (presenter.IsError) logger.LogError("{message}", presenter.Message);
 
         return presenter.ActionResult;
     }

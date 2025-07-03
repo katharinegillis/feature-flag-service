@@ -1,41 +1,41 @@
-using Application.Interactors.Config.Show;
-using Console.Common;
-using Console.Controllers.Config.Show;
 using Console.Localization;
 using NSubstitute;
 using Utilities.LocalizationService;
+using ConfigShow = Application.UseCases.Config.Show;
+using ConsoleConfigShow = Console.Controllers.Config.Show;
 
 namespace Console.Tests.Unit.Controllers.Config.Show;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class ConsolePresenterFactoryTests
 {
     [Test]
-    public void ConsolePresenterFactory_Should_Be_An_IConsolePresenterFactory()
+    public void ConfigShowConsolePresenterFactory__Is_An_IConsolePresenterFactory()
     {
+        // Arrange
         var localizer = Substitute.For<ILocalizationService<SharedResource>>();
-        var writer = Substitute.For<IConsoleWriter>();
-        
-        var factory = new ConsolePresenterFactory(localizer, writer);
-        
-        Assert.That(factory, Is.InstanceOf<IConsolePresenterFactory>());
+
+        // Act
+        var subject = new ConsoleConfigShow.ConsolePresenterFactory(localizer);
+
+        // Assert
+        Assert.That(subject, Is.InstanceOf<ConsoleConfigShow.IConsolePresenterFactory>());
     }
 
     [Test]
-    public void ConsolePresenterFactory_Should_Create_ConsolePresenter_With_Request()
+    public void ConfigShowConsolePresenterFactory__Create__Creates_ConsolePresenter_With_Request()
     {
-        var request = new RequestModel
-        {
-            Name = RequestModel.NameOptions.Datasource
-        };
-        
+        // Arrange
+        var request = new ConfigShow.RequestModel();
+
         var localizer = Substitute.For<ILocalizationService<SharedResource>>();
-        var writer = Substitute.For<IConsoleWriter>();
 
-        var factory = new ConsolePresenterFactory(localizer, writer);
+        // Act
+        var subject = new ConsoleConfigShow.ConsolePresenterFactory(localizer);
+        var result = subject.Create(request);
 
-        var presenter = factory.Create(request);
-        
-        Assert.That(presenter.Request, Is.EqualTo(request));
+        // Assert
+        Assert.That(result.Request, Is.SameAs(request));
     }
 }

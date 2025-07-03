@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 var builder = Host.CreateApplicationBuilder(args);
-builder.Configuration.AddJsonFile("consolesettings.json", optional: true);
+builder.Configuration.AddJsonFile("consolesettings.json", true);
 builder.Logging.ClearProviders();
 
 builder.Services.AddDomainFactories();
@@ -22,7 +22,6 @@ builder.Services.AddInfrastructureSplitConfig(builder.Configuration);
 var splitOptions = splitOptionsBuilder.Get<SplitOptions>();
 
 if (splitOptions != null && splitOptions.SdkKey != "")
-{
     try
     {
         builder.Services.AddInfrastructureSplitRepository(splitOptions);
@@ -31,11 +30,8 @@ if (splitOptions != null && splitOptions.SdkKey != "")
     {
         builder.Services.AddInfrastructureSqliteRepository();
     }
-}
 else
-{
     builder.Services.AddInfrastructureSqliteRepository();
-}
 
 builder.Services.AddConsoleControllers();
 builder.Services.AddConsoleLocalization();

@@ -6,7 +6,6 @@ using List = Console.Controllers.FeatureFlags.List;
 using Update = Console.Controllers.FeatureFlags.Update;
 using Delete = Console.Controllers.FeatureFlags.Delete;
 using Show = Console.Controllers.Config.Show;
-using Console.Common;
 
 namespace Console.Extensions;
 
@@ -31,8 +30,6 @@ public static class ConsoleExtensions
 
     public static void AddConsolePresenters(this IServiceCollection services)
     {
-        services.AddScoped<IConsoleWriter, ConsoleWriter>();
-
         services.AddScoped<Create.IConsolePresenterFactory, Create.ConsolePresenterFactory>();
         services.AddScoped<Get.IConsolePresenterFactory, Get.ConsolePresenterFactory>();
         services.AddScoped<List.IConsolePresenterFactory, List.ConsolePresenterFactory>();

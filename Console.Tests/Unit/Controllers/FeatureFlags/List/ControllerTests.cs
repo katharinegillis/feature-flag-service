@@ -1,41 +1,51 @@
-using Application.Interactors.FeatureFlag.List;
 using Console.Common;
-using Console.Controllers.FeatureFlags.List;
 using NSubstitute;
+using FeatureFlagList = Application.UseCases.FeatureFlag.List;
+using ConsoleFeatureFlagList = Console.Controllers.FeatureFlags.List;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.List;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class ControllerTests
 {
     [Test]
-    public void ListController_Should_Be_Executable()
+    public void FeatureFlagListController__Is_An_Executable()
     {
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        var interactor = Substitute.For<IInputPort>();
+        // Arrange
+        var factory = Substitute.For<ConsoleFeatureFlagList.IConsolePresenterFactory>();
+        var interactor = Substitute.For<FeatureFlagList.IUseCase>();
 
-        var controller = new Controller(factory, interactor);
+        // Act
+        var subject = new ConsoleFeatureFlagList.Controller(factory, interactor);
 
-        Assert.That(controller, Is.InstanceOf<IExecutable>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<IExecutable>());
     }
 
     [Test]
-    public async Task ListController_Should_Return_Successful()
+    public async Task FeatureFlagListController__Execute__Lists_Flags()
     {
-        var presenter = Substitute.For<IConsolePresenter>();
-        presenter.ExitCode.Returns((int)ExitCode.Success);
+        // Arrange
+        var actionResult = Substitute.For<IConsoleActionResult>();
 
-        var factory = Substitute.For<IConsolePresenterFactory>();
+        var presenter = Substitute.For<ConsoleFeatureFlagList.IConsolePresenter>();
+        presenter.ActionResult.Returns(actionResult);
+
+        var factory = Substitute.For<ConsoleFeatureFlagList.IConsolePresenterFactory>();
         factory.Create().Returns(presenter);
 
-        var interactor = Substitute.For<IInputPort>();
+        var interactor = Substitute.For<FeatureFlagList.IUseCase>();
 
-        var controller = new Controller(factory, interactor);
-
+        // Act
+        var controller = new ConsoleFeatureFlagList.Controller(factory, interactor);
         var result = await controller.Execute();
 
-        Assert.That(result, Is.EqualTo((int)ExitCode.Success));
-
-        await interactor.Execute(Arg.Any<IOutputPort>());
+        // Assert
+        Assert.Multiple(() =>
+        {
+            interactor.Received().Execute(presenter);
+            Assert.That(result, Is.SameAs(actionResult));
+        });
     }
 }

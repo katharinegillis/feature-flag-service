@@ -1,55 +1,76 @@
-using Application.Interactors.FeatureFlag.Get;
-using Console.Controllers.FeatureFlags.Get;
 using Console.Common;
 using NSubstitute;
+using FeatureFlagGet = Application.UseCases.FeatureFlag.Get;
+using ConsoleFeatureFlagGet = Console.Controllers.FeatureFlags.Get;
 using Controller = Console.Controllers.FeatureFlags.Get.Controller;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Get;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class ControllerTests
 {
     [Test]
-    public void GetController_Should_Be_Executable()
+    public void FeatureFlagGetController__Is_An_IExecutable()
     {
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        var interactor = Substitute.For<IInputPort>();
+        // Arrange
+        var factory = Substitute.For<ConsoleFeatureFlagGet.IConsolePresenterFactory>();
+        var interactor = Substitute.For<FeatureFlagGet.IUseCase>();
 
-        var controller = new Controller(factory, interactor);
+        // Act
+        var subject = new Controller(factory, interactor);
 
-        Assert.That(controller, Is.InstanceOf<IExecutable>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<IExecutable>());
     }
 
     [Test]
-    public void GetController_Should_Have_Options()
+    public void FeatureFlagGetController__Is_An_IOptions()
     {
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        var interactor = Substitute.For<IInputPort>();
+        // Arrange
+        var factory = Substitute.For<ConsoleFeatureFlagGet.IConsolePresenterFactory>();
+        var interactor = Substitute.For<FeatureFlagGet.IUseCase>();
 
-        var controller = new Controller(factory, interactor);
+        // Act
+        var subject = new Controller(factory, interactor);
 
-        Assert.That(controller, Is.InstanceOf<IHasOptions>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<IHasOptions>());
     }
 
     [Test]
-    public async Task GetController_Should_Succeed()
+    public async Task FeatureFlagGetController__Execute__Should_Succeed()
     {
-        var presenter = Substitute.For<IConsolePresenter>();
-        presenter.ExitCode.Returns((int)ExitCode.Success);
+        // Arrange
+        var request = new FeatureFlagGet.RequestModel
+        {
+            Id = "some_flag"
+        };
 
-        var factory = Substitute.For<IConsolePresenterFactory>();
-        factory.Create(Arg.Any<RequestModel>()).Returns(presenter);
+        var actionResult = Substitute.For<IConsoleActionResult>();
 
-        var interactor = Substitute.For<IInputPort>();
 
+        var presenter = Substitute.For<ConsoleFeatureFlagGet.IConsolePresenter>();
+        presenter.ActionResult.Returns(actionResult);
+
+        var factory = Substitute.For<ConsoleFeatureFlagGet.IConsolePresenterFactory>();
+        factory.Create(Arg.Any<FeatureFlagGet.RequestModel>()).Returns(presenter);
+
+        var interactor = Substitute.For<FeatureFlagGet.IUseCase>();
+
+        var options = Substitute.For<ConsoleFeatureFlagGet.IOptions>();
+        options.Id.Returns("some_flag");
+
+        // Act
         var controller = new Controller(factory, interactor);
-
-        var options = Substitute.For<IOptions>();
-
         controller.SetOptions(options);
-
         var result = await controller.Execute();
 
-        Assert.That(result, Is.EqualTo((int)ExitCode.Success));
+        // Assert
+        Assert.Multiple(() =>
+        {
+            interactor.Received().Execute(request, presenter);
+            Assert.That(result, Is.SameAs(actionResult));
+        });
     }
 }

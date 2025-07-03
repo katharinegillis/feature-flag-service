@@ -1,4 +1,4 @@
-using Application.Interactors.Config.Show;
+using Application.UseCases.Config.Show;
 using Console.Common;
 using Console.Localization;
 using Domain.Common;
@@ -8,25 +8,31 @@ namespace Console.Controllers.Config.Show;
 
 public class ConsolePresenter(
     RequestModel? request,
-    ILocalizationService<SharedResource> localizer,
-    IConsoleWriter writer) : IConsolePresenter
+    ILocalizationService<SharedResource> localizer) : IConsolePresenter
 {
     public void Ok(string value)
     {
-        writer.WriteLine(localizer.Translate("Datasource \"{0}\"", value));
-        ExitCode = (int)Common.ExitCode.Success;
+        ActionResult = new ConsoleActionResult
+        {
+            Lines = new List<string>
+            {
+                localizer.Translate("Datasource \"{0}\"", value)
+            },
+            ExitCode = (int)ExitCode.Success
+        };
     }
 
     public void BadRequest(IEnumerable<ValidationError> validationErrors)
     {
-        foreach (var error in validationErrors)
+        ActionResult = new ConsoleActionResult
         {
-            writer.WriteLine(localizer.Translate("{0}: {1}.", error.Field, localizer.Translate(error.Message)));
-        }
-        
-        ExitCode = (int)Common.ExitCode.OptionsError;
+            Lines = validationErrors.Select(error =>
+                localizer.Translate("{0}: {1}.", error.Field, localizer.Translate(error.Message))).ToList(),
+            ExitCode = (int)ExitCode.OptionsError
+        };
     }
 
-    public int ExitCode { get; private set; }
     public RequestModel? Request => request;
+
+    public IConsoleActionResult ActionResult { get; private set; } = new ConsoleActionResult();
 }

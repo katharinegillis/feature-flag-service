@@ -1,42 +1,53 @@
-using Application.Interactors.FeatureFlag.Create;
-using Console.Common;
-using Console.Controllers.FeatureFlags.Create;
 using Console.Localization;
 using NSubstitute;
 using Utilities.LocalizationService;
+using FeatureFlagCreate = Application.UseCases.FeatureFlag.Create;
+using ConsoleFeatureFlagCreate = Console.Controllers.FeatureFlags.Create;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.Create;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class ConsolePresenterFactoryTests
 {
     [Test]
-    public void ConsolePresenterFactory_Is_A_IConsolePresenterFactory()
+    public void FeatureFlagCreateConsolePresenterFactory__Is_A_IConsolePresenterFactory()
     {
+        // Arrange
         var localizer = Substitute.For<ILocalizationService<SharedResource>>();
-        var writer = Substitute.For<IConsoleWriter>();
 
-        var factory = new ConsolePresenterFactory(localizer, writer);
+        // Act
+        var subject = new ConsoleFeatureFlagCreate.ConsolePresenterFactory(localizer);
 
-        Assert.That(factory, Is.InstanceOf<IConsolePresenterFactory>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<ConsoleFeatureFlagCreate.IConsolePresenterFactory>());
     }
 
     [Test]
-    public void ConsolePresenterFactory_Should_Create_Presenter_With_Request()
+    public void FeatureFlagCreateConsolePresenterFactory__Create__Provides_A_New_Presenter_With_Request()
     {
-        var request = new RequestModel
+        // Arrange
+        const string flagId = "some_flag";
+        const bool enabled = true;
+
+        var request = new FeatureFlagCreate.RequestModel
         {
-            Id = "some_flag",
-            Enabled = true
+            Id = flagId,
+            Enabled = enabled
         };
 
         var localizer = Substitute.For<ILocalizationService<SharedResource>>();
-        var writer = Substitute.For<IConsoleWriter>();
 
-        var factory = new ConsolePresenterFactory(localizer, writer);
+        // Act
+        var subject = new ConsoleFeatureFlagCreate.ConsolePresenterFactory(localizer);
+        var result1 = subject.Create(request);
+        var result2 = subject.Create(request);
 
-        var presenter = factory.Create(request);
-
-        Assert.That(presenter.Request, Is.EqualTo(request));
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(result1.Request, Is.EqualTo(request));
+            Assert.That(result1, Is.Not.SameAs(result2));
+        });
     }
 }

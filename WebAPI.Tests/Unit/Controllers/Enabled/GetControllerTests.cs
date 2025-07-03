@@ -1,4 +1,4 @@
-using Application.Interactors.FeatureFlag.IsEnabled;
+using Application.UseCases.FeatureFlag.IsEnabled;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -6,6 +6,7 @@ using WebAPI.Controllers.Enabled;
 
 namespace WebAPI.Tests.Unit.Controllers.Enabled;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class GetControllerTests
 {
@@ -14,8 +15,8 @@ public sealed class GetControllerTests
     {
         var logger = Substitute.For<ILogger<GetController>>();
 
-        var interactor = Substitute.For<IInputPort>();
-        await interactor.Execute(Arg.Any<RequestModel>(), Arg.Any<IOutputPort>());
+        var interactor = Substitute.For<IUseCase>();
+        await interactor.Execute(Arg.Any<RequestModel>(), Arg.Any<IPresenter>());
 
         var presenter = Substitute.For<IActionResultPresenter>();
         presenter.ActionResult.Returns(new OkObjectResult(true));
@@ -38,8 +39,8 @@ public sealed class GetControllerTests
     {
         var logger = Substitute.For<ILogger<GetController>>();
 
-        var interactor = Substitute.For<IInputPort>();
-        await interactor.Execute(Arg.Any<RequestModel>(), Arg.Any<IOutputPort>());
+        var interactor = Substitute.For<IUseCase>();
+        await interactor.Execute(Arg.Any<RequestModel>(), Arg.Any<IPresenter>());
 
         var presenter = Substitute.For<IActionResultPresenter>();
         presenter.ActionResult.Returns(new OkObjectResult(false));
@@ -62,8 +63,8 @@ public sealed class GetControllerTests
     {
         var logger = Substitute.For<ILogger<GetController>>();
 
-        var interactor = Substitute.For<IInputPort>();
-        await interactor.Execute(Arg.Any<RequestModel>(), Arg.Any<IOutputPort>());
+        var interactor = Substitute.For<IUseCase>();
+        await interactor.Execute(Arg.Any<RequestModel>(), Arg.Any<IPresenter>());
 
         var presenter = Substitute.For<IActionResultPresenter>();
         presenter.ActionResult.Returns(new NotFoundResult());
@@ -83,7 +84,7 @@ public sealed class GetControllerTests
     {
         var logger = Substitute.For<ILogger<GetController>>();
 
-        var interactor = Substitute.For<IInputPort>();
+        var interactor = Substitute.For<IUseCase>();
 
         var presenter = Substitute.For<IActionResultPresenter>();
         presenter.ActionResult.Returns(new StatusCodeResult(500));

@@ -1,37 +1,44 @@
 using CommandLine;
 using Console.Common;
-using Console.Controllers.FeatureFlags.List;
+using ConsoleFeatureFlagList = Console.Controllers.FeatureFlags.List;
 
 namespace Console.Tests.Unit.Controllers.FeatureFlags.List;
 
+[Parallelizable]
 [Category("Unit")]
 public sealed class VerbTests
 {
     [Test]
-    public void ListVerb_Should_Be_A_IHasControllerType()
+    public void FeatureFlagListVerb__Is_An_IHasControllerType()
     {
-        var verb = new Verb();
+        // Act
+        var subject = new ConsoleFeatureFlagList.Verb();
 
-        Assert.That(verb, Is.InstanceOf<IHasControllerType>());
+        // Assert
+        Assert.That(subject, Is.InstanceOf<IHasControllerType>());
     }
 
     [Test]
-    public void ListVerb_Should_Be_Associated_With_ListController()
+    public void FeatureFlagListVerb__Should_Associate_A_ListController()
     {
-        var verb = new Verb();
+        // Act
+        var subject = new ConsoleFeatureFlagList.Verb();
 
-        Assert.That(verb.ControllerType, Is.EqualTo(typeof(Controller)));
+        // Assert
+        Assert.That(subject.ControllerType, Is.EqualTo(typeof(ConsoleFeatureFlagList.Controller)));
     }
 
     [Test]
-    public void ListVerb_Should_Be_A_Verb()
+    public void FeatureFlagListVerb__Has_A_Verb_Attribute()
     {
-        Assert.That(Attribute.IsDefined(typeof(Verb), typeof(VerbAttribute)));
+        // Assert
+        Assert.That(Attribute.IsDefined(typeof(ConsoleFeatureFlagList.Verb), typeof(VerbAttribute)));
     }
-    
+
     [Test]
-    public void ListVerb_Should_Be_A_ReadOnlyVerb()
+    public void FeatureFlagListVerb__Has_A_ReadOnlyVerb_Attribute()
     {
-        Assert.That(Attribute.IsDefined(typeof(Verb), typeof(ReadOnlyVerbAttribute)));
+        // Assert
+        Assert.That(Attribute.IsDefined(typeof(ConsoleFeatureFlagList.Verb), typeof(ReadOnlyVerbAttribute)));
     }
 }

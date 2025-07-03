@@ -1,4 +1,4 @@
-using Application.Interactors.FeatureFlag.Create;
+using Application.UseCases.FeatureFlag.Create;
 using Console.Common;
 using Console.Localization;
 using Domain.Common;
@@ -6,38 +6,46 @@ using Utilities.LocalizationService;
 
 namespace Console.Controllers.FeatureFlags.Create;
 
-// ReSharper disable once SuggestBaseTypeForParameterInConstructor
 public sealed class ConsolePresenter(
     RequestModel request,
-    ILocalizationService<SharedResource> localizer,
-    IConsoleWriter writer)
+    ILocalizationService<SharedResource> localizer)
     : IConsolePresenter
 {
     public void Ok()
     {
-        writer.WriteLine(localizer.Translate("Feature Flag \"{0}\" created.", request.Id));
-
-        ExitCode = (int)Console.Common.ExitCode.Success;
+        ActionResult = new ConsoleActionResult
+        {
+            Lines = new List<string>
+            {
+                localizer.Translate("Feature Flag \"{0}\" created.", request.Id)
+            },
+            ExitCode = (int)ExitCode.Success
+        };
     }
 
     public void BadRequest(IEnumerable<ValidationError> validationErrors)
     {
-        foreach (var error in validationErrors)
+        ActionResult = new ConsoleActionResult
         {
-            writer.WriteLine(localizer.Translate("{0}: {1}.", error.Field, localizer.Translate(error.Message)));
-        }
-
-        ExitCode = (int)Console.Common.ExitCode.OptionsError;
+            Lines = validationErrors.Select(error =>
+                localizer.Translate("{0}: {1}", error.Field, localizer.Translate(error.Message))),
+            ExitCode = (int)ExitCode.OptionsError
+        };
     }
 
     public void Error(Error error)
     {
-        writer.WriteLine(localizer.Translate("Error: {0}.", localizer.Translate(error.Message)));
-
-        ExitCode = (int)Console.Common.ExitCode.Error;
+        ActionResult = new ConsoleActionResult
+        {
+            Lines = new List<string>
+            {
+                localizer.Translate("Error: {0}.", localizer.Translate(error.Message))
+            },
+            ExitCode = (int)ExitCode.Error
+        };
     }
 
     public RequestModel Request => request;
 
-    public int ExitCode { get; private set; }
+    public IConsoleActionResult ActionResult { get; private set; } = new ConsoleActionResult();
 }
