@@ -110,7 +110,7 @@ namespace WebAPI.E2E.Features
                         "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
-        testRunner.Then("the result should be true", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("the result should be successful and true", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -153,7 +153,43 @@ namespace WebAPI.E2E.Features
                         "g", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 21
-        testRunner.Then("the result should be false", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("the result should be successful and false", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Get a non-existant feature flag")]
+        [NUnit.Framework.CategoryAttribute("SQLite")]
+        [NUnit.Framework.CategoryAttribute("Split")]
+        [NUnit.Framework.CategoryAttribute("E2E")]
+        public void GetANon_ExistantFeatureFlag()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "SQLite",
+                    "Split",
+                    "E2E"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a non-existant feature flag", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 26
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 27
+        testRunner.When("the feature flag enabled endpoint is opened for the e2e_test_missing feature flag" +
+                        "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Not found"});
+#line 28
+        testRunner.Then("the result should be unsuccessful with the following errors", ((string)(null)), table3, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

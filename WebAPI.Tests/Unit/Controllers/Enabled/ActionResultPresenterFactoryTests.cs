@@ -10,14 +10,17 @@ public sealed class ActionResultPresenterFactoryTests
     [Test]
     public void ActionResultPresenterFactory_Should_Be_An_IActionResultPresenterFactory()
     {
+        // Act
         var factory = new ActionResultPresenterFactory();
 
+        // Assert
         Assert.That(factory, Is.InstanceOf<IActionResultPresenterFactory>());
     }
 
     [Test]
     public void ActionResultPresenterFactory_Create_Should_Create_ActionResultPresenter_With_Request()
     {
+        // Arrange
         var factory = new ActionResultPresenterFactory();
 
         var request = new RequestModel
@@ -25,8 +28,10 @@ public sealed class ActionResultPresenterFactoryTests
             Id = "some_flag"
         };
 
+        // Act
         var presenter = factory.Create(request);
 
+        // Assert
         Assert.That(presenter.Request, Is.EqualTo(request));
     }
 }

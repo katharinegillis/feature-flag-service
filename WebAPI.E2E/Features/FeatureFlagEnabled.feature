@@ -8,7 +8,7 @@ Feature: FeatureFlagEnabled
           | Id               | Enabled |
           | e2e_test_enabled | true    |
         When the feature flag enabled endpoint is opened for the e2e_test_enabled feature flag
-        Then the result should be true
+        Then the result should be successful and true
 
     @SQLite
     @Split
@@ -18,4 +18,12 @@ Feature: FeatureFlagEnabled
           | Id                | Enabled |
           | e2e_test_disabled | false   |
         When the feature flag enabled endpoint is opened for the e2e_test_disabled feature flag
-        Then the result should be false
+        Then the result should be successful and false
+        
+    @SQLite
+    @Split
+    @E2E
+    Scenario: Get a non-existant feature flag
+        When the feature flag enabled endpoint is opened for the e2e_test_missing feature flag
+        Then the result should be unsuccessful with the following errors
+            | Not found |

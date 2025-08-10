@@ -21,8 +21,6 @@ public sealed class GetController(
 
         await interactor.Execute(request, presenter);
 
-        if (presenter.IsError) logger.LogError("{message}", presenter.Message);
-
         return presenter.ActionResult;
     }
 }
