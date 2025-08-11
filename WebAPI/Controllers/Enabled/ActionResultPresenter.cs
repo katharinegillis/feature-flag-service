@@ -11,20 +11,12 @@ public sealed class ActionResultPresenter(RequestModel request) : IActionResultP
 
     public void Ok(bool enabled)
     {
-        ActionResult = new OkObjectResult(new ApiResponse<bool?>
-        {
-            Successful = true,
-            Data = enabled,
-        });
+        ActionResult = ApiResponseActionResultFactory.Ok<bool?>(enabled);
     }
 
     public void NotFound()
     {
-        ActionResult = new OkObjectResult(new ApiResponse<bool?>
-        {
-            Successful = false,
-            Errors = ["Not found"]
-        });
+        ActionResult = ApiResponseActionResultFactory.Err<bool?>(["Not found"]);
     }
 
     public RequestModel Request => request;
