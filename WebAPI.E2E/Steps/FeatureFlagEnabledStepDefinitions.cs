@@ -52,12 +52,12 @@ public sealed class FeatureFlagEnabledStepDefinitions
             }
     }
 
-    [When(@"the feature flag enabled endpoint is opened for the (\w+) feature flag")]
-    public async Task WhenTheFeatureFlagEnabledEndpointIsOpenedForTheWFeatureFlag(string id)
+    [When(@"the (v1) feature flag enabled endpoint is opened for the (\w+) feature flag")]
+    public async Task WhenTheVersionedFeatureFlagEnabledEndpointIsOpenedForTheWFeatureFlag(string version, string id)
     {
         var flagId = await _dataSource.GetUniqueId(id);
 
-        var response = await _request.GetAsync($"/{flagId}/enabled");
+        var response = await _request.GetAsync($"api/{version}/featureflags/{flagId}/enabled");
         Assert.That(response.Ok, Is.True);
 
         _scenarioContext[Response] = response;
