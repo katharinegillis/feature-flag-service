@@ -112,27 +112,26 @@ namespace Console.Localization
                         into g
                         select new { SetName = g.Key, Errors = g.ToList() };
 
-                    var msgs = bySet.Select(
-                        set =>
-                        {
-                            var names = String.Join(
-                                String.Empty,
-                                (from e in set.Errors select String.Format("'{0}', ", e.NameInfo.NameText)).ToArray());
-                            var namesCount = set.Errors.Count;
+                    var msgs = bySet.Select(set =>
+                    {
+                        var names = String.Join(
+                            String.Empty,
+                            (from e in set.Errors select String.Format("'{0}', ", e.NameInfo.NameText)).ToArray());
+                        var namesCount = set.Errors.Count;
 
-                            var incompat = String.Join(
-                                String.Empty,
-                                (from x in
-                                        (from s in bySet
-                                            where !s.SetName.Equals(set.SetName)
-                                            from e in s.Errors
-                                            select e)
-                                        .Distinct()
-                                    select String.Format("'{0}', ", x.NameInfo.NameText)).ToArray());
-                            return
-                                String.Format(CommandLineParser.SentenceMutuallyExclusiveSetErrors,
-                                    names.Substring(0, names.Length - 2), incompat.Substring(0, incompat.Length - 2));
-                        }).ToArray();
+                        var incompat = String.Join(
+                            String.Empty,
+                            (from x in
+                                    (from s in bySet
+                                        where !s.SetName.Equals(set.SetName)
+                                        from e in s.Errors
+                                        select e)
+                                    .Distinct()
+                                select String.Format("'{0}', ", x.NameInfo.NameText)).ToArray());
+                        return
+                            String.Format(CommandLineParser.SentenceMutuallyExclusiveSetErrors,
+                                names.Substring(0, names.Length - 2), incompat.Substring(0, incompat.Length - 2));
+                    }).ToArray();
                     return string.Join(Environment.NewLine, msgs);
                 };
             }

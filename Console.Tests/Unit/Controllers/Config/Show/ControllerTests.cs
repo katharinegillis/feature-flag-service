@@ -66,11 +66,11 @@ public sealed class ControllerTests
         var result = await controller.Execute();
 
         // Assert
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             interactor.Received().Execute(Arg.Is<ConfigShow.RequestModel>(x => x.Equals(request)), presenter);
             Assert.That(result, Is.SameAs(actionResult));
-        });
+        }
     }
 
     [Test]
@@ -101,11 +101,11 @@ public sealed class ControllerTests
         var result = await controller.Execute();
 
         // Assert
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             interactor.Received().Execute(Arg.Is<ConfigShow.RequestModel>(x => x.Equals(request)), presenter);
             Assert.That(result, Is.SameAs(actionResult));
-        });
+        }
     }
 
     [Test]
@@ -140,11 +140,11 @@ public sealed class ControllerTests
         var result = await controller.Execute();
 
         // Assert
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             interactor.DidNotReceive().Execute(Arg.Any<ConfigShow.RequestModel>(), Arg.Any<ConfigShow.IPresenter>());
             presenter.Received().BadRequest(Arg.Is<List<ValidationError>>(x => errors.SequenceEqual(x)));
             Assert.That(result, Is.SameAs(actionResult));
-        });
+        }
     }
 }

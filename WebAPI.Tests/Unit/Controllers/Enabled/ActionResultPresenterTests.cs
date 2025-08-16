@@ -19,11 +19,11 @@ public sealed class ActionResultPresenterTests
 
         var presenter = new ActionResultPresenter(request);
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(presenter.ActionResult, Is.InstanceOf<StatusCodeResult>());
             Assert.That((presenter.ActionResult as StatusCodeResult)?.StatusCode, Is.EqualTo(500));
-        });
+        }
     }
 
     [Test]
@@ -45,13 +45,13 @@ public sealed class ActionResultPresenterTests
         var okResult = presenter.ActionResult as OkObjectResult;
         Assert.That(okResult!.Value, Is.InstanceOf<ApiResponse<bool?>>());
         var response = okResult.Value as ApiResponse<bool?>;
-        
-        Assert.Multiple(() =>
+
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(response!.Successful, Is.True);
             Assert.That(response.Data, Is.True);
             Assert.That(response.Errors, Is.Null);
-        });
+        }
     }
 
     [Test]
@@ -73,12 +73,12 @@ public sealed class ActionResultPresenterTests
         var okResult = presenter.ActionResult as OkObjectResult;
         Assert.That(okResult!.Value, Is.InstanceOf<ApiResponse<bool?>>());
         var response = okResult.Value as ApiResponse<bool?>;
-        
-        Assert.Multiple(() =>
+
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(response!.Successful, Is.False);
             Assert.That(response.Data, Is.Null);
             Assert.That(response.Errors, Is.EqualTo(new List<string> { "Not found" }));
-        });
+        }
     }
 }

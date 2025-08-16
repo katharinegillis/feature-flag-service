@@ -51,7 +51,7 @@ public sealed class NullModelTests
         var nullModel = NullModel.Instance;
 
         var result = nullModel.Validate();
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result.IsOk, Is.False);
             Assert.That(result.Error.Count, Is.EqualTo(1));
@@ -60,6 +60,6 @@ public sealed class NullModelTests
                 Field = "Id",
                 Message = "Null object"
             }));
-        });
+        }
     }
 }

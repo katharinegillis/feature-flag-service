@@ -25,10 +25,10 @@ public sealed class CodePresenterFactoryTests
         var result2 = subject.Create();
 
         // Assert
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result1, Is.InstanceOf<FeatureFlagGet.ICodePresenter>());
             Assert.That(result1, Is.Not.SameAs(result2));
-        });
+        }
     }
 }

@@ -1,5 +1,5 @@
 Feature: FeatureFlagEnabled
-            
+
     @SQLite
     @Split
     @E2E
@@ -19,7 +19,7 @@ Feature: FeatureFlagEnabled
           | e2e_test_disabled | false   |
         When the v1 feature flag enabled endpoint is opened for the e2e_test_disabled feature flag
         Then the result should be successful and false
-        
+
     @SQLite
     @Split
     @E2E

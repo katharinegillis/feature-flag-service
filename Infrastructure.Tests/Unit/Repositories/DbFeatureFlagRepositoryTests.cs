@@ -88,11 +88,11 @@ public sealed class DbFeatureFlagRepositoryTests
             Id = "some_flag",
             Enabled = true
         });
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result.IsOk);
             Assert.That(result.Value, Is.EqualTo("some_flag"));
-        });
+        }
 
         set.Received(1).Add(new FeatureFlag
         {
@@ -130,7 +130,8 @@ public sealed class DbFeatureFlagRepositoryTests
             Id = "some_flag",
             Enabled = true
         });
-        Assert.Multiple(() =>
+
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result.IsOk, Is.False);
             Assert.That(result.Error, Is.EqualTo(new ValidationError
@@ -138,7 +139,7 @@ public sealed class DbFeatureFlagRepositoryTests
                 Field = "Id",
                 Message = "Already exists"
             }));
-        });
+        }
 
         set.Received(1).Add(new FeatureFlag
         {
@@ -169,14 +170,14 @@ public sealed class DbFeatureFlagRepositoryTests
             Id = "some_flag",
             Enabled = true
         });
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result.IsOk, Is.False);
             Assert.That(result.Error, Is.EqualTo(new Error
             {
                 Message = "Unknown error"
             }));
-        });
+        }
 
         set.Received(1).Add(new FeatureFlag
         {
@@ -228,7 +229,7 @@ public sealed class DbFeatureFlagRepositoryTests
 
         var comparer = new EqualityComparer();
         var list = result.ToList();
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(comparer.Equals(list[0], new Model
             {
@@ -240,7 +241,7 @@ public sealed class DbFeatureFlagRepositoryTests
                 Id = "another_flag",
                 Enabled = false
             }));
-        });
+        }
     }
 
     [Test]
@@ -262,11 +263,11 @@ public sealed class DbFeatureFlagRepositoryTests
             Enabled = false
         });
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result.IsOk);
             Assert.That(result.Value);
-        });
+        }
 
 
         set.Received(1).Update(new FeatureFlag
@@ -299,14 +300,14 @@ public sealed class DbFeatureFlagRepositoryTests
             Enabled = false
         });
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result.IsOk, Is.False);
             Assert.That(result.Error, Is.EqualTo(new NotFoundError
             {
                 Message = "Not found"
             }));
-        });
+        }
 
         set.Received(1).Update(new FeatureFlag
         {
@@ -339,14 +340,14 @@ public sealed class DbFeatureFlagRepositoryTests
             Enabled = false
         });
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result.IsOk, Is.False);
             Assert.That(result.Error, Is.EqualTo(new Error
             {
                 Message = "Unknown error"
             }));
-        });
+        }
     }
 
     [Test]
@@ -364,11 +365,11 @@ public sealed class DbFeatureFlagRepositoryTests
 
         var result = await repository.Delete("some_flag");
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result.IsOk);
             Assert.That(result.Value);
-        });
+        }
 
         set.Received(1).Remove(new FeatureFlag
         {
@@ -395,11 +396,11 @@ public sealed class DbFeatureFlagRepositoryTests
 
         var result = await repository.Delete("some_flag");
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result.IsOk, Is.False);
             Assert.That(result.Error, Is.EqualTo(new NotFoundError()));
-        });
+        }
 
         set.Received(1).Remove(new FeatureFlag
         {
@@ -427,14 +428,14 @@ public sealed class DbFeatureFlagRepositoryTests
 
         var result = await repository.Delete("some_flag");
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result.IsOk, Is.False);
             Assert.That(result.Error, Is.EqualTo(new Error
             {
                 Message = "Unknown error"
             }));
-        });
+        }
     }
 
     [Test]

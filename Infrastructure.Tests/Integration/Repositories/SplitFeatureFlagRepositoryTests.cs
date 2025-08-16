@@ -143,19 +143,20 @@ public sealed class SplitFeatureFlagRepositoryTests
 
         var comparer = new EqualityComparer();
         var list = result.ToList();
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(comparer.Equals(list[0], new Model
             {
                 Id = "some_flag",
                 Enabled = true
             }));
+
             Assert.That(comparer.Equals(list[1], new Model
             {
                 Id = "some_other_flag",
                 Enabled = false
             }));
-        });
+        }
     }
 
     [Test]

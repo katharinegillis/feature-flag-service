@@ -67,10 +67,10 @@ public sealed class ControllerTests
         var result = await subject.Execute();
 
         // Assert
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
-            interactor.Received().Execute(request, presenter);
+            await interactor.Received().Execute(request, presenter);
             Assert.That(result, Is.SameAs(actionResult));
-        });
+        }
     }
 }

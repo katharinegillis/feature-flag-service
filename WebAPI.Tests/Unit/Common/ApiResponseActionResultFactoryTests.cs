@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using WebAPI.Common;
 
 namespace WebAPI.Tests.Unit.Common;
@@ -12,16 +11,16 @@ public sealed class ApiResponseActionResultFactoryTests
     {
         // Act
         var result = ApiResponseActionResultFactory.Ok<string>("some_data");
-        
+
         // Assert
         Assert.That(result.Value, Is.InstanceOf<ApiResponse<string>>());
         var apiResponseResult = result.Value as ApiResponse<string>;
-        
-        Assert.Multiple(() =>
+
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(apiResponseResult!.Successful, Is.True);
             Assert.That(apiResponseResult.Data, Is.EqualTo("some_data"));
-        });
+        }
     }
 
     [Test]
@@ -29,18 +28,19 @@ public sealed class ApiResponseActionResultFactoryTests
     {
         // Act
         var result = ApiResponseActionResultFactory.Err<string>(["some error", "some other error"]);
-        
+
         // Assert
         Assert.That(result.Value, Is.InstanceOf<ApiResponse<string>>());
         var apiResponseResult = result.Value as ApiResponse<string>;
-        
-        Assert.Multiple(() =>
+
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(apiResponseResult!.Successful, Is.False);
-            Assert.That(apiResponseResult.Errors, Is.EqualTo(new List<string> {
+            Assert.That(apiResponseResult.Errors, Is.EqualTo(new List<string>
+            {
                 "some error",
                 "some other error"
             }));
-        });
+        }
     }
 }

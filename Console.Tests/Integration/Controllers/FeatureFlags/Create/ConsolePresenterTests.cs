@@ -52,11 +52,11 @@ public sealed class ConsolePresenterTests : AbstractControllerTest
         subject.Ok();
 
         // Assert
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(subject.ActionResult.ExitCode, Is.EqualTo((int)ExitCode.Success));
             Assert.That(subject.ActionResult.Lines, Is.EqualTo(expectedLines));
-        });
+        }
     }
 
     [Test]
@@ -95,11 +95,11 @@ public sealed class ConsolePresenterTests : AbstractControllerTest
         });
 
         // Assert
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(subject.ActionResult.ExitCode, Is.EqualTo((int)ExitCode.OptionsError));
             Assert.That(subject.ActionResult.Lines, Is.EqualTo(expectedLines));
-        });
+        }
     }
 
     [Test]
@@ -128,10 +128,10 @@ public sealed class ConsolePresenterTests : AbstractControllerTest
         });
 
         // Assert
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(presenter.ActionResult.ExitCode, Is.EqualTo((int)ExitCode.Error));
             Assert.That(presenter.ActionResult.Lines, Is.EqualTo(expectedLines));
-        });
+        }
     }
 }
