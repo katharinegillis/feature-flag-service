@@ -43,11 +43,11 @@ public sealed class EqualityComparerTests
             Id = "some_flag",
             Enabled = true
         };
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(comparer.Equals(a, null), Is.False);
             Assert.That(comparer.Equals(null, a), Is.False);
-        });
+        }
     }
 
     [Test]

@@ -19,11 +19,11 @@ public sealed class CodePresenterTests
         subject.Ok(model);
 
         // Assert
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(subject.FeatureFlag, Is.SameAs(model));
             Assert.That(subject.IsNotFound, Is.False);
-        });
+        }
     }
 
     [Test]
@@ -34,10 +34,10 @@ public sealed class CodePresenterTests
         subject.NotFound();
 
         // Assert
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(subject.FeatureFlag, Is.TypeOf<FeatureFlags.NullModel>());
             Assert.That(subject.IsNotFound, Is.True);
-        });
+        }
     }
 }

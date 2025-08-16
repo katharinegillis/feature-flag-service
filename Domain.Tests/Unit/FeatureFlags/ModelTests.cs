@@ -32,7 +32,7 @@ public sealed class ModelTests
         };
 
         var result = model.Validate();
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result.IsOk, Is.False);
             Assert.That(result.Error.Count, Is.EqualTo(1));
@@ -41,6 +41,6 @@ public sealed class ModelTests
                 Field = "Id",
                 Message = "Max length is 100"
             }));
-        });
+        }
     }
 }

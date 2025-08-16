@@ -45,10 +45,10 @@ public sealed class ConsolePresenterTests : AbstractControllerTest
         });
 
         // Assert
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(subject.ActionResult.ExitCode, Is.EqualTo((int)ExitCode.Success));
             Assert.That(subject.ActionResult.Lines, Is.EqualTo(expectedLines));
-        });
+        }
     }
 }

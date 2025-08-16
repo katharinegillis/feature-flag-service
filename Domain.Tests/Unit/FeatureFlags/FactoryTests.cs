@@ -13,13 +13,13 @@ public sealed class FactoryTests
 
         var model = factory.Create("new_flag", true);
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(model, Is.InstanceOf<Model>());
             Assert.That(model.Id, Is.EqualTo("new_flag"));
             Assert.That(model.Enabled, Is.True);
             Assert.That(model.IsNull, Is.False);
-        });
+        }
     }
 
     [Test]
@@ -29,11 +29,11 @@ public sealed class FactoryTests
 
         var model = factory.Create();
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(model, Is.InstanceOf<NullModel>());
             Assert.That(model.IsNull, Is.True);
             Assert.That(model, Is.EqualTo(NullModel.Instance));
-        });
+        }
     }
 }

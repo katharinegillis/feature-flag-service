@@ -44,10 +44,10 @@ public sealed class ConsolePresenterFactoryTests
         var result2 = subject.Create(request);
 
         // Assert
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(result1.Request, Is.EqualTo(request));
             Assert.That(result1, Is.Not.SameAs(result2));
-        });
+        }
     }
 }

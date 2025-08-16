@@ -1,11 +1,9 @@
-﻿using System.Diagnostics;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Microsoft.Playwright;
-using Newtonsoft.Json;
 using NUnit.Framework;
+using WebAPI.Common;
 using WebAPI.E2E.DataSources;
 using WebAPI.E2E.Drivers;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace WebAPI.E2E.Steps;
 
@@ -53,7 +51,7 @@ public sealed class FeatureFlagEnabledStepDefinitions
     }
 
     [When(@"the (v1) feature flag enabled endpoint is opened for the (\w+) feature flag")]
-    public async Task WhenTheVersionedFeatureFlagEnabledEndpointIsOpenedForTheWFeatureFlag(string version, string id)
+    public async Task WhenTheVFeatureFlagEnabledEndpointIsOpenedForTheWFeatureFlag(string version, string id)
     {
         var flagId = await _dataSource.GetUniqueId(id);
 

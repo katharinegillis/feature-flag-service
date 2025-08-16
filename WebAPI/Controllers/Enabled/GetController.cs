@@ -9,8 +9,7 @@ namespace WebAPI.Controllers.Enabled;
 [Route("api/v{v:apiVersion}/featureflags/{id}/enabled")]
 public sealed class GetController(
     IActionResultPresenterFactory factory,
-    IUseCase interactor,
-    ILogger<GetController> logger)
+    IUseCase interactor)
     : ControllerBase
 {
     [MapToApiVersion(1)]
