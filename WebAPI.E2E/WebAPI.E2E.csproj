@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Using Include="TechTalk.SpecFlow"/>
+        <Using Include="Reqnroll"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -17,12 +17,8 @@
         <PackageReference Include="Microsoft.Playwright" Version="1.54.0"/>
         <PackageReference Include="Microsoft.Playwright.NUnit" Version="1.54.0"/>
         <PackageReference Include="RandomString4Net" Version="1.9.0"/>
-        <PackageReference Include="SpecFlow" Version="3.9.74"/>
-        <PackageReference Include="SpecFlow.NUnit" Version="3.9.74"/>
-        <PackageReference Include="SpecFlow.NUnit.Runners" Version="3.9.74"/>
-        <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57"/>
+        <PackageReference Include="Reqnroll.NUnit" Version="2.4.1" />
         <PackageReference Include="FluentAssertions" Version="8.6.0"/>
-        <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.9.74"/>
     </ItemGroup>
 
     <ItemGroup>
