@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Infrastructure.Configuration;
 using WebAPI.Extensions;
 
@@ -8,6 +9,20 @@ builder.Services.AddDomainFactories();
 
 builder.Services.AddApplicationInteractors();
 builder.Services.AddApplicationPresenters();
+
+builder.Services.AddApiVersioning(options =>
+    {
+        options.DefaultApiVersion = new ApiVersion(1);
+        options.ReportApiVersions = true;
+        options.AssumeDefaultVersionWhenUnspecified = true;
+        options.ApiVersionReader = new UrlSegmentApiVersionReader();
+    })
+    .AddMvc()
+    .AddApiExplorer(options =>
+    {
+        options.GroupNameFormat = "'v'V";
+        options.SubstituteApiVersionInUrl = true;
+    });
 
 var splitOptionsBuilder = builder.Configuration.GetSection(SplitOptions.Split);
 

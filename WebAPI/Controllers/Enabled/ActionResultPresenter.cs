@@ -1,5 +1,6 @@
 using Application.UseCases.FeatureFlag.IsEnabled;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Common;
 
 namespace WebAPI.Controllers.Enabled;
 
@@ -8,21 +9,14 @@ public sealed class ActionResultPresenter(RequestModel request) : IActionResultP
     public IActionResult ActionResult { get; private set; } =
         new StatusCodeResult(StatusCodes.Status500InternalServerError);
 
-    public bool IsError { get; private set; } = true;
-    public string? Message { get; private set; } = "No action result set";
-
     public void Ok(bool enabled)
     {
-        ActionResult = new OkObjectResult(enabled);
-        IsError = false;
-        Message = null;
+        ActionResult = ApiResponseActionResultFactory.Ok<bool?>(enabled);
     }
 
     public void NotFound()
     {
-        ActionResult = new NotFoundResult();
-        IsError = false;
-        Message = null;
+        ActionResult = ApiResponseActionResultFactory.Err<bool?>(["Not found"]);
     }
 
     public RequestModel Request => request;

@@ -1,7 +1,11 @@
-﻿using Microsoft.Playwright;
+﻿using System.Diagnostics;
+using System.Text.Json;
+using Microsoft.Playwright;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using WebAPI.E2E.DataSources;
 using WebAPI.E2E.Drivers;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace WebAPI.E2E.Steps;
 
@@ -12,6 +16,7 @@ public sealed class FeatureFlagEnabledStepDefinitions
     private const string Response = "response";
     private readonly ConsoleDriver _consoleDriver;
     private readonly FeatureFlagDataSource _dataSource;
+    private readonly JsonSerializerOptions _jsonSerializerOptions;
 
     private readonly IAPIRequestContext _request;
     // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
@@ -25,6 +30,10 @@ public sealed class FeatureFlagEnabledStepDefinitions
         _consoleDriver = new ConsoleDriver();
         _dataSource = new FeatureFlagDataSource(_consoleDriver);
         _request = hooks.Request;
+        _jsonSerializerOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
     }
 
     [Given("the following feature flags exist")]
@@ -43,30 +52,47 @@ public sealed class FeatureFlagEnabledStepDefinitions
             }
     }
 
-    [When(@"the feature flag enabled endpoint is opened for the (\w+) feature flag")]
-    public async Task WhenTheFeatureFlagEnabledEndpointIsOpenedForTheWFeatureFlag(string id)
+    [When(@"the (v1) feature flag enabled endpoint is opened for the (\w+) feature flag")]
+    public async Task WhenTheVersionedFeatureFlagEnabledEndpointIsOpenedForTheWFeatureFlag(string version, string id)
     {
         var flagId = await _dataSource.GetUniqueId(id);
 
-        var response = await _request.GetAsync($"/{flagId}/enabled");
+        var response = await _request.GetAsync($"api/{version}/featureflags/{flagId}/enabled");
         Assert.That(response.Ok, Is.True);
 
         _scenarioContext[Response] = response;
     }
 
-    [Then("the result should be (true|false)")]
-    public async Task ThenTheResultShouldBeTrueFalse(string expectedResult)
+    [Then("the result should be successful and (true|false)")]
+    public async Task ThenTheResultShouldBeSuccessfulAndTrueFalse(string expectedResult)
     {
-        var jsonResponse = await _scenarioContext.Get<IAPIResponse>(Response).JsonAsync();
-        Assert.That(jsonResponse, Is.Not.Null);
+        var response = await _scenarioContext.Get<IAPIResponse>(Response).JsonAsync<ApiResponse<bool?>>(_jsonSerializerOptions);
+        Assert.That(response, Is.Not.Null);
+        
+        Assert.That(response!.Successful, Is.True);
 
         if (expectedResult == "true")
         {
-            Assert.That(jsonResponse!.Value.GetBoolean(), Is.True);
+            Assert.That(response.Data, Is.True);
             return;
         }
 
-        Assert.That(jsonResponse!.Value.GetBoolean(), Is.False);
+        Assert.That(response.Data, Is.False);
+    }
+
+    [Then("the result should be unsuccessful with the following errors")]
+    public async Task ThenTheResultShouldBeUnsuccessfulWithTheFollowingErrors(Table table)
+    {
+        var response = await _scenarioContext.Get<IAPIResponse>(Response)
+            .JsonAsync<ApiResponse<bool?>>(_jsonSerializerOptions);
+        Assert.That(response, Is.Not.Null);
+        
+        Assert.That(response!.Successful, Is.False);
+
+        foreach (var row in table.Rows)
+        {
+            Assert.That(response.Errors, Contains.Item(row[0]));
+        }
     }
 
     [AfterScenario]

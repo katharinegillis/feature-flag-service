@@ -3,7 +3,7 @@ using WebAPI.Common;
 
 namespace WebAPI.Controllers.Enabled;
 
-public interface IActionResultPresenter : IPresenter, IHasActionResult, IHasIsError
+public interface IActionResultPresenter : IPresenter, IHasActionResult
 {
     public RequestModel Request { get; }
 }
