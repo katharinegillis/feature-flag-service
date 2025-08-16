@@ -22,6 +22,7 @@ builder.Services.AddInfrastructureSplitConfig(builder.Configuration);
 var splitOptions = splitOptionsBuilder.Get<SplitOptions>();
 
 if (splitOptions != null && splitOptions.SdkKey != "")
+{
     try
     {
         builder.Services.AddInfrastructureSplitRepository(splitOptions);
@@ -30,8 +31,11 @@ if (splitOptions != null && splitOptions.SdkKey != "")
     {
         builder.Services.AddInfrastructureSqliteRepository();
     }
+}
 else
+{
     builder.Services.AddInfrastructureSqliteRepository();
+}
 
 builder.Services.AddConsoleControllers();
 builder.Services.AddConsoleLocalization();

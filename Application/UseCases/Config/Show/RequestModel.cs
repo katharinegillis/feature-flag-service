@@ -12,9 +12,15 @@ public sealed class RequestModel : IEquatable<RequestModel>
 
     public bool Equals(RequestModel? other)
     {
-        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(null, other))
+        {
+            return false;
+        }
 
-        if (ReferenceEquals(this, other)) return true;
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
 
         return Name == other.Name;
     }

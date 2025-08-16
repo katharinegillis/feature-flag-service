@@ -150,7 +150,7 @@ public sealed class SplitFeatureFlagRepositoryTests
                 Id = "some_flag",
                 Enabled = true
             }));
-            
+
             Assert.That(comparer.Equals(list[1], new Model
             {
                 Id = "some_other_flag",

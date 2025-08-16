@@ -130,7 +130,7 @@ public sealed class DbFeatureFlagRepositoryTests
             Id = "some_flag",
             Enabled = true
         });
-        
+
         using (Assert.EnterMultipleScope())
         {
             Assert.That(result.IsOk, Is.False);

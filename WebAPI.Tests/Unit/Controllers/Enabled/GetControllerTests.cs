@@ -31,7 +31,7 @@ public sealed class GetControllerTests
 
         // Act
         var result = await controller.Execute("some_flag");
-        
+
         // Assert
         Assert.That(result, Is.InstanceOf<OkObjectResult>());
         var okResult = result as OkObjectResult;
@@ -66,7 +66,7 @@ public sealed class GetControllerTests
 
         // Act
         var result = await controller.Execute("some_flag");
-        
+
         // Assert
         Assert.That(result, Is.InstanceOf<OkObjectResult>());
         var okResult = result as OkObjectResult;

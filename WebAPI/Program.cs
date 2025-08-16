@@ -31,6 +31,7 @@ builder.Services.AddInfrastructureSplitConfig(builder.Configuration);
 var splitOptions = splitOptionsBuilder.Get<SplitOptions>();
 
 if (splitOptions != null && splitOptions.SdkKey != "")
+{
     try
     {
         builder.Services.AddInfrastructureSplitRepository(splitOptions);
@@ -41,8 +42,11 @@ if (splitOptions != null && splitOptions.SdkKey != "")
         Console.WriteLine("Split.IO client unable to start up. Falling back on sqlite datasource.");
         builder.Services.AddInfrastructureSqliteRepository();
     }
+}
 else
+{
     builder.Services.AddInfrastructureSqliteRepository();
+}
 
 builder.Services.AddWebApiPresenters();
 

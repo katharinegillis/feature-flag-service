@@ -22,7 +22,10 @@ public sealed partial class ConsoleDriver
 
         using var process = Process.Start(_psi);
 
-        if (process == null) return false;
+        if (process == null)
+        {
+            return false;
+        }
 
         await process.WaitForExitAsync();
 
@@ -35,7 +38,10 @@ public sealed partial class ConsoleDriver
 
         using var process = Process.Start(_psi);
 
-        if (process == null) return;
+        if (process == null)
+        {
+            return;
+        }
 
         await process.WaitForExitAsync();
     }
@@ -46,7 +52,10 @@ public sealed partial class ConsoleDriver
 
         using var process = Process.Start(_psi);
 
-        if (process == null) return "unknown";
+        if (process == null)
+        {
+            return "unknown";
+        }
 
         await process.WaitForExitAsync();
 

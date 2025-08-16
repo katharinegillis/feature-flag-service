@@ -51,11 +51,17 @@ public sealed class App(
             return;
         }
 
-        if (command is IHasOptions commandWithOptions) commandWithOptions.SetOptions(obj);
+        if (command is IHasOptions commandWithOptions)
+        {
+            commandWithOptions.SetOptions(obj);
+        }
 
         var result = await command.Execute();
 
-        foreach (var line in result.Lines) System.Console.WriteLine(line);
+        foreach (var line in result.Lines)
+        {
+            System.Console.WriteLine(line);
+        }
 
         Environment.ExitCode = result.ExitCode;
     }
