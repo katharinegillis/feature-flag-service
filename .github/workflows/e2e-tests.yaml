@@ -45,8 +45,8 @@ jobs:
         with:
           time: '10'
         
-      - name: Run the E2E against the Split Service
-        run: dotnet test --filter TestCategory=Split
+      - name: Run the E2E tests against the Split Service
+        run: dotnet test --filter TestCategory=E2E
       
       - name: Shutdown the service
         run: docker compose -f compose.yaml -f compose.e2e.yaml down
