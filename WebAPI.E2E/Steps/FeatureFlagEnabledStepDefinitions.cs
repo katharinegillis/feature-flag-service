@@ -5,6 +5,8 @@ using WebAPI.Common;
 using WebAPI.E2E.DataSources;
 using WebAPI.E2E.Drivers;
 
+[assembly: Parallelizable(ParallelScope.Children)]
+
 namespace WebAPI.E2E.Steps;
 
 [Binding]
