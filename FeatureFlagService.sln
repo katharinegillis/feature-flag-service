@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console.Tests", "Console.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.E2E", "WebAPI.E2E\WebAPI.E2E.csproj", "{A6E2F9DE-C3E0-41A8-9E0B-19E35DB818D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console.E2E", "Console.E2E\Console.E2E.csproj", "{6C3F3530-24AA-4F45-BB2B-685F48B47C96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,5 +80,9 @@ Global
 		{A6E2F9DE-C3E0-41A8-9E0B-19E35DB818D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6E2F9DE-C3E0-41A8-9E0B-19E35DB818D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6E2F9DE-C3E0-41A8-9E0B-19E35DB818D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C3F3530-24AA-4F45-BB2B-685F48B47C96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C3F3530-24AA-4F45-BB2B-685F48B47C96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C3F3530-24AA-4F45-BB2B-685F48B47C96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C3F3530-24AA-4F45-BB2B-685F48B47C96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
