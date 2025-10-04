@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace WebAPI.E2E.Drivers;
 
-public sealed partial class ConsoleDriver
+public sealed class ConsoleDriver
 {
     private readonly ProcessStartInfo _psi = new()
     {
@@ -61,9 +61,8 @@ public sealed partial class ConsoleDriver
 
         var output = await process.StandardOutput.ReadToEndAsync();
 
-        return process.ExitCode != 0 ? "unknown" : DatasourceRegex().Match(output).Groups[1].Value;
-    }
+        var datasourceRegex = new Regex("^Datasource \"(.+?)\"$");
 
-    [GeneratedRegex("^Datasource \"(.+?)\"$")]
-    private static partial Regex DatasourceRegex();
+        return process.ExitCode != 0 ? "unknown" : datasourceRegex.Match(output).Groups[1].Value;
+    }
 }

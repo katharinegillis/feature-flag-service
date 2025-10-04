@@ -104,18 +104,14 @@ namespace WebAPI.E2E.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Get an enabled feature flag with v1")]
-        [NUnit.Framework.CategoryAttribute("SQLite")]
-        [NUnit.Framework.CategoryAttribute("Split")]
         [NUnit.Framework.CategoryAttribute("E2E")]
         public async global::System.Threading.Tasks.Task GetAnEnabledFeatureFlagWithV1()
         {
             string[] tagsOfScenario = new string[] {
-                    "SQLite",
-                    "Split",
                     "E2E"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Get an enabled feature flag with v1", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 6
+#line 4
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -131,14 +127,14 @@ namespace WebAPI.E2E.Features
                 table1.AddRow(new string[] {
                             "e2e_test_enabled",
                             "true"});
-#line 7
+#line 5
         await testRunner.GivenAsync("the following feature flags exist", ((string)(null)), table1, "Given ");
 #line hidden
-#line 10
+#line 8
         await testRunner.WhenAsync("the v1 feature flag enabled endpoint is opened for the e2e_test_enabled feature f" +
                         "lag", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 11
+#line 9
         await testRunner.ThenAsync("the result should be successful and true", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -147,18 +143,14 @@ namespace WebAPI.E2E.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Get a disabled feature flag with v1")]
-        [NUnit.Framework.CategoryAttribute("SQLite")]
-        [NUnit.Framework.CategoryAttribute("Split")]
         [NUnit.Framework.CategoryAttribute("E2E")]
         public async global::System.Threading.Tasks.Task GetADisabledFeatureFlagWithV1()
         {
             string[] tagsOfScenario = new string[] {
-                    "SQLite",
-                    "Split",
                     "E2E"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Get a disabled feature flag with v1", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 16
+#line 12
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -174,14 +166,14 @@ namespace WebAPI.E2E.Features
                 table2.AddRow(new string[] {
                             "e2e_test_disabled",
                             "false"});
-#line 17
+#line 13
         await testRunner.GivenAsync("the following feature flags exist", ((string)(null)), table2, "Given ");
 #line hidden
-#line 20
+#line 16
         await testRunner.WhenAsync("the v1 feature flag enabled endpoint is opened for the e2e_test_disabled feature " +
                         "flag", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 21
+#line 17
         await testRunner.ThenAsync("the result should be successful and false", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -190,18 +182,14 @@ namespace WebAPI.E2E.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Get a non-existant feature flag with v1")]
-        [NUnit.Framework.CategoryAttribute("SQLite")]
-        [NUnit.Framework.CategoryAttribute("Split")]
         [NUnit.Framework.CategoryAttribute("E2E")]
         public async global::System.Threading.Tasks.Task GetANon_ExistantFeatureFlagWithV1()
         {
             string[] tagsOfScenario = new string[] {
-                    "SQLite",
-                    "Split",
                     "E2E"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Get a non-existant feature flag with v1", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 26
+#line 20
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -211,13 +199,13 @@ namespace WebAPI.E2E.Features
             else
             {
                 await this.ScenarioStartAsync();
-#line 27
+#line 21
         await testRunner.WhenAsync("the v1 feature flag enabled endpoint is opened for the e2e_test_missing feature f" +
                         "lag", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
                 global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
                             "Not found"});
-#line 28
+#line 22
         await testRunner.ThenAsync("the result should be unsuccessful with the following errors", ((string)(null)), table3, "Then ");
 #line hidden
             }

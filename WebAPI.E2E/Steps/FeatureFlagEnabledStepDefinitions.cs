@@ -17,7 +17,6 @@ public sealed class FeatureFlagEnabledStepDefinitions
     private readonly JsonSerializerOptions _jsonSerializerOptions;
 
     private readonly IAPIRequestContext _request;
-    // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
 
     private readonly ScenarioContext _scenarioContext;
 
@@ -34,7 +33,7 @@ public sealed class FeatureFlagEnabledStepDefinitions
         };
     }
 
-    [Given("the following feature flags exist")]
+    [Given("^the following feature flags exist$")]
     public async Task GivenTheFollowingFeatureFlagsExist(Table table)
     {
         if (await _consoleDriver.ConfigShowDataSource() == "Database")
@@ -55,7 +54,7 @@ public sealed class FeatureFlagEnabledStepDefinitions
         }
     }
 
-    [When(@"the (v1) feature flag enabled endpoint is opened for the (\w+) feature flag")]
+    [When(@"^the (v1) feature flag enabled endpoint is opened for the (\w+) feature flag$")]
     public async Task WhenTheVFeatureFlagEnabledEndpointIsOpenedForTheWFeatureFlag(string version, string id)
     {
         var flagId = await _dataSource.GetUniqueId(id);
@@ -66,7 +65,7 @@ public sealed class FeatureFlagEnabledStepDefinitions
         _scenarioContext[Response] = response;
     }
 
-    [Then("the result should be successful and (true|false)")]
+    [Then("^the result should be successful and (true|false)$")]
     public async Task ThenTheResultShouldBeSuccessfulAndTrueFalse(string expectedResult)
     {
         var response = await _scenarioContext.Get<IAPIResponse>(Response)
@@ -84,7 +83,7 @@ public sealed class FeatureFlagEnabledStepDefinitions
         Assert.That(response.Data, Is.False);
     }
 
-    [Then("the result should be unsuccessful with the following errors")]
+    [Then("^the result should be unsuccessful with the following errors$")]
     public async Task ThenTheResultShouldBeUnsuccessfulWithTheFollowingErrors(Table table)
     {
         var response = await _scenarioContext.Get<IAPIResponse>(Response)
